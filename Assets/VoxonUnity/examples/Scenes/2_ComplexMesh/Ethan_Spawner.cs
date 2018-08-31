@@ -16,7 +16,7 @@ public class Ethan_Spawner : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(Time.frameCount % 20 == 0 && ethans.Count < max_ethans)
+		if(Time.frameCount % 360 == 0 && ethans.Count < max_ethans)
         {
             try
             {
@@ -29,7 +29,7 @@ public class Ethan_Spawner : MonoBehaviour {
             }
         }
 
-        if (Time.frameCount % 20 == 0 && ethans.Count >= max_ethans)
+        if (Time.frameCount % 360 == 0 && ethans.Count >= max_ethans)
         {
             GameObject fatal_ethan = ethans[0];
             ethans.RemoveAt(0);

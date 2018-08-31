@@ -158,6 +158,7 @@ public class MeshRegister : Singleton<MeshRegister> {
                 int indices = mesh.GetTriangles(submesh).Length;
                 rm.index_counts[submesh] = indices + (indices / 3);
 
+
                 rm.indices[submesh] = new int[rm.index_counts[submesh]]; // Number of Poly Indices
 
                 // Set up indices
@@ -223,27 +224,26 @@ public class MeshRegister : Singleton<MeshRegister> {
     ///  Compute Shader call. Set up Kernel, define tranform values and dispatches GPU threads
     ///  Currently only sends thin batches; should see to increase this in future.
     ///  </summary>
-    public void compute_transform(Matrix4x4 Transform, registered_mesh rm, ref Voxon.DLL.poltex_t[] vt)
+    public void compute_transform(Matrix4x4 Transform, registered_mesh rm, ref Voxon.DLL.poltex_t[] vt, ref ComputeBuffer verts)
     {
         try
         {
             // Need to be set for each draw update
             cshader_main.SetMatrix("_transform", Transform);
 
+            // cshader_main.SetBuffer(kernelHandle, "in_vertices", verts);
             cshader_main.SetBuffer(kernelHandle, "in_vertices", rm.cbufferI_vertices);
             cshader_main.SetBuffer(kernelHandle, "in_uvs", rm.cbufferI_uvs);
             cshader_main.SetBuffer(kernelHandle, "output", rm.cbufferO_poltex);
 
-
             // Slight Magic Number; Aiming to create 256 int blocks
             int blocks = (rm.vertex_count + 256 - 1) / 256;
+            int subblocks = blocks / 16;
 
-
+            // cshader_main.Dispatch(kernelHandle, blocks, subblocks, 1);
             cshader_main.Dispatch(kernelHandle, blocks, 1, 1);
 
-
             rm.cbufferO_poltex.GetData(vt);
-
         }
         catch (Exception E)
         {
@@ -257,7 +257,7 @@ public class MeshRegister : Singleton<MeshRegister> {
         // Vector3 pos = component.transform.position;object_transform.MultiplyPoint3x4(component.transform.position)
         // Matrix4x4 object_transform = VXProcess.Instance._camera.transform.worldToLocalMatrix;
         Vector4 in_v;
-        for (int idx = rm.vertices.Length - 1; idx >=0; --idx)
+        for (int idx = rm.vertices.Length - 1; idx >= 0; --idx)
         {            
             in_v = new Vector4(rm.vertices[idx].x, rm.vertices[idx].y, rm.vertices[idx].z, 1.0f);
 

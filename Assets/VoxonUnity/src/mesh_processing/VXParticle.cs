@@ -121,7 +121,6 @@ namespace Voxon
             // TODO : The IsAlive check may cause problems in the future, leaving for now due to safety
             if(!m_particleSystem || !m_particleSystem.IsAlive())
             {
-                Destroy(this);
                 return;
             }
             if (renderMode == ParticleSystemRenderMode.Mesh)

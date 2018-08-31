@@ -43,8 +43,15 @@ namespace Voxon
                 {
                     continue;
                 }
-                child.gameObject.AddComponent<VXComponent>();
+                if(child.gameObject.GetComponent<ParticleSystem>())
+                {
+                    continue;
+                }
                 // Child will add self to VXProcess _components
+                if (!child.gameObject.GetComponent<VXComponent>())
+                {
+                    child.gameObject.AddComponent<VXComponent>();
+                }                
             }
 
             VXProcess._gameobjects.Add(this);

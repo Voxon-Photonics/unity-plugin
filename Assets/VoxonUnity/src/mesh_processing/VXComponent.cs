@@ -116,9 +116,10 @@ namespace Voxon
                 VXProcess._components.Remove(this);
 
                 // Free Mesh
-                MeshRegister.Instance.drop_mesh(ref Umesh);
-                
-                if(animated_vertices != null)
+                if(Umesh)
+                    MeshRegister.Instance.drop_mesh(ref Umesh);
+
+                if (animated_vertices != null)
                 {
                     animated_vertices.Release();
                 }
@@ -153,6 +154,7 @@ namespace Voxon
                 {
                     sm_rend.BakeMesh(Umesh);
                     // animated_vertices.SetData(Umesh.vertices);
+                    mesh.cbufferI_vertices.SetData(Umesh.vertices);
                 }
 
                 Profiler.BeginSample("Build Mesh");
@@ -226,7 +228,7 @@ namespace Voxon
                 if (isSkinnedMesh)
                 {
                     // MeshRegister.Instance.compute_transform_cpu(Matrix, mesh, ref vt);
-                    MeshRegister.Instance.compute_transform(Matrix, mesh, ref vt);
+                    MeshRegister.Instance.compute_transform(Matrix, mesh, ref vt, ref animated_vertices);
                 }
                 else
                 {
@@ -247,6 +249,12 @@ namespace Voxon
             {
                 mesh = MeshRegister.Instance.get_registed_mesh(ref Umesh);
                 vt = new Voxon.DLL.poltex_t[mesh.vertex_count];
+
+                if(isSkinnedMesh)
+                {
+                    animated_vertices = new ComputeBuffer(Umesh.vertexCount, sizeof(float) * 3, ComputeBufferType.Default);
+                    animated_vertices.SetData(Umesh.vertices);
+                }
                 BuildMesh();
             }
             catch (Exception E)
@@ -268,7 +276,7 @@ namespace Voxon
                     }
                     else
                     {
-                        VXProcess.Instance.add_log_line(gameObject.name + " submesh #" + mesh.submesh_count + " has no main texture");
+                        // VXProcess.Instance.add_log_line(gameObject.name + " submesh #" + mesh.submesh_count + " has no main texture");
                     }
                 }
             }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657907, g: 0.49641332, b: 0.5748179, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 133353338}
   - component: {fileID: 133353337}
   m_Layer: 0
-  m_Name: FireBoxes
+  m_Name: FireBoxes_M
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -258,7 +258,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1864032256
+  randomSeed: 1815102667
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -25329,7 +25329,7 @@ GameObject:
   - component: {fileID: 1325089730}
   - component: {fileID: 1325089729}
   m_Layer: 0
-  m_Name: FireBoxes
+  m_Name: FireBoxes_S
   m_TagString: Sphere
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25463,7 +25463,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1925603016
+  randomSeed: 1056167686
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -28775,7 +28775,7 @@ GameObject:
   - component: {fileID: 1370633927}
   - component: {fileID: 1370633926}
   m_Layer: 0
-  m_Name: FireBoxes
+  m_Name: FireBoxes_B
   m_TagString: Sphere
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28909,7 +28909,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 312288299
+  randomSeed: 960283156
   InitialModule:
     serializedVersion: 3
     enabled: 1
