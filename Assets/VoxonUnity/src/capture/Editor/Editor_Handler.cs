@@ -29,7 +29,6 @@ public class Editor_Handler: MonoBehaviour {
                 InputController.LoadData();
             }
 
-
             Debug.Assert(InputController.GetKey("Quit") != 0, "No 'Quit' keybinding found. Add to Input Manager");
         }
         catch(System.InvalidOperationException E)
