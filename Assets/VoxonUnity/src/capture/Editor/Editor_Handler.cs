@@ -40,7 +40,7 @@ public class Editor_Handler: MonoBehaviour {
         DefaultPlayerSettings();
     }
 
-    [MenuItem("Voxon/Tools/Make Textures Readable")]
+    [MenuItem("Voxon/Tools/Reimport Textures")]
     static void reimportMaterials()
     {
         var guids = AssetDatabase.FindAssets("t:Texture2d", null);
@@ -49,6 +49,21 @@ public class Editor_Handler: MonoBehaviour {
             string path = AssetDatabase.GUIDToAssetPath(guid);
             TextureImporter texImporter = AssetImporter.GetAtPath(path) as TextureImporter;
             texImporter.isReadable = true;
+            AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceUpdate);
+        }
+        EditorUtility.DisplayDialog("Reimported Textures", "Textures Reimported.", "Ok");
+    }
+
+    [MenuItem("Voxon/Tools/Reimport Meshes")]
+    static void reimportMeshes()
+    {
+        var guids = AssetDatabase.FindAssets("t:Mesh", null);
+        foreach (var guid in guids)
+        {
+            string path = AssetDatabase.GUIDToAssetPath(guid);
+            ModelImporter meshImporter = AssetImporter.GetAtPath(path) as ModelImporter;
+            meshImporter.isReadable = true;
+            meshImporter.useFileScale = true;
             AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceUpdate);
         }
         EditorUtility.DisplayDialog("Reimported Textures", "Textures Reimported.", "Ok");

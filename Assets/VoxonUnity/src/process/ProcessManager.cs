@@ -13,6 +13,8 @@ public class ProcessManager : EditorWindow
     private static void Init()
     {
         _ProcessManager = (ProcessManager)GetWindow(typeof(ProcessManager));
+        // Unneccesary but it shuts up Unity's warnings
+        _ProcessManager.Show();
     }
 
     private void OnGUI()

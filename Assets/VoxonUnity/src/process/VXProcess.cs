@@ -65,7 +65,7 @@ public class VXProcess : Singleton<VXProcess> {
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         bool is_breathing = Voxon.DLL.start_frame();
 

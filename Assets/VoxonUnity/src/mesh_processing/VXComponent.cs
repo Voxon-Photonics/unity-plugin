@@ -17,15 +17,12 @@ namespace Voxon
         private Renderer rend;
         private SkinnedMeshRenderer sm_rend;
 
-        private bool isSkinnedMesh = false;
-
         // Mesh Structure Structure
         private Mesh Umesh;         // Objects mesh
         private Material[] Umaterials; // Object's Materials
 
         // Mesh Data
-        private registered_mesh mesh;
-        private ComputeBuffer animated_vertices;
+        private RegisteredMesh mesh;
         private Voxon.DLL.poltex_t[] vt;   // List of vertices
 
         private int submesh_n = 0;      // Count of Submeshes part of mesh
@@ -58,11 +55,8 @@ namespace Voxon
                 sm_rend = GetComponent<SkinnedMeshRenderer>();
                 if (sm_rend)
                 {
-                    isSkinnedMesh = true;
                     Umesh = new Mesh();
 
-                    // We currently take a single set of materials (may need to get mats per child in future).
-                    //Umesh = sm_rend.sharedMesh;
                     sm_rend.BakeMesh(Umesh);
                     Umaterials = sm_rend.materials;
 
@@ -119,11 +113,6 @@ namespace Voxon
                 if(Umesh)
                     MeshRegister.Instance.drop_mesh(ref Umesh);
 
-                if (animated_vertices != null)
-                {
-                    animated_vertices.Release();
-                }
-
                 for (int submesh = 0; submesh < submesh_n; submesh++)
                 {
                     if (Umaterials[submesh].mainTexture)
@@ -150,33 +139,27 @@ namespace Voxon
                 if (!gameObject.activeSelf || tag == "VoxieHide")
                     return;
 
-                if (isSkinnedMesh)
+                if (sm_rend)
                 {
-                    sm_rend.BakeMesh(Umesh);
-                    // animated_vertices.SetData(Umesh.vertices);
-                    mesh.cbufferI_vertices.SetData(Umesh.vertices);
+                    mesh.update_baked_mesh(sm_rend, ref Umesh);
                 }
 
-                Profiler.BeginSample("Build Mesh");
-                if (isSkinnedMesh || VXProcess.Instance._camera.transform.hasChanged || transform.hasChanged)
+                
+                if (sm_rend || VXProcess.Instance._camera.transform.hasChanged || transform.hasChanged)
                 {
                     BuildMesh();
                 }
-                Profiler.EndSample();
+
 
                 for (int idx = 0; idx < mesh.submesh_count; idx++)
                 {
                     if (Umaterials[idx].mainTexture)
                     {
-                        Profiler.BeginSample("Draw Textured Mesh");
                         Voxon.DLL.draw_textured_mesh(ref textures[idx], vt, mesh.vertex_count, mesh.indices[idx], mesh.index_counts[idx], draw_flags);
-                        Profiler.EndSample();
                     }
                     else
                     {
-                        Profiler.BeginSample("Draw UnTextured Mesh");
                         Voxon.DLL.draw_untextured_mesh(vt, mesh.vertex_count, mesh.indices[idx], mesh.index_counts[idx], draw_flags, rend.materials[idx].color.toInt());
-                        Profiler.EndSample();
                     }
                 }
             }
@@ -201,38 +184,13 @@ namespace Voxon
                 Matrix = VXProcess.Instance._camera.transform.worldToLocalMatrix * Matrix;
                 Matrix = Matrix4x4.Scale(new Vector3(2.0f, 0.8f, 2.0f)) * Matrix;
 
-                /*
-                //forward transform (x -> nx, ..)
-                Vector3 cam_right = VXProcess.Instance._camera.transform.right;
-                Vector3 cam_forward = VXProcess.Instance._camera.transform.forward;
-                Vector3 cam_up = VXProcess.Instance._camera.transform.up;
-                Vector3 cam_position = VXProcess.Instance._camera.transform.position;
-                Vector3 cam_scale = VXProcess.Instance._camera.transform.lossyScale;
-
-                Vector3 pos = gameObject.transform.position;
-                Vector3 new_pos = new Vector3();
-
-                Vector3 scale = new Vector3(transform.lossyScale.x / cam_scale.x, transform.lossyScale.y / cam_scale.y, transform.lossyScale.z / cam_scale.z);
-
-                new_pos.x = (pos.x * cam_right.x + pos.y * -cam_up.x + pos.z * cam_forward.x) * scale.x + cam_position.x;
-                new_pos.y = (pos.x * cam_right.y + pos.y * -cam_up.y + pos.z * cam_forward.y) * scale.y + cam_position.y;
-                new_pos.z = (pos.x * cam_right.z + pos.y * -cam_up.z + pos.z * cam_forward.z) * scale.z + cam_position.z;
-                */
-                // Look at handing off
-                // VXParticle.matrix3x4 rotmatpos = new VXParticle.matrix3x4(gameObject.transform.rotation.eulerAngles, new_pos, gameObject.transform.lossyScale);
-
-                // VXProcess.Instance.add_log_line(name + "  Rotation: " + rot + "  Postion: " + pos + "  Scale: " + Matrix.lossyScale);
-
-                // MeshRegister.Instance.compute_transform(Matrix, mesh, ref vt);\
-
-                if (isSkinnedMesh)
+                if (sm_rend)
                 {
-                    // MeshRegister.Instance.compute_transform_cpu(Matrix, mesh, ref vt);
-                    MeshRegister.Instance.compute_transform(Matrix, mesh, ref vt, ref animated_vertices);
+                    MeshRegister.Instance.compute_transform_anim(mesh.name, Matrix, ref vt, ref Umesh);
                 }
                 else
                 {
-                    MeshRegister.Instance.compute_transform_cpu(Matrix, mesh, ref vt);
+                    MeshRegister.Instance.compute_transform_cpu(mesh.name, Matrix, ref vt);
                 }
 
                 transform.hasChanged = false;
@@ -247,14 +205,10 @@ namespace Voxon
         {
             try
             {
+                // TODO : I THINK HERE IS THE PROBLEM!
                 mesh = MeshRegister.Instance.get_registed_mesh(ref Umesh);
-                vt = new Voxon.DLL.poltex_t[mesh.vertex_count];
+                vt = new DLL.poltex_t[mesh.vertex_count];
 
-                if(isSkinnedMesh)
-                {
-                    animated_vertices = new ComputeBuffer(Umesh.vertexCount, sizeof(float) * 3, ComputeBufferType.Default);
-                    animated_vertices.SetData(Umesh.vertices);
-                }
                 BuildMesh();
             }
             catch (Exception E)
@@ -273,10 +227,6 @@ namespace Voxon
                     if (Umaterials[submesh].mainTexture)
                     {
                         textures[submesh] = TextureRegister.Instance.get_tile(ref Umaterials[submesh]);
-                    }
-                    else
-                    {
-                        // VXProcess.Instance.add_log_line(gameObject.name + " submesh #" + mesh.submesh_count + " has no main texture");
                     }
                 }
             }

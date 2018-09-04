@@ -76,7 +76,7 @@ namespace Voxon
         Matrix4x4 Matrix;
 
         Renderer rend;
-        registered_mesh mesh;
+        RegisteredMesh mesh;
 
         // DLL Version (Source is mesh.vertices)
         DLL.poltex_t[][] destinations;
@@ -178,29 +178,17 @@ namespace Voxon
             for (int idx = 0; idx < n_Particles; ++idx)
             {
                 // Unity Style 
-
-                Profiler.BeginSample("A");
-
                 Matrix.SetTRS(m_Particles[idx].position, Quaternion.Euler(m_Particles[idx].rotation3D), m_Particles[idx].GetCurrentSize3D(m_particleSystem));
-                Profiler.EndSample();
-                Profiler.BeginSample("B");
+
                 Matrix = FMatrix * Matrix;
-                Profiler.EndSample();
-                Profiler.BeginSample("C");
+
                 // MeshRegister.Instance.compute_transform_cpu(Matrix, mesh, ref destinations[idx]);
                 outMat = new matrix3x4(Matrix);
                 transform_mesh(mesh.vertices, destinations[idx], ref outMat, mesh.vertex_count);
-                Profiler.EndSample();
-
 
                 // TODO We don't currently rotate based on the rotation of the capture volume!
-                /*
-                Vector3 shift = new Vector3(transform.position.x, -transform.position.y, transform.position.z);
-                rotmatpos = new matrix3x4(m_Particles[idx].rotation3D, m_Particles[idx].position + shift, m_Particles[idx].GetCurrentSize3D(m_particleSystem));
-                transform_mesh(mesh.vertices, destinations[idx], ref rotmatpos, mesh.vertex_count);
-                */
-                for (int idy = mesh.submesh_count-1; idy >= 0; --idy)
-                {
+                
+                for (int idy = mesh.submesh_count-1; idy >= 0; --idy)                {
                     DLL.draw_untextured_mesh(destinations[idx], mesh.vertex_count, mesh.indices[idy], mesh.index_counts[idy], draw_flags, (m_Particles[idx].GetCurrentColor(m_particleSystem)).toInt());
                 }
             }
