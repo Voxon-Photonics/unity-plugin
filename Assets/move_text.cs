@@ -14,7 +14,7 @@ public class move_text : MonoBehaviour {
 	void Update () {
         if(step > 300)
         {
-            //gameObject.transform.position = new Vector3(Random.Range(-4.9f, 4.9f), Random.Range(-1.9f, 1.9f), Random.Range(-3.9f, 3.9f));
+            gameObject.transform.position = new Vector3(Random.Range(-4.9f, 4.9f), Random.Range(-1.9f, 1.9f), Random.Range(-3.9f, 3.9f));
             Vector3 pos = gameObject.transform.position;
             pos.x += 0.5f;
             gameObject.transform.position = pos;

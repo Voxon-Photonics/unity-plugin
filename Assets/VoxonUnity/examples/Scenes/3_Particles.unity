@@ -113,6 +113,53 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &53137216
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4282493003479850, guid: f3d6745943794b548af80428879f21e8, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4282493003479850, guid: f3d6745943794b548af80428879f21e8, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4282493003479850, guid: f3d6745943794b548af80428879f21e8, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4282493003479850, guid: f3d6745943794b548af80428879f21e8, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4282493003479850, guid: f3d6745943794b548af80428879f21e8, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4282493003479850, guid: f3d6745943794b548af80428879f21e8, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4282493003479850, guid: f3d6745943794b548af80428879f21e8, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4282493003479850, guid: f3d6745943794b548af80428879f21e8, type: 2}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: f3d6745943794b548af80428879f21e8, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1 &53137217 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1995373690718174, guid: f3d6745943794b548af80428879f21e8,
+    type: 2}
+  m_PrefabInternal: {fileID: 53137216}
 --- !u!1 &133353335
 GameObject:
   m_ObjectHideFlags: 0
@@ -193,7 +240,7 @@ ParticleSystemRenderer:
   m_Pivot: {x: 0, y: -0.15, z: 0}
   m_UseCustomVertexStreams: 0
   m_VertexStreams: 00010304
-  m_Mesh: {fileID: 4300000, guid: 4a7d5e38bd60f6e4c891961c69dba2e8, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 2d47761739036e74484a3b009fc67cba, type: 3}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
@@ -258,7 +305,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1815102667
+  randomSeed: 288879089
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -24732,7 +24779,7 @@ Transform:
   - {fileID: 1704584761}
   - {fileID: 1370633925}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &893720945
 GameObject:
@@ -24761,151 +24808,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b13a888e62571043b125bce075ae5fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  filename: default.json
-  Keyboard:
-    _Buckets: ffffffffffffffffffffffff010000000500000002000000ffffffffffffffff0000000003000000ffffffffffffffffffffffffffffffffffffffff0700000006000000
-    _HashCodes: c25d3e32d18ba0277377124cf86f8906f919075ceab07d513234eb46f963bb07000000000000000000000000000000000000000000000000000000000000000000000000
-    _Next: ffffffffffffffffffffffffffffffffffffffffffffffff04000000ffffffff000000000000000000000000000000000000000000000000000000000000000000000000
-    _Count: 8
-    _Version: 60
-    _FreeList: -1
-    _FreeCount: 0
-    _Keys:
-    - Jump
-    - Quit
-    - Left
-    - Right
-    - Up
-    - Down
-    - RotLeft
-    - RotRight
-    - 
-    - 
-    - 
-    - 
-    - 
-    - 
-    - 
-    - 
-    - 
-    _Values: 39000000010000001e00000020000000110000001f0000001000000012000000000000000000000000000000000000000000000000000000000000000000000000000000
-  Mouse:
-    _Buckets: ffffffff01000000ffffffff
-    _HashCodes: 7377124cf86f890600000000
-    _Next: ffffffff0000000000000000
-    _Count: 2
-    _Version: 8
-    _FreeList: -1
-    _FreeCount: 0
-    _Keys:
-    - Left
-    - Right
-    - 
-    _Values: 010000000200000000000000
-  J1Buttons:
-    _Buckets: ffffffffffffffffffffffff
-    _HashCodes: 000000000000000000000000
-    _Next: 000000000000000000000000
-    _Count: 0
-    _Version: 2
-    _FreeList: -1
-    _FreeCount: 0
-    _Keys:
-    - 
-    - 
-    - 
-    _Values: 000000000000000000000000
-  J1Axis:
-    _Buckets: ffffffffffffffffffffffff
-    _HashCodes: 000000000000000000000000
-    _Next: 000000000000000000000000
-    _Count: 0
-    _Version: 0
-    _FreeList: -1
-    _FreeCount: 0
-    _Keys:
-    - 
-    - 
-    - 
-    _Values: 000000000000000000000000
-  J2Buttons:
-    _Buckets: ffffffffffffffffffffffff
-    _HashCodes: 000000000000000000000000
-    _Next: 000000000000000000000000
-    _Count: 0
-    _Version: 0
-    _FreeList: -1
-    _FreeCount: 0
-    _Keys:
-    - 
-    - 
-    - 
-    _Values: 000000000000000000000000
-  J2Axis:
-    _Buckets: ffffffffffffffffffffffff
-    _HashCodes: 000000000000000000000000
-    _Next: 000000000000000000000000
-    _Count: 0
-    _Version: 0
-    _FreeList: -1
-    _FreeCount: 0
-    _Keys:
-    - 
-    - 
-    - 
-    _Values: 000000000000000000000000
-  J3Buttons:
-    _Buckets: ffffffffffffffffffffffff
-    _HashCodes: 000000000000000000000000
-    _Next: 000000000000000000000000
-    _Count: 0
-    _Version: 0
-    _FreeList: -1
-    _FreeCount: 0
-    _Keys:
-    - 
-    - 
-    - 
-    _Values: 000000000000000000000000
-  J3Axis:
-    _Buckets: ffffffffffffffffffffffff
-    _HashCodes: 000000000000000000000000
-    _Next: 000000000000000000000000
-    _Count: 0
-    _Version: 0
-    _FreeList: -1
-    _FreeCount: 0
-    _Keys:
-    - 
-    - 
-    - 
-    _Values: 000000000000000000000000
-  J4Buttons:
-    _Buckets: ffffffffffffffffffffffff
-    _HashCodes: 000000000000000000000000
-    _Next: 000000000000000000000000
-    _Count: 0
-    _Version: 0
-    _FreeList: -1
-    _FreeCount: 0
-    _Keys:
-    - 
-    - 
-    - 
-    _Values: 000000000000000000000000
-  J4Axis:
-    _Buckets: ffffffffffffffffffffffff
-    _HashCodes: 000000000000000000000000
-    _Next: 000000000000000000000000
-    _Count: 0
-    _Version: 0
-    _FreeList: -1
-    _FreeCount: 0
-    _Keys:
-    - 
-    - 
-    - 
-    _Values: 000000000000000000000000
 --- !u!4 &893720947
 Transform:
   m_ObjectHideFlags: 1
@@ -25004,64 +24906,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 899985297}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &984621309
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4138307867549318, guid: f5cac830b368d3f43bf7a10ad1405ec7, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4138307867549318, guid: f5cac830b368d3f43bf7a10ad1405ec7, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4138307867549318, guid: f5cac830b368d3f43bf7a10ad1405ec7, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4138307867549318, guid: f5cac830b368d3f43bf7a10ad1405ec7, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4138307867549318, guid: f5cac830b368d3f43bf7a10ad1405ec7, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4138307867549318, guid: f5cac830b368d3f43bf7a10ad1405ec7, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4138307867549318, guid: f5cac830b368d3f43bf7a10ad1405ec7, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4138307867549318, guid: f5cac830b368d3f43bf7a10ad1405ec7, type: 2}
-      propertyPath: m_RootOrder
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 1346146678981404, guid: f5cac830b368d3f43bf7a10ad1405ec7, type: 2}
-      propertyPath: m_Name
-      value: Camera
-      objectReference: {fileID: 0}
-    - target: {fileID: 4138307867549318, guid: f5cac830b368d3f43bf7a10ad1405ec7, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 4138307867549318, guid: f5cac830b368d3f43bf7a10ad1405ec7, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 4.44
-      objectReference: {fileID: 0}
-    - target: {fileID: 4138307867549318, guid: f5cac830b368d3f43bf7a10ad1405ec7, type: 2}
-      propertyPath: m_LocalScale.z
-      value: 10
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: f5cac830b368d3f43bf7a10ad1405ec7, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &1092538622
 GameObject:
   m_ObjectHideFlags: 1
@@ -25090,7 +24934,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _guidelines: 1
-  _camera: {fileID: 2056368123}
+  _camera: {fileID: 53137217}
 --- !u!4 &1092538624
 Transform:
   m_ObjectHideFlags: 1
@@ -25231,7 +25075,7 @@ Transform:
   - {fileID: 147862660}
   - {fileID: 133353336}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1298759307
 GameObject:
@@ -25398,7 +25242,7 @@ ParticleSystemRenderer:
   m_Pivot: {x: 0, y: -0.15, z: 0}
   m_UseCustomVertexStreams: 0
   m_VertexStreams: 00010304
-  m_Mesh: {fileID: 4300000, guid: 4a7d5e38bd60f6e4c891961c69dba2e8, type: 3}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
@@ -25463,7 +25307,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1056167686
+  randomSeed: 1280343347
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -28909,7 +28753,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 960283156
+  randomSeed: 898935179
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -42992,7 +42836,7 @@ Transform:
   - {fileID: 1817174840}
   - {fileID: 1325089728}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2034227686
 GameObject:
@@ -46439,23 +46283,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!1 &2056368123 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1346146678981404, guid: f5cac830b368d3f43bf7a10ad1405ec7,
-    type: 2}
-  m_PrefabInternal: {fileID: 984621309}
---- !u!114 &2056368124
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2056368123}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c3756999d5eadc4a81f203e663ca38c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_refreshTime: 0.5
 --- !u!1 &2087473034
 GameObject:
   m_ObjectHideFlags: 0
@@ -50045,7 +49872,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c3756999d5eadc4a81f203e663ca38c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_refreshTime: 0.5
 --- !u!114 &2128625437
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50057,4 +49883,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e02cdb8de3d6b44439ded62f62a4c303, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: 
