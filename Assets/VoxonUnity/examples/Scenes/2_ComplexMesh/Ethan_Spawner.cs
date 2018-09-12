@@ -20,7 +20,7 @@ public class Ethan_Spawner : MonoBehaviour {
         {
             try
             {
-                ethans.Add(Instantiate(spawnable, new Vector3(UnityEngine.Random.Range(-1.5f, 1.5f), 2, UnityEngine.Random.Range(-1.5f, 1.5f)), Quaternion.identity));
+                ethans.Add(Instantiate(spawnable, new Vector3(UnityEngine.Random.Range(-2f, 2f), 0, UnityEngine.Random.Range(-2f, 2f)), Quaternion.identity));
                 ethans[ethans.Count - 1].AddComponent<Voxon.VXGameObject>();
             }
             catch (Exception E)

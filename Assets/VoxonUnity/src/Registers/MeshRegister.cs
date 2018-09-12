@@ -23,11 +23,7 @@ public class MeshRegister : Singleton<MeshRegister> {
 
     public RegisteredMesh get_registed_mesh(ref Mesh mesh)
     {
-        if(mesh.name == "")
-        {
-            mesh.name = "" + mesh.vertexBufferCount + ":" + mesh.vertexCount + ":" + mesh.subMeshCount + ":" + mesh.triangles.Length;
-            Debug.Log("No Name, New name: " + mesh.name);
-        }        
+        mesh.name = "" + mesh.vertexBufferCount + ":" + mesh.vertexCount + ":" + mesh.subMeshCount + ":" + mesh.triangles.Length;
 
         if (Register == null)
         {

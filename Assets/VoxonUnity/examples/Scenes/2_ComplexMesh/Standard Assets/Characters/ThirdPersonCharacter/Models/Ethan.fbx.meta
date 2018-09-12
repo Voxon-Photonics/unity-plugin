@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b235179bd2a63d1468dd430670338c55
+guid: ccca71da9b682d44eb7cba43a5b95940
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
@@ -360,7 +360,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: EthanWhite
-    second: {fileID: 2100000, guid: f62b52b2d4b721742a0bc5c6b4db468d, type: 2}
+    second: {fileID: 2100000, guid: 55713762f1f9d454581a0a0e4aec590c, type: 2}
   materials:
     importMaterials: 1
     materialName: 1
@@ -375,11 +375,11 @@ ModelImporter:
     rigImportErrors: 
     rigImportWarnings: "Avatar Rig Configuration mis-match. Bone length in configuration
       does not match position in animation file:\n\t'EthanLeftUpLeg' : position error
-      = 98.739143 mm\n\t'EthanLeftLeg' : position error = 406.540985 mm\n\t'EthanLeftFoot'
-      : position error = 377.608612 mm\n\t'EthanLeftToe1' : position error = 158.346893
-      mm\n\t'EthanRightUpLeg' : position error = 98.739182 mm\n\t'EthanRightLeg' :
-      position error = 406.540985 mm\n\t'EthanRightFoot' : position error = 377.608643
-      mm\n\t'EthanRightToe1' : position error = 158.346893 mm\n"
+      = 98.739166 mm\n\t'EthanLeftLeg' : position error = 406.540985 mm\n\t'EthanLeftFoot'
+      : position error = 377.608612 mm\n\t'EthanLeftToe1' : position error = 158.346909
+      mm\n\t'EthanRightUpLeg' : position error = 98.739151 mm\n\t'EthanRightLeg' :
+      position error = 406.540955 mm\n\t'EthanRightFoot' : position error = 377.608612
+      mm\n\t'EthanRightToe1' : position error = 158.346909 mm\n"
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 

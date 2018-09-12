@@ -10,6 +10,15 @@ namespace Voxon
     {
         Voxon.DLL.point3d pr, pd, pp;
 
+        [Tooltip("right vector - length is size of single character")]
+        public Vector3 _pr = new Vector3(0.1f, 0.0f, 0.0f);
+        [Tooltip("down vector - length is height of character")]
+        public Vector3 _pd = new Vector3(0.0f, 0.5f, 0.0f);
+        [Tooltip("top-left-up corner of first character")]
+        public Vector3 _pp = new Vector3(-0.75f, 0.5f, 0.0f);
+        [Tooltip("text colour")]
+        public int _color = 0xffffff;
+
         private static System.Text.Encoding enc = System.Text.Encoding.ASCII;
 
         public string text = "";
@@ -17,9 +26,17 @@ namespace Voxon
         // Use this for initialization
         void Start()
         {
-            pr.x = 0.1f; pd.x = 0.0f;
-            pr.y = 0.0f; pd.y = 0.5f;
-            pr.z = 0.0f; pd.z = 0.0f;
+            pr.x = _pr.x;
+            pr.y = _pr.y;
+            pr.z = _pr.z;
+
+            pd.x = _pd.x;
+            pd.y = _pd.y;
+            pd.z = _pd.z;
+
+            pp.x = _pp.x;
+            pp.y = _pp.y;
+            pp.z = _pp.z;
 
             SetString(text);
             UpdateLocation();
@@ -74,7 +91,7 @@ namespace Voxon
         ///  </summary>
         public void DrawMesh()
         {
-            Voxon.DLL.draw_letters(ref pp, ref pr, ref pd, 0xffffff, ts);
+            Voxon.DLL.draw_letters(ref pp, ref pr, ref pd, _color, ts);
         }
 
         /// <summary>  
@@ -101,6 +118,12 @@ namespace Voxon
 
         private void load_textures()
         {
+        }
+
+        private void OnDestroy()
+        {
+            ts = new byte[1];
+            ts[0] = 0;
         }
     }
 }

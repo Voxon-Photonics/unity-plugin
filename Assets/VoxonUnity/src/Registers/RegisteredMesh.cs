@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 
 public class RegisteredMesh {
     // Mesh Data
@@ -18,6 +19,8 @@ public class RegisteredMesh {
     ComputeBuffer cbufferO_poltex;
     public int counter;
 
+    bool loaded;
+
     // Use this for initialization
     public RegisteredMesh(ref Mesh mesh)
     {
@@ -31,9 +34,7 @@ public class RegisteredMesh {
             // Vertices
             vertex_count = mesh.vertexCount;
             vertices = new Voxon.DLL.poltex_t[vertex_count];
-
             load_poltex(ref mesh);
-
             // UVs
             List<Vector2> tmp_uvs = new List<Vector2>();
             mesh.GetUVs(0, tmp_uvs);
@@ -103,17 +104,23 @@ public class RegisteredMesh {
     public void update_baked_mesh(SkinnedMeshRenderer sm_rend, ref Mesh mesh)
     {
         sm_rend.BakeMesh(mesh);
-        // cbufferI_vertices.SetData(mesh.vertices);
     }
 
     /** Privates **/
     private void load_poltex(ref Mesh mesh)
     {
         // Set Source Vertices
+        int uv_length = mesh.uv.Length;
+        int colour = mesh.colors.Length > 0 ? mesh.colors[0].toInt() : 0xFFFFFF;
+
+        Vector3[] verts = mesh.vertices;
+        Vector2[] uvs = mesh.uv;
+
         for (int idx = vertex_count - 1; idx >= 0; --idx)
         {
-            vertices[idx] = build_poltex(mesh.vertices[idx], mesh.uv.Length == 0 ? Vector2.zero : mesh.uv[idx], mesh.colors.Length > 0 ? mesh.colors[0].toInt() : 0xFFFFFF);
+            vertices[idx] = build_poltex(verts[idx], uv_length == 0 ? Vector2.zero : uvs[idx], colour);
         }
+
     }
 
     private void rearrange_indices(ref Mesh mesh)
@@ -199,10 +206,6 @@ public class RegisteredMesh {
 
     public void compute_transform_cpu(Matrix4x4 component, ref Voxon.DLL.poltex_t[] vt)
     {
-
-        // Vector3 pos = component.transform.position;object_transform.MultiplyPoint3x4(component.transform.position)
-        // Matrix4x4 object_transform = VXProcess.Instance._camera.transform.worldToLocalMatrix;
-
         Vector4 in_v;
         for (int idx = vertices.Length - 1; idx >= 0; --idx)
         {
@@ -216,14 +219,6 @@ public class RegisteredMesh {
             vt[idx].u = vertices[idx].u;
             vt[idx].v = vertices[idx].v;
         }
-
-        /*
-        Debug.Log(vertices.Length);
-        for (int idx = 0; idx < vertices.Length; ++idx)
-        {
-            Debug.Log(idx + "\t" + vertices[idx].x + ":" + vertices[idx].y + ":" + vertices[idx].z + " = " + vt[idx].x + ":" + vt[idx].y + ":" + vt[idx].z);
-        }
-        */
     }
 
     public void compute_transform_anim(Matrix4x4 component, ref Voxon.DLL.poltex_t[] vt, ref Mesh mesh)
