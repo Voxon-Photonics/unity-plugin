@@ -17,7 +17,7 @@ public class RegisteredMesh {
     ComputeBuffer cbufferI_vertices;
     ComputeBuffer cbufferI_uvs;
     ComputeBuffer cbufferO_poltex;
-    public int counter;
+    public int counter = 1;     // If instantiated we expect atleast 1, so set that as default value
 
     bool loaded;
 
