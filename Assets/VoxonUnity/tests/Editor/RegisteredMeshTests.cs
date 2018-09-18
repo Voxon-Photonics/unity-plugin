@@ -326,42 +326,6 @@ public class RegisteredMeshTests
         }
     }
 
-    [Test]
-    public void computeTransformCPU_WorldMatrix()
-    {
-        // TODO: Tranform Locally then perform World Transform before applying
-
-        // TODO: Am I testing Natural Behaviour of our game objects?
-
-        // Perform a 90 degree rotation around the X axis
-        GameObject go = TestObjects.tGameObject();
-        Mesh mesh = go.GetComponent<MeshFilter>().sharedMesh;
-        RegisteredMesh testRM = new RegisteredMesh(ref mesh);
-
-        Voxon.DLL.poltex_t[] vt = new Voxon.DLL.poltex_t[mesh.vertexCount];
-
-        Matrix4x4 mat = Matrix4x4.TRS(new Vector3(2, 2, 2), Quaternion.AngleAxis(90, new Vector3(1, 0, 0)), new Vector3(2, 2, 2));
-
-        testRM.compute_transform_cpu(mat, ref vt);
-
-        // Unity Rotation is done Right Handed
-        Vector3[] expected_vertices = {
-            new Vector3(4,0,-4),
-            new Vector3(4,0,0),
-            new Vector3(0,0,0),
-            new Vector3(0,0,-4),
-            new Vector3(4,-3,0),
-            new Vector3(0,-3,0)
-        };
-
-        for (int idx = 0; idx < mesh.vertexCount; idx++)
-        {
-            Assert.AreEqual(expected_vertices[idx].x, vt[idx].x, 0.001f, "X failed on index: " + idx);
-            Assert.AreEqual(expected_vertices[idx].y, vt[idx].y, 0.001f, "Y failed on index: " + idx);
-            Assert.AreEqual(expected_vertices[idx].z, vt[idx].z, 0.001f, "Z failed on index: " + idx);
-        }
-    }
-
     private void generateMeshRegister()
     {
         if(MeshRegister.Instance.cshader_main == null)
@@ -517,44 +481,6 @@ public class RegisteredMeshTests
     public void computeTransformGPU_LocalMatrix()
     {
         generateMeshRegister();
-
-        // Perform a 90 degree rotation around the X axis
-        GameObject go = TestObjects.tGameObject();
-        Mesh mesh = go.GetComponent<MeshFilter>().sharedMesh;
-        RegisteredMesh testRM = new RegisteredMesh(ref mesh);
-
-        Voxon.DLL.poltex_t[] vt = new Voxon.DLL.poltex_t[mesh.vertexCount];
-
-        Matrix4x4 mat = Matrix4x4.TRS(new Vector3(2, 2, 2), Quaternion.AngleAxis(90, new Vector3(1, 0, 0)), new Vector3(2, 2, 2));
-
-        testRM.compute_transform_gpu(mat, ref vt, ref mesh);
-
-        // Unity Rotation is done Right Handed
-        Vector3[] expected_vertices = {
-            new Vector3(4,0,-4),
-            new Vector3(4,0,0),
-            new Vector3(0,0,0),
-            new Vector3(0,0,-4),
-            new Vector3(4,-3,0),
-            new Vector3(0,-3,0)
-        };
-
-        for (int idx = 0; idx < mesh.vertexCount; idx++)
-        {
-            Assert.AreEqual(expected_vertices[idx].x, vt[idx].x, 0.001f, "X failed on index: " + idx);
-            Assert.AreEqual(expected_vertices[idx].y, vt[idx].y, 0.001f, "Y failed on index: " + idx);
-            Assert.AreEqual(expected_vertices[idx].z, vt[idx].z, 0.001f, "Z failed on index: " + idx);
-        }
-    }
-
-    [Test]
-    public void computeTransformGPU_WorldMatrix()
-    {
-        generateMeshRegister();
-
-        // TODO: Tranform Locally then perform World Transform before applying
-
-        // TODO: Am I testing Natural Behaviour of our game objects?
 
         // Perform a 90 degree rotation around the X axis
         GameObject go = TestObjects.tGameObject();

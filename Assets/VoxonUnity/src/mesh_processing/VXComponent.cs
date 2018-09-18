@@ -186,11 +186,11 @@ namespace Voxon
 
                 if (sm_rend)
                 {
-                    MeshRegister.Instance.compute_transform_anim(mesh.name, Matrix, ref vt, ref Umesh);
+                    mesh.compute_transform_gpu(Matrix, ref vt, ref Umesh);
                 }
                 else
                 {
-                    MeshRegister.Instance.compute_transform_cpu(mesh.name, Matrix, ref vt);
+                    mesh.compute_transform_cpu(Matrix, ref vt);
                 }
 
                 transform.hasChanged = false;

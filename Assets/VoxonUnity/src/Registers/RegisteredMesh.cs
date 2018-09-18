@@ -124,16 +124,16 @@ public class RegisteredMesh {
 
     private void rearrange_indices(ref Mesh mesh)
     {
+        /* Triangles are 3 idx and our array requires -1 delimiting, 
+        /  So we need to make room for all tris (count) + a -1 at the end of each (count / 3)
+        */
         try
         {
             for (int submesh = 0; submesh < submesh_count; submesh++)
             {
 
-                /* Triangles are 3 idx and our array requires -1 delimiting, 
-                /  So we need to make room for all tris (count) + a -1 at the end of each (count / 3)
-                */
+                
 
-                // Note GetTriangles.Length takes ages, save as int and use that instead
                 int _indices = mesh.GetTriangles(submesh).Length;
                 index_counts[submesh] = _indices + (_indices / 3);
 
@@ -220,27 +220,6 @@ public class RegisteredMesh {
         }
     }
 
-    public void compute_transform_anim(Matrix4x4 component, ref Voxon.DLL.poltex_t[] vt, ref Mesh mesh)
-    {
-
-        // Vector3 pos = component.transform.position;object_transform.MultiplyPoint3x4(component.transform.position)
-        // Matrix4x4 object_transform = VXProcess.Instance._camera.transform.worldToLocalMatrix;
-
-        Vector4 in_v;
-        Vector3 [] verts = mesh.vertices;
-        for (int idx = verts.Length - 1; idx >= 0; --idx)
-        {
-            in_v = new Vector4(verts[idx].x, verts[idx].y, verts[idx].z, 1.0f);
-
-            in_v = component * in_v;
-
-            vt[idx].x = in_v.x;
-            vt[idx].y = -in_v.z;
-            vt[idx].z = -in_v.y;
-            vt[idx].u = vertices[idx].u;
-            vt[idx].v = vertices[idx].v;
-        }
-    }
     public void destroy()
     {
         if (cbufferI_uvs != null)

@@ -65,22 +65,22 @@ public class MeshRegister : Singleton<MeshRegister> {
         return false;
     }
 
-    /// <summary>  
-    ///  Compute Shader call. Set up Kernel, define tranform values and dispatches GPU threads
-    ///  Currently only sends thin batches; should see to increase this in future.
-    ///  </summary>
+    public void Clear()
+    {
+        if (Register == null)
+            return;
+
+        while (Register.Count > 0)
+        {
+            RemoveRegister(Register.ElementAt(0).Key);
+        }
+    }
 
     private new void OnDestroy()
     {
         base.OnDestroy();
 
-        if (Register == null)
-            return;
-
-        while(Register.Count > 0)
-        {
-            RemoveRegister(Register.ElementAt(0).Key);
-        }
+        Clear();
     }
 
     private void RemoveRegister(string name)
@@ -96,29 +96,4 @@ public class MeshRegister : Singleton<MeshRegister> {
             rt.destroy();
         }
     }
-
-    public void compute_transform(String name, Matrix4x4 Transform, ref Voxon.DLL.poltex_t[] vt)
-    {
-        if (Register.ContainsKey(name))
-        {
-            // Register[name].compute_transform(Transform, ref vt);
-        }
-    }
-
-    public void compute_transform_cpu(String name, Matrix4x4 Transform, ref Voxon.DLL.poltex_t[] vt)
-    {
-        if (Register.ContainsKey(name))
-        {
-            Register[name].compute_transform_cpu(Transform, ref vt);
-        }
-    }
-
-    public void compute_transform_anim(String name, Matrix4x4 Transform, ref Voxon.DLL.poltex_t[] vt, ref Mesh mesh)
-    {
-        if (Register.ContainsKey(name))
-        {
-            Register[name].compute_transform_gpu(Transform, ref vt, ref mesh);
-        }
-    }
-
 }
