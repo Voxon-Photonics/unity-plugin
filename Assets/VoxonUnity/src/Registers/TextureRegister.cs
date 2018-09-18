@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
@@ -61,6 +62,38 @@ public class TextureRegister : Singleton<TextureRegister> {
             Register[(mat.mainTexture.name)] = rt;
         }
         return false;
+    }
+
+    private new void OnDestroy()
+    {
+        base.OnDestroy();
+
+        ClearRegister();
+    }
+
+    private void RemoveRegister(string name)
+    {
+        if (!Register.ContainsKey(name))
+        {
+            return;
+        }
+        else
+        {
+            registered_tile rt = Register[name];
+            Register.Remove(name);
+            Marshal.FreeHGlobal(rt.texture.first_pixel);
+        }
+    }
+
+    public void ClearRegister()
+    {
+        if (Register == null)
+            return;
+
+        while (Register.Count > 0)
+        {
+            RemoveRegister(Register.ElementAt(0).Key);
+        }
     }
 
     Voxon.DLL.tiletype LoadTexture(ref Material mat)

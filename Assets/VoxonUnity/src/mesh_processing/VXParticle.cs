@@ -104,17 +104,9 @@ namespace Voxon
                     destinations[idx] = new DLL.poltex_t[mesh.vertex_count];
                 }
             }
-            else
-            {
-                TransformBillboard();
-            }
 
             VXProcess._particles.Add(this);
         }
-
-        // Update is called once per frame
-        void Update()
-        { }
 
         public void Draw()
         {
@@ -143,24 +135,18 @@ namespace Voxon
 
         public void Draw_Billboard()        
         {
+            Matrix4x4 FMatrix = Matrix4x4.Scale(new Vector3(2.0f, 0.8f, 2.0f)) * VXProcess.Instance._camera.transform.worldToLocalMatrix;
 
-            if (VXProcess.Instance._camera.transform.hasChanged)
+            n_Particles = m_particleSystem.GetParticles(m_Particles);
+
+            Vector3 l;
+
+            for (int idx = 0; idx < n_Particles; ++idx)
             {
-                TransformBillboard();
-            }
+                float size = m_Particles[idx].GetCurrentSize(m_particleSystem) * 0.05f;
+                l = FMatrix * m_Particles[idx].position;
 
-            if (m_Particles != null)
-            {
-                n_Particles = m_particleSystem.GetParticles(m_Particles);
-
-                Vector3 l;
-
-                foreach (var par in m_Particles)
-                {
-                    float size = par.GetCurrentSize(m_particleSystem) / 25.0f;
-                    l = Matrix * par.position;
-                    Voxon.DLL.draw_box(l.x - size, -l.y, l.z - size, l.x + size, -l.y, l.z + size, 2, (par.GetCurrentColor(m_particleSystem)).toInt());
-                }
+                Voxon.DLL.draw_box(l.x - size, -l.z, -l.y - size, l.x + size, -l.z, -l.y + size, 2, (m_Particles[idx].GetCurrentColor(m_particleSystem)).toInt());
             }
         }
 
@@ -168,13 +154,8 @@ namespace Voxon
         {
             n_Particles = m_particleSystem.GetParticles(m_Particles);
 
-            Profiler.BeginSample("Particle");
-
-            Profiler.BeginSample("D");
             Matrix4x4 FMatrix = Matrix4x4.Scale(new Vector3(2.0f, 0.8f, 2.0f)) * VXProcess.Instance._camera.transform.worldToLocalMatrix;
-            Profiler.EndSample();
 
-            matrix3x4 outMat;
             for (int idx = 0; idx < n_Particles; ++idx)
             {
                 // Unity Style 
@@ -182,56 +163,31 @@ namespace Voxon
 
                 Matrix = FMatrix * Matrix;
 
-                // MeshRegister.Instance.compute_transform_cpu(Matrix, mesh, ref destinations[idx]);
-                outMat = new matrix3x4(Matrix);
-                transform_mesh(mesh.vertices, destinations[idx], ref outMat, mesh.vertex_count);
-
-                // TODO We don't currently rotate based on the rotation of the capture volume!
+                mesh.compute_transform_cpu(Matrix, ref destinations[idx]);
                 
                 for (int idy = mesh.submesh_count-1; idy >= 0; --idy)                {
                     DLL.draw_untextured_mesh(destinations[idx], mesh.vertex_count, mesh.indices[idy], mesh.index_counts[idy], draw_flags, (m_Particles[idx].GetCurrentColor(m_particleSystem)).toInt());
                 }
             }
-            Profiler.EndSample();
         }
 
         // Draw Sphere
         public void Draw_Sphere()
         {
+            Matrix4x4 FMatrix = Matrix4x4.Scale(new Vector3(2.0f, 0.8f, 2.0f)) * VXProcess.Instance._camera.transform.worldToLocalMatrix;
+
             n_Particles = m_particleSystem.GetParticles(m_Particles);
 
-            Profiler.BeginSample("Particle");
+            Vector3 l;
 
-            float fx, fy, fz;
             for (int idx = 0; idx < n_Particles; ++idx)
             {
-                // TODO We don't currently rotate based on the rotation of the capture volume!
-                // Vector3 shift = new Vector3(transform.position.x, -transform.position.y, transform.position.z);
-                Vector3 f = (m_Particles[idx].position - VXProcess.Instance._camera.transform.position);
-                fx = f.x / VXProcess.Instance._camera.transform.lossyScale.x * 2f;
-                fz = -f.y / VXProcess.Instance._camera.transform.lossyScale.y * 0.888f;
-                fy = -f.z / VXProcess.Instance._camera.transform.lossyScale.z * 2f;
-                Voxon.DLL.draw_sphere(fx, fy, fz, m_Particles[idx].GetCurrentSize(m_particleSystem) * 0.05f, 0, ((m_Particles[idx].GetCurrentColor(m_particleSystem)).toInt()&0xffffff)>>0);
-            }
-            Profiler.EndSample();
-        }
+                float size = m_Particles[idx].GetCurrentSize(m_particleSystem) * 0.05f;
+                l = FMatrix * m_Particles[idx].position;
 
-        public void TransformBillboard()
-        {
-            try
-            {
-                // Set Model View transform
-                Matrix = transform.localToWorldMatrix;
-                Matrix = VXProcess.Instance._camera.transform.worldToLocalMatrix * Matrix;
-                Matrix = Matrix4x4.Scale(new Vector3(2.0f, 0.8f, 2.0f)) * Matrix;
-
-            }
-            catch (Exception E)
-            {
-                UnityEngine.Debug.LogError("Error while Building Mesh " + gameObject.name + "\n" + E.Message);
+                Voxon.DLL.draw_sphere(l.x, -l.z, -l.y, size, 0, ((m_Particles[idx].GetCurrentColor(m_particleSystem)).toInt() & 0xffffff) >> 0);
             }
         }
-
 
         private void load_meshes()
         {

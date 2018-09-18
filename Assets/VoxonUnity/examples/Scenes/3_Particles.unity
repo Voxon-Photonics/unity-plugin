@@ -24935,6 +24935,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _guidelines: 1
   _camera: {fileID: 53137217}
+  active: 1
 --- !u!4 &1092538624
 Transform:
   m_ObjectHideFlags: 1
@@ -25459,7 +25460,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0.5
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -28905,7 +28906,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0.5
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -42837,6 +42838,191 @@ Transform:
   - {fileID: 1325089728}
   m_Father: {fileID: 0}
   m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1999519087
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1999519089}
+  - component: {fileID: 1999519088}
+  m_Layer: 0
+  m_Name: InputController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1999519088
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1999519087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdce307c928d7144a803bdd7b0a1226a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filename: default.json
+  Keyboard:
+    _Buckets: ffffffffffffffffffffffff010000000500000002000000ffffffffffffffff0000000003000000ffffffffffffffffffffffffffffffffffffffff0700000006000000
+    _HashCodes: c25d3e32d18ba0277377124cf86f8906f919075ceab07d513234eb46f963bb07000000000000000000000000000000000000000000000000000000000000000000000000
+    _Next: ffffffffffffffffffffffffffffffffffffffffffffffff04000000ffffffff000000000000000000000000000000000000000000000000000000000000000000000000
+    _Count: 8
+    _Version: 8
+    _FreeList: -1
+    _FreeCount: 0
+    _Keys:
+    - Jump
+    - Quit
+    - Left
+    - Right
+    - Up
+    - Down
+    - RotLeft
+    - RotRight
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    _Values: 39000000010000001e00000020000000110000001f0000001000000012000000000000000000000000000000000000000000000000000000000000000000000000000000
+  Mouse:
+    _Buckets: ffffffff01000000ffffffff
+    _HashCodes: 7377124cf86f890600000000
+    _Next: ffffffff0000000000000000
+    _Count: 2
+    _Version: 2
+    _FreeList: -1
+    _FreeCount: 0
+    _Keys:
+    - Left
+    - Right
+    - 
+    _Values: 010000000200000000000000
+  J1Buttons:
+    _Buckets: 00000000ffffffffffffffff
+    _HashCodes: c25d3e320000000000000000
+    _Next: ffffffff0000000000000000
+    _Count: 1
+    _Version: 1
+    _FreeList: -1
+    _FreeCount: 0
+    _Keys:
+    - Jump
+    - 
+    - 
+    _Values: 001000000000000000000000
+  J1Axis:
+    _Buckets: ffffffffffffffffffffffff
+    _HashCodes: 000000000000000000000000
+    _Next: 000000000000000000000000
+    _Count: 0
+    _Version: 0
+    _FreeList: -1
+    _FreeCount: 0
+    _Keys:
+    - 
+    - 
+    - 
+    _Values: 000000000000000000000000
+  J2Buttons:
+    _Buckets: 00000000ffffffffffffffff
+    _HashCodes: c25d3e320000000000000000
+    _Next: ffffffff0000000000000000
+    _Count: 1
+    _Version: 1
+    _FreeList: -1
+    _FreeCount: 0
+    _Keys:
+    - Jump
+    - 
+    - 
+    _Values: 001000000000000000000000
+  J2Axis:
+    _Buckets: ffffffffffffffffffffffff
+    _HashCodes: 000000000000000000000000
+    _Next: 000000000000000000000000
+    _Count: 0
+    _Version: 0
+    _FreeList: -1
+    _FreeCount: 0
+    _Keys:
+    - 
+    - 
+    - 
+    _Values: 000000000000000000000000
+  J3Buttons:
+    _Buckets: 00000000ffffffffffffffff
+    _HashCodes: c25d3e320000000000000000
+    _Next: ffffffff0000000000000000
+    _Count: 1
+    _Version: 1
+    _FreeList: -1
+    _FreeCount: 0
+    _Keys:
+    - Jump
+    - 
+    - 
+    _Values: 001000000000000000000000
+  J3Axis:
+    _Buckets: ffffffffffffffffffffffff
+    _HashCodes: 000000000000000000000000
+    _Next: 000000000000000000000000
+    _Count: 0
+    _Version: 0
+    _FreeList: -1
+    _FreeCount: 0
+    _Keys:
+    - 
+    - 
+    - 
+    _Values: 000000000000000000000000
+  J4Buttons:
+    _Buckets: 00000000ffffffffffffffff
+    _HashCodes: c25d3e320000000000000000
+    _Next: ffffffff0000000000000000
+    _Count: 1
+    _Version: 1
+    _FreeList: -1
+    _FreeCount: 0
+    _Keys:
+    - Jump
+    - 
+    - 
+    _Values: 001000000000000000000000
+  J4Axis:
+    _Buckets: ffffffffffffffffffffffff
+    _HashCodes: 000000000000000000000000
+    _Next: 000000000000000000000000
+    _Count: 0
+    _Version: 0
+    _FreeList: -1
+    _FreeCount: 0
+    _Keys:
+    - 
+    - 
+    - 
+    _Values: 000000000000000000000000
+--- !u!4 &1999519089
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1999519087}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2034227686
 GameObject:

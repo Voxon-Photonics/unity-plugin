@@ -46,7 +46,10 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
                         singleton.name = typeof(T).ToString();
                         singleton.hideFlags = HideFlags.HideInHierarchy;
 
-                        DontDestroyOnLoad(singleton);
+                        #if UNITY_EDITOR
+                        #else
+                            DontDestroyOnLoad(singleton);
+                        #endif
 
                         Debug.Log("[Singleton] An instance of " + typeof(T) +
                             " is needed in the scene, so '" + singleton +
@@ -86,9 +89,9 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     /// </summary>
     public void OnApplicationQuit()
     {
-        #if UNITY_EDITOR
-        #else
+#if UNITY_EDITOR
+#else
             applicationIsQuitting = true;
-        #endif
+#endif
     }
 }

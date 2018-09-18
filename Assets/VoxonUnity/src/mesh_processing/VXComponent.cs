@@ -205,7 +205,6 @@ namespace Voxon
         {
             try
             {
-                // TODO : I THINK HERE IS THE PROBLEM!
                 mesh = MeshRegister.Instance.get_registed_mesh(ref Umesh);
                 vt = new DLL.poltex_t[mesh.vertex_count];
 

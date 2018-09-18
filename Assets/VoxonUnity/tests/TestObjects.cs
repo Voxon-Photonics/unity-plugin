@@ -49,4 +49,46 @@ public class TestObjects {
 
         return go;
     }
+
+    public static Material tMaterial()
+    {
+        int main_texture_id = Shader.PropertyToID("_MainTex");
+
+        Material mat = new Material(Shader.Find("Standard"));
+        mat.color = Color.red;
+
+        mat.SetTexture(main_texture_id, tTexture());
+
+        return mat;
+    }
+
+    public static Texture2D tTexture()
+    {
+        int width = 256;
+        int height = 256;
+
+        int wBlocks = 8;
+        int hBlocks = 8;
+
+        Texture2D texture = new Texture2D(width, height);
+
+        for(int widthIdx = 0; widthIdx < width; ++widthIdx)
+        {
+            for (int heightIdx = 0; heightIdx < height; ++heightIdx)
+            {
+                if(((widthIdx / wBlocks) + (heightIdx / hBlocks)) % 2 == 0)
+                {
+                    texture.SetPixel(widthIdx, heightIdx, Color.black);
+                }
+                else
+                {
+                    texture.SetPixel(widthIdx, heightIdx, Color.white);
+                }
+            }
+        }
+
+        texture.Apply();
+
+        return texture;
+    }
 }

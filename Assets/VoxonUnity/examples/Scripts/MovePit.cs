@@ -29,7 +29,6 @@ public class MovePit : MonoBehaviour {
             pos.z += 0.1f;
         }
 
-        /*
         Vector3 world_rot = VXProcess.Instance._camera.transform.rotation.eulerAngles;
         if (Voxon.Input.GetKey("RotLeft"))
         {
@@ -42,7 +41,6 @@ public class MovePit : MonoBehaviour {
         
 
         VXProcess.Instance._camera.transform.rotation = Quaternion.Euler(world_rot);
-        */
 
         transform.position = pos;
     }

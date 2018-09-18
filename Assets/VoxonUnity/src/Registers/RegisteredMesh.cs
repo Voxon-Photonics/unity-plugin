@@ -60,10 +60,9 @@ public class RegisteredMesh {
 
             // Set up output buffer; the assigned data array will change per instance
             cbufferO_poltex = new ComputeBuffer(vertex_count, sizeof(float) * 5 + sizeof(int), ComputeBufferType.Default);
+
             cbufferI_uvs = new ComputeBuffer(vertex_count, sizeof(float) * 2, ComputeBufferType.Default);
             cbufferI_uvs.SetData(tmp_uvs.ToArray());
-
-            // If our mesh is static, we will set the values now
             cbufferI_vertices = new ComputeBuffer(vertex_count, sizeof(float) * 3, ComputeBufferType.Default);
             cbufferI_vertices.SetData(mesh.vertices);
 
@@ -176,7 +175,7 @@ public class RegisteredMesh {
     ///  Compute Shader call. Set up Kernel, define tranform values and dispatches GPU threads
     ///  Currently only sends thin batches; should see to increase this in future.
     ///  </summary>
-    public void compute_transform(Matrix4x4 Transform, ref Voxon.DLL.poltex_t[] vt, ref Mesh mesh)
+    public void compute_transform_gpu(Matrix4x4 Transform, ref Voxon.DLL.poltex_t[] vt, ref Mesh mesh)
     {
         try
         {

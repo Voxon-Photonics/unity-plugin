@@ -12,6 +12,9 @@ public class VXProcess : Singleton<VXProcess> {
     [Tooltip("Collision 'Camera'\nUtilises GameObject Scale, Rotation and Position")]
     public GameObject _camera;
 
+    [Tooltip("Disable to turn off VXProcess behaviour")]
+    public bool active = true;
+
     // Magic Numbers
     const int MAXCONTROLLERS = 4;
 
@@ -22,16 +25,21 @@ public class VXProcess : Singleton<VXProcess> {
     public static List<Voxon.VXTextComponent> _textcomponents = new List<Voxon.VXTextComponent>();
     public static List<String> _logger = new List<String>();
 
+    
     // Use this for initialization
     void Start () {
-
-        if (_camera == null)
+        if(!active)
         {
-            Debug.Log("No Camera Assigned");
+            return;
+        }
+        else if (_camera == null)
+        {
+            Debug.Log("No Camera Assigned. Disabling");
+            active = false;
+            return;
         }
             
-        // We use a base scale of (10, 4, 10) in case a camera isn't assigned (this will allow us to still show graphics even between cameras) 
-        transform.localScale = new Vector3(10, 4, 10);
+
         if (!Voxon.DLL.isLoaded())
         {
             Voxon.DLL.Load();
@@ -67,6 +75,11 @@ public class VXProcess : Singleton<VXProcess> {
     // Update is called once per frame
     void Update()
     {
+        if(!active)
+        {
+            return;
+        }
+
         bool is_breathing = Voxon.DLL.start_frame();
 
         AudioListener.volume = Voxon.DLL.get_volume();

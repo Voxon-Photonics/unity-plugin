@@ -117,7 +117,7 @@ public class MeshRegister : Singleton<MeshRegister> {
     {
         if (Register.ContainsKey(name))
         {
-            Register[name].compute_transform(Transform, ref vt, ref mesh);
+            Register[name].compute_transform_gpu(Transform, ref vt, ref mesh);
         }
     }
 
