@@ -182,10 +182,10 @@ public struct Mouse_Position
     }
 }
 
-[System.Serializable] public class KeyBindings : SerializableDictionary<string, Keys> { }
-[System.Serializable] public class MouseBindings : SerializableDictionary<string, Mouse_Button> { }
-[System.Serializable] public class ButtonBindings : SerializableDictionary<string, Buttons> { }
-[System.Serializable] public class AxisBindings : SerializableDictionary<string, Axis> { }
+[System.Serializable] public class KeyBindings : SerializableDictionary<string, Keys> { public KeyBindings():base(new System.Collections.Generic.StaticStringComparer()) { } }
+[System.Serializable] public class MouseBindings : SerializableDictionary<string, Mouse_Button> { public MouseBindings() : base(new System.Collections.Generic.StaticStringComparer()) { } }
+[System.Serializable] public class ButtonBindings : SerializableDictionary<string, Buttons> { public ButtonBindings() : base(new System.Collections.Generic.StaticStringComparer()) { } }
+[System.Serializable] public class AxisBindings : SerializableDictionary<string, Axis> { public AxisBindings() : base(new System.Collections.Generic.StaticStringComparer()) { } }
 
 /// <summary>  
 ///  Input Controller handles keybindings, Allows Saving and Loading of keybinding.json files

@@ -11,9 +11,15 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/BoxFill.unity
     guid: 8c916665bef05554b9c1e098fd2628a9
-  - enabled: 1
+  - enabled: 0
     path: Assets/VoxonUnity/examples/Scenes/3_Particles.unity
     guid: 0085ba01242d6bc4ca6c80b86b343567
   - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
     path: Assets/VoxonUnity/examples/Scenes/1_SpawningObjects.unity
-    guid: 32e13201466784c4687fb638a82ba52d
+    guid: 2bdc52bdc1c31a84eba8cbb28e684536
+  - enabled: 1
+    path: Assets/JakeScene.unity
+    guid: 988ac35e3b637a847860b1b35583332b
