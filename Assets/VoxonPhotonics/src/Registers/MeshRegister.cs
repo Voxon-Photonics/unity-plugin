@@ -55,6 +55,7 @@ public class MeshRegister : Singleton<MeshRegister> {
             rt.decrement();
 
             // TODO decide when to drop mesh (disable mesh dropping for now)
+            /*
             if (!rt.isactive() && false)
             {
                 Register.Remove((mesh.name));
@@ -62,6 +63,7 @@ public class MeshRegister : Singleton<MeshRegister> {
 
                 return true;
             }
+            */
         }
         return false;
     }

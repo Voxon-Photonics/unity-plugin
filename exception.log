@@ -77,3 +77,6 @@ Testing Path: C:\Program Files (x86)\Microsoft Visual Studio\Shared\Python36_64
 Testing Path: C:\Users\Ben\AppData\Local\Microsoft\WindowsApps
 Testing Path: C:\Program Files\CMake\bin
 Testing Path: 
+Failed to load library (ErrorCode: 126). Path = C:\Program Files\Voxon Photonics\SDK\voxiebox.dll
+Failed to load library (ErrorCode: 126). Path = C:\Program Files\Voxon Photonics\SDK\_voxiebox.dll
+Failed to load library (ErrorCode: 126). Path = C:\Program Files\Voxon Photonics\SDK\_voxiebox.dll
