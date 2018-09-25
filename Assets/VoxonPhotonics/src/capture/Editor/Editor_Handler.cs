@@ -21,7 +21,7 @@ public class Editor_Handler: MonoBehaviour {
             if(AssetDatabase.IsValidFolder("Assets/StreamingAssets") == false)
             {
                 System.IO.Directory.CreateDirectory("Assets\\StreamingAssets");
-                File.Copy("Assets\\VoxonUnity\\examples\\StreamingAssets\\default.json", "Assets\\StreamingAssets\\default.json", false);
+                File.Copy("Assets\\VoxonPhotonics\\examples\\StreamingAssets\\default.json", "Assets\\StreamingAssets\\default.json", false);
             }
 
             if(InputController.GetKey("Quit") == 0)

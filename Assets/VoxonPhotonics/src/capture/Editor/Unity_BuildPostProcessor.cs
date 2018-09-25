@@ -28,33 +28,5 @@ class Unity_BuildPostProcessor : IPostprocessBuild
         {
             writer.Close();
         }
-
-        try
-        {
-            File.Copy("Assets\\VoxonUnity\\default_settings\\voxiebox.ini", output_directory + "\\voxiebox.ini", false);
-        }
-        catch (IOException)
-        {
-            // File Already Exists, Skip
-        }
-        catch (Exception E)
-        {
-            Debug.LogError("Unable transfer default voxie ini");
-            Debug.LogError(E.Message);
-        }
-
-        try
-        {
-            File.Copy("Assets\\VoxonUnity\\default_settings\\voxiebox_menu0.ini", output_directory + "\\voxiebox_menu0.ini", false);
-        }
-        catch (IOException)
-        {
-            // File Already Exists, Skip
-        }
-        catch (Exception E)
-        {
-            Debug.LogError("Unable transfer default voxie ini");
-            Debug.LogError(E.Message);
-        }
     }
 }
