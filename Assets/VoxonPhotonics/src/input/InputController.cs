@@ -255,6 +255,13 @@ public class InputController : Singleton<InputController>
         
         string dataAsJson = JsonUtility.ToJson(Save, true);
         string filePath = Path.Combine(Application.streamingAssetsPath, Instance.filename);
+
+        if (!Directory.Exists(Application.streamingAssetsPath))
+        {
+            System.IO.FileInfo file = new System.IO.FileInfo(filePath);
+            file.Directory.Create();
+        }
+
         File.WriteAllText(filePath, dataAsJson);
     }
 
