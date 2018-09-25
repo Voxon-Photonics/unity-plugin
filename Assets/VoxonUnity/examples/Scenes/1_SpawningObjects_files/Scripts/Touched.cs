@@ -18,7 +18,7 @@ public class Touched : MonoBehaviour {
             gameObject.AddComponent<AudioSource>();
         }
 
-        AudioClip myClip = AudioClip.Create("MyTone", 44100, 1, 24500, false, true, OnAudioRead, OnAudioSetPosition);
+        AudioClip myClip = AudioClip.Create("MyTone", 44100, 1, 24500, true, OnAudioRead, OnAudioSetPosition);
 
         sampleRate = AudioSettings.outputSampleRate;
         sound = GetComponent<AudioSource>();
