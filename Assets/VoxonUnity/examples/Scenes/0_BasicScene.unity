@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 188546784}
   - component: {fileID: 188546788}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: EastCube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -206,7 +206,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 188546783}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe672a3ab116dd44f99dacdf81afd995, type: 3}
+  m_Script: {fileID: 11500000, guid: 7b28ea535822f6e4992b3a6881cadbe9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &350631297
@@ -220,25 +220,13 @@ GameObject:
   - component: {fileID: 350631301}
   - component: {fileID: 350631300}
   - component: {fileID: 350631299}
-  - component: {fileID: 350631298}
   m_Layer: 0
-  m_Name: Cube (1)
+  m_Name: NorthCube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &350631298
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 350631297}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe672a3ab116dd44f99dacdf81afd995, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!23 &350631299
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -316,25 +304,13 @@ GameObject:
   - component: {fileID: 701817165}
   - component: {fileID: 701817164}
   - component: {fileID: 701817163}
-  - component: {fileID: 701817162}
   m_Layer: 0
-  m_Name: Cube (2)
+  m_Name: WestCube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &701817162
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 701817161}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe672a3ab116dd44f99dacdf81afd995, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!23 &701817163
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -581,6 +557,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _guidelines: 1
   _camera: {fileID: 1756280383}
+  active: 1
 --- !u!4 &834048955
 Transform:
   m_ObjectHideFlags: 1
@@ -605,25 +582,13 @@ GameObject:
   - component: {fileID: 848183488}
   - component: {fileID: 848183487}
   - component: {fileID: 848183486}
-  - component: {fileID: 848183485}
   m_Layer: 0
-  m_Name: Cube (3)
+  m_Name: SouthCube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &848183485
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 848183484}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe672a3ab116dd44f99dacdf81afd995, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!23 &848183486
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -745,7 +710,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1788538052}
-  - component: {fileID: 1788538051}
   m_Layer: 0
   m_Name: InputController
   m_TagString: Untagged
@@ -753,17 +717,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1788538051
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1788538050}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b13a888e62571043b125bce075ae5fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1788538052
 Transform:
   m_ObjectHideFlags: 1
@@ -776,6 +729,191 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1874747005
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1874747007}
+  - component: {fileID: 1874747006}
+  m_Layer: 0
+  m_Name: InputController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1874747006
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1874747005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdce307c928d7144a803bdd7b0a1226a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filename: default.json
+  Keyboard:
+    _Buckets: ffffffffffffffffffffffff010000000500000002000000ffffffffffffffff0000000003000000ffffffffffffffffffffffffffffffffffffffff0700000006000000
+    _HashCodes: c25d3e32d18ba0277377124cf86f8906f919075ceab07d513234eb46f963bb07000000000000000000000000000000000000000000000000000000000000000000000000
+    _Next: ffffffffffffffffffffffffffffffffffffffffffffffff04000000ffffffff000000000000000000000000000000000000000000000000000000000000000000000000
+    _Count: 8
+    _Version: 8
+    _FreeList: -1
+    _FreeCount: 0
+    _Keys:
+    - Jump
+    - Quit
+    - Left
+    - Right
+    - Up
+    - Down
+    - RotLeft
+    - RotRight
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    _Values: 39000000010000001e00000020000000110000001f0000001000000012000000000000000000000000000000000000000000000000000000000000000000000000000000
+  Mouse:
+    _Buckets: ffffffff01000000ffffffff
+    _HashCodes: 7377124cf86f890600000000
+    _Next: ffffffff0000000000000000
+    _Count: 2
+    _Version: 2
+    _FreeList: -1
+    _FreeCount: 0
+    _Keys:
+    - Left
+    - Right
+    - 
+    _Values: 010000000200000000000000
+  J1Buttons:
+    _Buckets: 00000000ffffffffffffffff
+    _HashCodes: c25d3e320000000000000000
+    _Next: ffffffff0000000000000000
+    _Count: 1
+    _Version: 1
+    _FreeList: -1
+    _FreeCount: 0
+    _Keys:
+    - Jump
+    - 
+    - 
+    _Values: 001000000000000000000000
+  J1Axis:
+    _Buckets: ffffffffffffffffffffffff
+    _HashCodes: 000000000000000000000000
+    _Next: 000000000000000000000000
+    _Count: 0
+    _Version: 0
+    _FreeList: -1
+    _FreeCount: 0
+    _Keys:
+    - 
+    - 
+    - 
+    _Values: 000000000000000000000000
+  J2Buttons:
+    _Buckets: 00000000ffffffffffffffff
+    _HashCodes: c25d3e320000000000000000
+    _Next: ffffffff0000000000000000
+    _Count: 1
+    _Version: 1
+    _FreeList: -1
+    _FreeCount: 0
+    _Keys:
+    - Jump
+    - 
+    - 
+    _Values: 001000000000000000000000
+  J2Axis:
+    _Buckets: ffffffffffffffffffffffff
+    _HashCodes: 000000000000000000000000
+    _Next: 000000000000000000000000
+    _Count: 0
+    _Version: 0
+    _FreeList: -1
+    _FreeCount: 0
+    _Keys:
+    - 
+    - 
+    - 
+    _Values: 000000000000000000000000
+  J3Buttons:
+    _Buckets: 00000000ffffffffffffffff
+    _HashCodes: c25d3e320000000000000000
+    _Next: ffffffff0000000000000000
+    _Count: 1
+    _Version: 1
+    _FreeList: -1
+    _FreeCount: 0
+    _Keys:
+    - Jump
+    - 
+    - 
+    _Values: 001000000000000000000000
+  J3Axis:
+    _Buckets: ffffffffffffffffffffffff
+    _HashCodes: 000000000000000000000000
+    _Next: 000000000000000000000000
+    _Count: 0
+    _Version: 0
+    _FreeList: -1
+    _FreeCount: 0
+    _Keys:
+    - 
+    - 
+    - 
+    _Values: 000000000000000000000000
+  J4Buttons:
+    _Buckets: 00000000ffffffffffffffff
+    _HashCodes: c25d3e320000000000000000
+    _Next: ffffffff0000000000000000
+    _Count: 1
+    _Version: 1
+    _FreeList: -1
+    _FreeCount: 0
+    _Keys:
+    - Jump
+    - 
+    - 
+    _Values: 001000000000000000000000
+  J4Axis:
+    _Buckets: ffffffffffffffffffffffff
+    _HashCodes: 000000000000000000000000
+    _Next: 000000000000000000000000
+    _Count: 0
+    _Version: 0
+    _FreeList: -1
+    _FreeCount: 0
+    _Keys:
+    - 
+    - 
+    - 
+    _Values: 000000000000000000000000
+--- !u!4 &1874747007
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1874747005}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2067185646
 GameObject:

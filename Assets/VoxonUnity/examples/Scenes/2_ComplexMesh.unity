@@ -228,44 +228,58 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   filename: default.json
   Keyboard:
-    _Buckets: ffffffffffffffffffffffff
-    _HashCodes: 000000000000000000000000
-    _Next: 000000000000000000000000
-    _Count: 0
-    _Version: 0
+    _Buckets: ffffffffffffffffffffffff010000000500000002000000ffffffffffffffff0000000003000000ffffffffffffffffffffffffffffffffffffffff0700000006000000
+    _HashCodes: c25d3e32d18ba0277377124cf86f8906f919075ceab07d513234eb46f963bb07000000000000000000000000000000000000000000000000000000000000000000000000
+    _Next: ffffffffffffffffffffffffffffffffffffffffffffffff04000000ffffffff000000000000000000000000000000000000000000000000000000000000000000000000
+    _Count: 8
+    _Version: 8
     _FreeList: -1
     _FreeCount: 0
     _Keys:
+    - Jump
+    - Quit
+    - Left
+    - Right
+    - Up
+    - Down
+    - RotLeft
+    - RotRight
     - 
     - 
     - 
-    _Values: 000000000000000000000000
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    _Values: 39000000010000001e00000020000000110000001f0000001000000012000000000000000000000000000000000000000000000000000000000000000000000000000000
   Mouse:
-    _Buckets: ffffffffffffffffffffffff
-    _HashCodes: 000000000000000000000000
-    _Next: 000000000000000000000000
-    _Count: 0
-    _Version: 0
+    _Buckets: ffffffff01000000ffffffff
+    _HashCodes: 7377124cf86f890600000000
+    _Next: ffffffff0000000000000000
+    _Count: 2
+    _Version: 2
     _FreeList: -1
     _FreeCount: 0
     _Keys:
+    - Left
+    - Right
     - 
-    - 
-    - 
-    _Values: 000000000000000000000000
+    _Values: 010000000200000000000000
   J1Buttons:
-    _Buckets: ffffffffffffffffffffffff
-    _HashCodes: 000000000000000000000000
-    _Next: 000000000000000000000000
-    _Count: 0
-    _Version: 0
+    _Buckets: 00000000ffffffffffffffff
+    _HashCodes: c25d3e320000000000000000
+    _Next: ffffffff0000000000000000
+    _Count: 1
+    _Version: 1
     _FreeList: -1
     _FreeCount: 0
     _Keys:
+    - Jump
     - 
     - 
-    - 
-    _Values: 000000000000000000000000
+    _Values: 001000000000000000000000
   J1Axis:
     _Buckets: ffffffffffffffffffffffff
     _HashCodes: 000000000000000000000000
@@ -280,18 +294,18 @@ MonoBehaviour:
     - 
     _Values: 000000000000000000000000
   J2Buttons:
-    _Buckets: ffffffffffffffffffffffff
-    _HashCodes: 000000000000000000000000
-    _Next: 000000000000000000000000
-    _Count: 0
-    _Version: 0
+    _Buckets: 00000000ffffffffffffffff
+    _HashCodes: c25d3e320000000000000000
+    _Next: ffffffff0000000000000000
+    _Count: 1
+    _Version: 1
     _FreeList: -1
     _FreeCount: 0
     _Keys:
+    - Jump
     - 
     - 
-    - 
-    _Values: 000000000000000000000000
+    _Values: 001000000000000000000000
   J2Axis:
     _Buckets: ffffffffffffffffffffffff
     _HashCodes: 000000000000000000000000
@@ -306,18 +320,18 @@ MonoBehaviour:
     - 
     _Values: 000000000000000000000000
   J3Buttons:
-    _Buckets: ffffffffffffffffffffffff
-    _HashCodes: 000000000000000000000000
-    _Next: 000000000000000000000000
-    _Count: 0
-    _Version: 0
+    _Buckets: 00000000ffffffffffffffff
+    _HashCodes: c25d3e320000000000000000
+    _Next: ffffffff0000000000000000
+    _Count: 1
+    _Version: 1
     _FreeList: -1
     _FreeCount: 0
     _Keys:
+    - Jump
     - 
     - 
-    - 
-    _Values: 000000000000000000000000
+    _Values: 001000000000000000000000
   J3Axis:
     _Buckets: ffffffffffffffffffffffff
     _HashCodes: 000000000000000000000000
@@ -332,18 +346,18 @@ MonoBehaviour:
     - 
     _Values: 000000000000000000000000
   J4Buttons:
-    _Buckets: ffffffffffffffffffffffff
-    _HashCodes: 000000000000000000000000
-    _Next: 000000000000000000000000
-    _Count: 0
-    _Version: 0
+    _Buckets: 00000000ffffffffffffffff
+    _HashCodes: c25d3e320000000000000000
+    _Next: ffffffff0000000000000000
+    _Count: 1
+    _Version: 1
     _FreeList: -1
     _FreeCount: 0
     _Keys:
+    - Jump
     - 
     - 
-    - 
-    _Values: 000000000000000000000000
+    _Values: 001000000000000000000000
   J4Axis:
     _Buckets: ffffffffffffffffffffffff
     _HashCodes: 000000000000000000000000
@@ -555,7 +569,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1266999405}
-  - component: {fileID: 1266999404}
   m_Layer: 0
   m_Name: InputController
   m_TagString: Untagged
@@ -563,17 +576,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1266999404
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1266999403}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b13a888e62571043b125bce075ae5fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1266999405
 Transform:
   m_ObjectHideFlags: 1
