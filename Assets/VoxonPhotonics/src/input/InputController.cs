@@ -237,8 +237,14 @@ public class InputController : Singleton<InputController>
         }
         else
         {
-            Debug.Log("Cannot load input data!");
-            VXProcess.Instance.add_log_line("Cannot load input data!");
+            Debug.Log("Cannot load input data. Creating: " + filePath);
+            VXProcess.Instance.add_log_line("Cannot load input data. Creating: " + filePath);
+            if (!Directory.Exists(Application.streamingAssetsPath))
+            {
+                System.IO.FileInfo file = new System.IO.FileInfo(filePath);
+                file.Directory.Create();
+            }
+            SaveData();
         }
     }
 
