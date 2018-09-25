@@ -26,7 +26,7 @@ public class tGameObjectTests {
     public void tGameObjectHasMesh()
     {
         GameObject testObject = TestObjects.tGameObject();
-        MeshFilter meshFilter = testObject.GetComponent<MeshFilter>();
+        testObject.GetComponent<MeshFilter>();
         Mesh mesh = testObject.GetComponent<MeshFilter>().sharedMesh;
 
         Assert.IsNotNull(mesh, "Mesh not generated");
@@ -36,7 +36,7 @@ public class tGameObjectTests {
     public void tGameObjectHasSingleSubmesh()
     {
         GameObject testObject = TestObjects.tGameObject();
-        MeshFilter meshFilter = testObject.GetComponent<MeshFilter>();
+        testObject.GetComponent<MeshFilter>();
         Mesh mesh = testObject.GetComponent<MeshFilter>().sharedMesh;
 
         Assert.AreEqual(1, mesh.subMeshCount);

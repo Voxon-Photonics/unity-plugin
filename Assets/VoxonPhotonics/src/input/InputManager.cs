@@ -14,6 +14,8 @@ public class InputManager : EditorWindow
     private static void Init()
     {
         _InputManager = (InputManager)GetWindow(typeof(InputManager));
+        // Unneccesary but it shuts up Unity's warnings
+        _InputManager.Show();
     }
 
     private void OnGUI()

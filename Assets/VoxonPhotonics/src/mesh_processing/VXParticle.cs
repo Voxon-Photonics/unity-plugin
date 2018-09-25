@@ -75,7 +75,6 @@ namespace Voxon
 
         Matrix4x4 Matrix;
 
-        Renderer rend;
         RegisteredMesh mesh;
 
         // DLL Version (Source is mesh.vertices)
@@ -94,7 +93,6 @@ namespace Voxon
             renderMode = GetComponent<ParticleSystemRenderer>().renderMode;
             if(renderMode == ParticleSystemRenderMode.Mesh)
             {
-                rend = GetComponent<Renderer>();
                 load_meshes();
 
                 // Particles destination structures

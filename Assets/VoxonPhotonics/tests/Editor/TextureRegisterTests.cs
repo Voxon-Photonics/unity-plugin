@@ -32,7 +32,7 @@ public class TextureRegisterTests
         TextureRegister TR = TextureRegister.Instance;
         Material mat = TestObjects.tMaterial();
 
-        Voxon.DLL.tiletype TT = TR.get_tile(ref mat);
+        TR.get_tile(ref mat);
         bool dropSuccessful = TR.drop_tile(ref mat);
 
         Assert.True(dropSuccessful, "Tile was not unloaded from library");
@@ -46,10 +46,10 @@ public class TextureRegisterTests
         Material mat = TestObjects.tMaterial();
 
         // Initial load
-        Voxon.DLL.tiletype TT = TR.get_tile(ref mat);
+        TR.get_tile(ref mat);
 
         // Additional load to increase "active" materials
-        TT = TR.get_tile(ref mat);
+        TR.get_tile(ref mat);
 
         bool dropSuccessful = TR.drop_tile(ref mat);
 

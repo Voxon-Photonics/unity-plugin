@@ -332,7 +332,7 @@ public class RegisteredMeshTests
         {
             GameObject go = TestObjects.tGameObject();
             Mesh mesh = go.GetComponent<MeshFilter>().sharedMesh;
-            RegisteredMesh testRM = MeshRegister.Instance.get_registed_mesh(ref mesh);
+            MeshRegister.Instance.get_registed_mesh(ref mesh);
             MeshRegister.Instance.drop_mesh(ref mesh);
         }
     }
