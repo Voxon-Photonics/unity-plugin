@@ -4,15 +4,7 @@ using UnityEngine.Profiling;
 
 namespace Voxon
 {
-    public enum flags
-    {
-        dots = 0,
-        lines = 1,
-        surfaces = 2,
-        solid = 3
-    };
-
-    public class VXComponent : MonoBehaviour
+    public class VXComponent : MonoBehaviour, IVXDrawable
     {
         private Renderer rend;
         private SkinnedMeshRenderer sm_rend;
@@ -85,7 +77,7 @@ namespace Voxon
                 // Load textures
                 load_textures();
 
-                VXProcess._components.Add(this);
+                VXProcess._drawables.Add(this);
             }
             catch (Exception E)
             {
@@ -107,7 +99,7 @@ namespace Voxon
             try
             {
                 // Remove ourselves from Draw cycle
-                VXProcess._components.Remove(this);
+                VXProcess._drawables.Remove(this);
 
                 // Free Mesh
                 if(Umesh)
@@ -132,7 +124,7 @@ namespace Voxon
         ///  Animated meshes are set to redraw every frame while statics only redrawn on them or the volume
         ///  changing transform.
         ///  </summary>
-        public void DrawMesh()
+        public void Draw()
         {
             try
             {

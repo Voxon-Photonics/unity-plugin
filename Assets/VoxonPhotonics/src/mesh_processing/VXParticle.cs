@@ -8,7 +8,8 @@ using System.Runtime.InteropServices;
 namespace Voxon
 {
     [RequireComponent(typeof(ParticleSystem))]
-    public class VXParticle : MonoBehaviour {
+    public class VXParticle : MonoBehaviour, IVXDrawable
+    {
 
         public struct vector3
         {
@@ -103,7 +104,7 @@ namespace Voxon
                 }
             }
 
-            VXProcess._particles.Add(this);
+            VXProcess._drawables.Add(this);
         }
 
         public void Draw()
@@ -197,6 +198,20 @@ namespace Voxon
             catch (Exception E)
             {
                 ExceptionHandler.Except("Error while Loading Mesh: " + gameObject.name, E);
+            }
+        }
+
+        // Use destroy to free gpu data
+        void OnDestroy()
+        {
+            try
+            {
+                // Remove ourselves from Draw cycle
+                VXProcess._drawables.Remove(this);
+            }
+            catch (Exception E)
+            {
+                ExceptionHandler.Except("Error while Destroying " + gameObject.name, E);
             }
         }
     }

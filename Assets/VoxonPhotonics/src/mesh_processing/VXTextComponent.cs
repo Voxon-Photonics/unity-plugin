@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Voxon
 {
-    public class VXTextComponent : MonoBehaviour
+    public class VXTextComponent : MonoBehaviour, IVXDrawable
     {
         Voxon.DLL.point3d pr, pd, pp;
 
@@ -41,7 +41,7 @@ namespace Voxon
             SetString(text);
             UpdateLocation();
 
-            VXProcess._textcomponents.Add(this);
+            VXProcess._drawables.Add(this);
         }
 
         public void SetString(string Text)
@@ -89,41 +89,25 @@ namespace Voxon
         ///  Animated meshes are set to redraw every frame while statics only redrawn on them or the volume
         ///  changing transform.
         ///  </summary>
-        public void DrawMesh()
+        public void Draw()
         {
             Voxon.DLL.draw_letters(ref pp, ref pr, ref pd, _color, ts);
         }
 
-        /// <summary>  
-        ///  Generates relevant transform for mesh type against capture volume transform
-        ///  Passes to the Compute Shader for processing
-        ///  </summary>
-        private void BuildMesh()
-        {
-        }
-
-
-        /// <summary>  
-        ///  Compute Shader call. Set up Kernel, define tranform values and dispatches GPU threads
-        ///  Currently only sends thin batches; should see to increase this in future.
-        ///  </summary>
-        private void compute_transform(Matrix4x4 Transform)
-        {
-        }
-
-
-        private void translate_triangles()
-        {
-        }
-
-        private void load_textures()
-        {
-        }
-
         private void OnDestroy()
         {
-            ts = new byte[1];
-            ts[0] = 0;
+            try
+            {
+                ts = new byte[1];
+                ts[0] = 0;
+
+                // Remove ourselves from Draw cycle
+                VXProcess._drawables.Remove(this);
+            }
+            catch (Exception E)
+            {
+                ExceptionHandler.Except("Error while Destroying " + gameObject.name, E);
+            }
         }
     }
 }

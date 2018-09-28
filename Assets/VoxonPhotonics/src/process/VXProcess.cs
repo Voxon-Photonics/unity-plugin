@@ -19,11 +19,10 @@ public class VXProcess : Singleton<VXProcess> {
     const int MAXCONTROLLERS = 4;
 
     // Drawable Items
-    public static List<Voxon.VXComponent> _components = new List<Voxon.VXComponent>(); 
+    public static List<Voxon.IVXDrawable> _drawables = new List<Voxon.IVXDrawable>(); 
     public static List<Voxon.VXGameObject> _gameobjects = new List<Voxon.VXGameObject>();
-    public static List<Voxon.VXParticle> _particles = new List<Voxon.VXParticle>();
-    public static List<Voxon.VXTextComponent> _textcomponents = new List<Voxon.VXTextComponent>();
-    public static List<String> _logger = new List<String>();
+
+    public static List<string> _logger = new List<string>();
 
     
     // Use this for initialization
@@ -38,7 +37,6 @@ public class VXProcess : Singleton<VXProcess> {
             active = false;
             return;
         }
-            
 
         if (!Voxon.DLL.isLoaded())
         {
@@ -56,8 +54,7 @@ public class VXProcess : Singleton<VXProcess> {
         {
             if(piece.gameObject.GetComponent<ParticleSystem>())
             {
-                var part = piece.gameObject.AddComponent<Voxon.VXParticle>();
-                _particles.Add(part);
+                piece.gameObject.AddComponent<Voxon.VXParticle>();
             }
             else
             {
@@ -125,19 +122,9 @@ public class VXProcess : Singleton<VXProcess> {
 
     private void Draw()
     {
-        foreach (Voxon.VXComponent go in _components)
-        {
-            go.DrawMesh();
-        }
-
-        foreach (Voxon.VXParticle go in _particles)
+        foreach (var go in _drawables)
         {
             go.Draw();
-        }
-
-        foreach (Voxon.VXTextComponent go in _textcomponents)
-        {
-            go.DrawMesh();
         }
 
         while(_logger.Count > 10)
@@ -149,7 +136,6 @@ public class VXProcess : Singleton<VXProcess> {
         {
             Voxon.DLL.debug_log(0, 64 + (idx * 8), _logger[idx]);
         }
-
     }
 
     public void add_log_line(string str)
