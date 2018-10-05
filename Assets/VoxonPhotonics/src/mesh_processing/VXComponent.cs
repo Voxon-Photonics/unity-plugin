@@ -23,6 +23,7 @@ namespace Voxon
         private int draw_flags = 2 | 1 << 3; // 2 - Fill, and Draw from Texture buffer
         private int[] cols;
 
+        private string tag_was = "";
         // Texture
         Voxon.DLL.tiletype[] textures;
 
@@ -137,7 +138,7 @@ namespace Voxon
                 }
 
                 
-                if (sm_rend || VXProcess.Instance._camera.transform.hasChanged || transform.hasChanged)
+                if (sm_rend || VXProcess.Instance._camera.transform.hasChanged || transform.hasChanged || tag_was == "VoxieHide")
                 {
                     BuildMesh();
                 }
@@ -159,6 +160,8 @@ namespace Voxon
             {
                 ExceptionHandler.Except("Error while Drawing " + gameObject.name, E);
             }
+
+            tag_was = tag;
         }
 
         /// <summary>  

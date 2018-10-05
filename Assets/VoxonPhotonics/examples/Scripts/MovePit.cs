@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MovePit : MonoBehaviour {
-
+    bool hidden = false;
 	// Use this for initialization
 	void Start () {
 		
@@ -39,6 +39,17 @@ public class MovePit : MonoBehaviour {
             world_rot.y -= 1f;
         }
         
+        if(Voxon.Input.GetKeyDown("Hide") && !hidden)
+        {
+            VXProcess.Instance.add_log_line("Hiding: " + hidden.ToString());
+            tag = "VoxieHide";
+            hidden = !hidden;
+        }
+        else if(Voxon.Input.GetKeyDown("Hide"))
+        {
+            tag = "Untagged";
+            hidden = !hidden;
+        }
 
         VXProcess.Instance._camera.transform.rotation = Quaternion.Euler(world_rot);
 
