@@ -599,7 +599,7 @@ GameObject:
   - component: {fileID: 1330882858}
   - component: {fileID: 1330882857}
   m_Layer: 0
-  m_Name: EthanSpawner
+  m_Name: CharacterSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -617,7 +617,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnable: {fileID: 1848456548094120, guid: 751c7d8a1aba2c845934297d32178896, type: 2}
-  max_ethans: 10
+  max_chars: 5
 --- !u!4 &1330882858
 Transform:
   m_ObjectHideFlags: 0

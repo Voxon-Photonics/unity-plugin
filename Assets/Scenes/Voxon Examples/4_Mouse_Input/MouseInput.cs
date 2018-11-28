@@ -9,7 +9,6 @@ public class MouseInput : MonoBehaviour {
     public Mesh[] Meshes = new Mesh[4];
 	// Use this for initialization
 	void Start () {
-		
 	}
 	
 	// Update is called once per frame
