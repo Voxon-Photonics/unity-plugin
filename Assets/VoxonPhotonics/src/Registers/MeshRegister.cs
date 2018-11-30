@@ -2,13 +2,39 @@
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 
+[Serializable]
 public class MeshRegister : Singleton<MeshRegister> {
-
     public ComputeShader cshader_main;
     public int kernelHandle;
 
+    [SerializeField]
     private Dictionary<String, RegisteredMesh> Register;
+
+    private void OnEnable()
+    {
+        Init();
+
+        FileStream s = null;
+        IFormatter formatter = new BinaryFormatter();
+        try
+        {
+            s = new FileStream(Application.dataPath+ "/StreamingAssets/MeshData.bin", FileMode.Open);
+            MeshPack mp = (MeshPack)formatter.Deserialize(s);
+            Voxon.MeshData[] md = mp.getData();
+            for(int idx = 0; idx < md.Length; idx++)
+            {
+                Register.Add(md[idx].name, new RegisteredMesh(ref md[idx]));
+            }
+        }
+        finally
+        {
+            s.Close();
+        }
+    }
 
     void Init()
     {
@@ -68,6 +94,11 @@ public class MeshRegister : Singleton<MeshRegister> {
         return false;
     }
 
+    public int Length()
+    {
+        return Register.Count;
+    }
+
     public void Clear()
     {
         if (Register == null)
@@ -99,4 +130,22 @@ public class MeshRegister : Singleton<MeshRegister> {
             rt.destroy();
         }
     }
+
+    #if UNITY_EDITOR
+    public MeshPack PackMeshes()
+    {
+        Voxon.MeshData[] RMs = new Voxon.MeshData[Register.Count];
+        int idx = 0;
+        foreach(RegisteredMesh rm in Register.Values)
+        {
+            RMs[idx] = rm.getMeshData();
+            idx++;
+        }
+
+        MeshPack packedMeshes = new MeshPack();
+        packedMeshes.setData(RMs);
+
+        return packedMeshes;
+    }
+    #endif
 }

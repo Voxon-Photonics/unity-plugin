@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using UnityEditor;
 using System.IO;
@@ -65,6 +67,44 @@ public class Editor_Handler: MonoBehaviour {
             AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceUpdate);
         }
         EditorUtility.DisplayDialog("Reimported Textures", "Textures Reimported.", "Ok");
+    }
+
+    [MenuItem("Voxon/Tools/Prebuild Mesh")]
+    public static void prebuildMesh()
+    {
+        var guids = AssetDatabase.FindAssets("t:Mesh", null);
+
+        MeshRegister meshRegister = new MeshRegister();
+
+        foreach (var guid in guids)
+        {
+            string path = AssetDatabase.GUIDToAssetPath(guid);
+            if (path == "") continue;
+
+            Mesh t = (Mesh)AssetDatabase.LoadAssetAtPath(path, typeof(Mesh));
+            meshRegister.get_registed_mesh(ref t);
+        }
+
+        // Create an instance of the type and serialize it.
+        IFormatter formatter = new BinaryFormatter();
+        FileStream s = null;
+        
+        try
+        {
+            if (!AssetDatabase.IsValidFolder(Application.dataPath + "/StreamingAssets"))
+            {
+                System.IO.Directory.CreateDirectory(Application.dataPath + "/StreamingAssets");
+            }
+
+            s = new FileStream(Application.dataPath + "/StreamingAssets/MeshData.bin", FileMode.Create);
+            formatter.Serialize(s, meshRegister.PackMeshes());
+        }
+        finally
+        {
+            s.Close();
+        }
+
+        EditorUtility.DisplayDialog("Prebuild Mesh", (meshRegister.Length().ToString() + " Meshes Processed"), "Ok");
     }
 
     private static void PlayStateChange(PlayModeStateChange state)

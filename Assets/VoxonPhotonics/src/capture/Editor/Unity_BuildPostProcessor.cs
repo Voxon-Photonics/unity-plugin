@@ -12,6 +12,7 @@ class Unity_BuildPostProcessor : IPostprocessBuild
         string file_name = System.IO.Path.GetFileName(path);
         string output_directory = System.IO.Path.GetDirectoryName(path);
 
+        // Generate Batch executable
         string batch_contents = string.Format("start \"\" \"{0}\" -batchmode", file_name);
         StreamWriter writer = new StreamWriter(output_directory + "\\VX.bat");
 

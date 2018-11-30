@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Collections;
 
+[Serializable]
 public class RegisteredMesh {
     // Mesh Data
     public Voxon.DLL.poltex_t[] vertices;
@@ -73,6 +74,43 @@ public class RegisteredMesh {
         }
     }
 
+    public RegisteredMesh(ref Voxon.MeshData meshData)
+    {
+        try
+        {
+            name = meshData.name;
+
+            // Mesh Divisions
+            submesh_count = meshData.submesh_count;
+
+            // Vertices
+            vertex_count = meshData.vertex_count;
+            vertices = meshData.vertices;
+
+            // Indexes
+            indices = meshData.indices;
+            index_counts = meshData.index_counts;
+
+            List<Vector2> tmp_uvs = new List<Vector2>();
+            foreach(Voxon.DLL.poltex_t vert in meshData.vertices)
+            {
+                tmp_uvs.Add(new Vector2(vert.u, vert.v));
+            }
+
+            // Set up output buffer; the assigned data array will change per instance
+            cbufferO_poltex = new ComputeBuffer(vertex_count, sizeof(float) * 5 + sizeof(int), ComputeBufferType.Default);
+
+            cbufferI_uvs = new ComputeBuffer(vertex_count, sizeof(float) * 2, ComputeBufferType.Default);
+            cbufferI_uvs.SetData(tmp_uvs.ToArray());
+            cbufferI_vertices = new ComputeBuffer(vertex_count, sizeof(float) * 3, ComputeBufferType.Default);
+            cbufferI_vertices.SetData(meshData.vertices);
+
+        }
+        catch (Exception E)
+        {
+            Voxon.ExceptionHandler.Except("Error building Mesh " + name, E);
+        }
+    }
     public void increment()
     {
         counter++;
@@ -131,17 +169,12 @@ public class RegisteredMesh {
         {
             for (int submesh = 0; submesh < submesh_count; submesh++)
             {
-
-                
-
                 int _indices = mesh.GetTriangles(submesh).Length;
                 index_counts[submesh] = _indices + (_indices / 3);
-
 
                 indices[submesh] = new int[index_counts[submesh]]; // Number of Poly Indices
 
                 // Set up indices
-
                 int[] Tri_me = mesh.GetTriangles(submesh);
 
                 int out_idx = 0;
@@ -155,14 +188,6 @@ public class RegisteredMesh {
                     // flag end of triangle
                     indices[submesh][3 + out_idx] = -1;
                 }
-
-                /*
-                Debug.Log(indices[submesh].Length);
-                for (int idx = 0; idx < indices[submesh].Length; idx += 4)
-                {
-                    Debug.Log(idx + "\t" + indices[submesh][0 + idx] + " : " + indices[submesh][1 + idx] + " : " + indices[submesh][2 + idx] + " : " + indices[submesh][3 + idx]);
-                }
-                */
             }
         }
         catch (Exception E)
@@ -236,4 +261,18 @@ public class RegisteredMesh {
         }
     }
 
+    #if UNITY_EDITOR
+    public Voxon.MeshData getMeshData()
+    {
+        Voxon.MeshData meshData = new Voxon.MeshData();
+        meshData.index_counts = index_counts;
+        meshData.indices = indices;
+        meshData.name = name;
+        meshData.submesh_count = submesh_count;
+        meshData.vertex_count = vertex_count;
+        meshData.vertices = vertices;
+
+        return meshData;
+    }
+    #endif
 }

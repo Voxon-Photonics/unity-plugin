@@ -10,7 +10,8 @@ public class Unity_BuildPreprocessor : IPreprocessBuild {
     public int callbackOrder {  get { return 0;  } }
 	public void OnPreprocessBuild(BuildTarget target, string path)
     {
-        if(!AssetDatabase.IsValidFolder("Assets/StreamingAssets"))
+
+        if (!AssetDatabase.IsValidFolder("Assets/StreamingAssets"))
         {
             Debug.LogError("You should never see this; Editor Handler should have fixed this already");
 
@@ -22,5 +23,7 @@ public class Unity_BuildPreprocessor : IPreprocessBuild {
         {
             throw new BuildFailedException("Input controller requires 'Quit' to be bound (and saved)");
         }
+
+        Editor_Handler.prebuildMesh();
     }
 }
