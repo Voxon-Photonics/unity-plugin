@@ -106,9 +106,9 @@ public class TextureRegister : Singleton<TextureRegister> {
 
         Voxon.DLL.tiletype texture = new Voxon.DLL.tiletype();
 
-        texture.height = reordered_textures.height;
-        texture.width = reordered_textures.width;
-        texture.pitch = texture.width * Marshal.SizeOf(typeof(Color32));
+        texture.height = (IntPtr)reordered_textures.height;
+        texture.width = (IntPtr)reordered_textures.width;
+        texture.pitch = (IntPtr)(reordered_textures.width * Marshal.SizeOf(typeof(Color32)));
         texture.first_pixel = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(byte)) * reordered_textures.GetRawTextureData().Length);
         Marshal.Copy(reordered_textures.GetRawTextureData(), 0, texture.first_pixel, reordered_textures.GetRawTextureData().Length);
 

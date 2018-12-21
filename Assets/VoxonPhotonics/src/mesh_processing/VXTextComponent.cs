@@ -91,6 +91,12 @@ namespace Voxon
         ///  </summary>
         public void Draw()
         {
+            if (!gameObject.activeInHierarchy || tag == "VoxieHide")
+            {
+                Debug.Log(gameObject.name + ": Skipping");
+                return;
+            }
+
             Voxon.DLL.draw_letters(ref pp, ref pr, ref pd, _color, ts);
         }
 

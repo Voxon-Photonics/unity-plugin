@@ -27,6 +27,7 @@ public class RegisteredMesh {
     {
         try
         {
+            Debug.Log("Processing Mesh Data");
             name = mesh.name;
 
             // Mesh Divisions
@@ -34,8 +35,10 @@ public class RegisteredMesh {
 
             // Vertices
             vertex_count = mesh.vertexCount;
+
             vertices = new Voxon.DLL.poltex_t[vertex_count];
             load_poltex(ref mesh);
+
             // UVs
             List<Vector2> tmp_uvs = new List<Vector2>();
             mesh.GetUVs(0, tmp_uvs);
@@ -148,6 +151,7 @@ public class RegisteredMesh {
     {
         // Set Source Vertices
         int uv_length = mesh.uv.Length;
+
         int colour = mesh.colors.Length > 0 ? mesh.colors[0].toInt() : 0xFFFFFF;
 
         Vector3[] verts = mesh.vertices;
@@ -202,6 +206,7 @@ public class RegisteredMesh {
     ///  </summary>
     public void compute_transform_gpu(Matrix4x4 Transform, ref Voxon.DLL.poltex_t[] vt, ref Mesh mesh)
     {
+        
         try
         {
             // Need to be set for each draw update
@@ -230,19 +235,25 @@ public class RegisteredMesh {
 
     public void compute_transform_cpu(Matrix4x4 component, ref Voxon.DLL.poltex_t[] vt)
     {
-        Vector4 in_v;
+        Vector4 in_v = Vector4.one;
+
         for (int idx = vertices.Length - 1; idx >= 0; --idx)
         {
-            in_v = new Vector4(vertices[idx].x, vertices[idx].y, vertices[idx].z, 1.0f);
-
+            in_v.x = vertices[idx].x;
+            in_v.y = vertices[idx].y;
+            in_v.z = vertices[idx].z;
+            
             in_v = component * in_v;
-
+            
             vt[idx].x = in_v.x;
             vt[idx].y = -in_v.z;
             vt[idx].z = -in_v.y;
             vt[idx].u = vertices[idx].u;
             vt[idx].v = vertices[idx].v;
+            
         }
+
+        
     }
 
     public void destroy()

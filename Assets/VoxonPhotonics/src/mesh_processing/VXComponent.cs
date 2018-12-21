@@ -43,6 +43,7 @@ namespace Voxon
                 catch (Exception E)
                 {
                     ExceptionHandler.Except("(" + name + ") Failed to load suitable Renderer", E);
+                    Destroy(this);
                 }
 
                 sm_rend = GetComponent<SkinnedMeshRenderer>();
@@ -129,21 +130,22 @@ namespace Voxon
         {
             try
             {
-                if (!gameObject.activeSelf || tag == "VoxieHide")
+                if (!gameObject.activeInHierarchy || tag == "VoxieHide")
+                {
+                    Debug.Log(gameObject.name + ": Skipping");
                     return;
-
+                }
+                
                 if (sm_rend)
                 {
                     mesh.update_baked_mesh(sm_rend, ref Umesh);
                 }
-
                 
                 if (sm_rend || VXProcess.Instance._camera.transform.hasChanged || transform.hasChanged || tag_was == "VoxieHide")
                 {
                     BuildMesh();
                 }
-
-
+                
                 for (int idx = 0; idx < mesh.submesh_count; idx++)
                 {
                     if (Umaterials[idx].mainTexture)
@@ -155,6 +157,7 @@ namespace Voxon
                         Voxon.DLL.draw_untextured_mesh(vt, mesh.vertex_count, mesh.indices[idx], mesh.index_counts[idx], draw_flags, rend.materials[idx].color.toInt());
                     }
                 }
+                
             }
             catch (Exception E)
             {
@@ -162,6 +165,7 @@ namespace Voxon
             }
 
             tag_was = tag;
+            
         }
 
         /// <summary>  
@@ -175,9 +179,10 @@ namespace Voxon
                 // Set Model View transform
                 Matrix4x4 Matrix;
                 Matrix = transform.localToWorldMatrix;
-
                 Matrix = VXProcess.Instance._camera.transform.worldToLocalMatrix * Matrix;
                 Matrix = Matrix4x4.Scale(new Vector3(2.0f, 0.8f, 2.0f)) * Matrix;
+
+                
 
                 if (sm_rend)
                 {
@@ -229,7 +234,5 @@ namespace Voxon
                 ExceptionHandler.Except("Error while Loading Textures: " + gameObject.name, E);
             }
         }
-
-        
     }
 }

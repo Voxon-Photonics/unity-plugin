@@ -110,8 +110,9 @@ namespace Voxon
         public void Draw()
         {
             // TODO : The IsAlive check may cause problems in the future, leaving for now due to safety
-            if(!m_particleSystem || !m_particleSystem.IsAlive())
+            if(!m_particleSystem || !m_particleSystem.IsAlive() || !gameObject.activeInHierarchy)
             {
+                Debug.Log(gameObject.name + ": Skipping");
                 return;
             }
             if (renderMode == ParticleSystemRenderMode.Mesh)
@@ -184,7 +185,12 @@ namespace Voxon
                 float size = m_Particles[idx].GetCurrentSize(m_particleSystem) * 0.05f;
                 l = FMatrix * m_Particles[idx].position;
 
-                Voxon.DLL.draw_sphere(l.x, -l.z, -l.y, size, 0, ((m_Particles[idx].GetCurrentColor(m_particleSystem)).toInt() & 0xffffff) >> 0);
+                // int tmpInt = ((m_Particles[idx].GetCurrentColor(m_particleSystem)).toInt() & 0xffffff) >> 0;
+                // string st = l.x.ToString() + "," + (-l.z).ToString() + "," + (-l.y).ToString() + ": " + tmpInt.ToString();
+                // Debug.Log(st);
+                Voxon.DLL.draw_line(l.x, -l.z, -l.y, l.x, l.z, l.y, ((m_Particles[idx].GetCurrentColor(m_particleSystem)).toInt() & 0xffffff) >> 0);
+                //Voxon.DLL.draw_sphere(l.x, -l.z, -l.y, size, 0, ((m_Particles[idx].GetCurrentColor(m_particleSystem)).toInt() & 0xffffff) >> 0);
+
             }
         }
 

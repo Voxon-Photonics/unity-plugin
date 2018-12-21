@@ -49,7 +49,12 @@ public class MeshRegister : Singleton<MeshRegister> {
 
     public RegisteredMesh get_registed_mesh(ref Mesh mesh)
     {
-        mesh.name = "" + mesh.vertexBufferCount + ":" + mesh.vertexCount + ":" + mesh.subMeshCount + ":" + mesh.triangles.Length;
+        Vector3 count = Vector3.zero;
+        foreach (var point in mesh.vertices)
+        {
+            count += point;
+        }
+        mesh.name = count.x + "-" + count.y + "-" + count.z + ":" + mesh.vertexBufferCount + ":" + mesh.vertexCount + ":" + mesh.subMeshCount + ":" + mesh.triangles.Length;
 
         if (Register == null)
         {
