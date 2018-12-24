@@ -7,7 +7,7 @@ using System.Collections;
 [Serializable]
 public class RegisteredMesh {
     // Mesh Data
-    public Voxon.DLL.poltex_t[] vertices;
+    public Voxon.poltex_t[] vertices;
     public string name;
     public int vertex_count;        // Number of vertices
     public int submesh_count;      // Count of Submeshes part of mesh
@@ -36,7 +36,7 @@ public class RegisteredMesh {
             // Vertices
             vertex_count = mesh.vertexCount;
 
-            vertices = new Voxon.DLL.poltex_t[vertex_count];
+            vertices = new Voxon.poltex_t[vertex_count];
             load_poltex(ref mesh);
 
             // UVs
@@ -95,7 +95,7 @@ public class RegisteredMesh {
             index_counts = meshData.index_counts;
 
             List<Vector2> tmp_uvs = new List<Vector2>();
-            foreach(Voxon.DLL.poltex_t vert in meshData.vertices)
+            foreach(Voxon.poltex_t vert in meshData.vertices)
             {
                 tmp_uvs.Add(new Vector2(vert.u, vert.v));
             }
@@ -129,9 +129,9 @@ public class RegisteredMesh {
         return counter > 0;
     }
 
-    public static Voxon.DLL.poltex_t build_poltex(Vector3 pos, Vector2 uv, int col)
+    public static Voxon.poltex_t build_poltex(Vector3 pos, Vector2 uv, int col)
     {
-        Voxon.DLL.poltex_t _T = new Voxon.DLL.poltex_t();
+        Voxon.poltex_t _T = new Voxon.poltex_t();
         _T.x = pos.x;
         _T.y = pos.y;
         _T.z = pos.z;
@@ -204,7 +204,7 @@ public class RegisteredMesh {
     ///  Compute Shader call. Set up Kernel, define tranform values and dispatches GPU threads
     ///  Currently only sends thin batches; should see to increase this in future.
     ///  </summary>
-    public void compute_transform_gpu(Matrix4x4 Transform, ref Voxon.DLL.poltex_t[] vt, ref Mesh mesh)
+    public void compute_transform_gpu(Matrix4x4 Transform, ref Voxon.poltex_t[] vt, ref Mesh mesh)
     {
         
         try
@@ -233,7 +233,7 @@ public class RegisteredMesh {
         }
     }
 
-    public void compute_transform_cpu(Matrix4x4 component, ref Voxon.DLL.poltex_t[] vt)
+    public void compute_transform_cpu(Matrix4x4 component, ref Voxon.poltex_t[] vt)
     {
         Vector4 in_v = Vector4.one;
 

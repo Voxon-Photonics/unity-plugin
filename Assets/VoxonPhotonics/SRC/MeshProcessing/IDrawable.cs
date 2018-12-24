@@ -12,7 +12,7 @@ namespace Voxon
         solid = 3
     };
 
-    public interface IVXDrawable
+    public interface IDrawable
     {
         void Draw();
     }

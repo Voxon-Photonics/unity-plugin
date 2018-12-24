@@ -20,7 +20,7 @@ public class TextureRegisterTests
         TextureRegister TR = TextureRegister.Instance;
         Material mat = TestObjects.tMaterial();
 
-        Voxon.DLL.tiletype TT = TR.get_tile(ref mat);
+        Voxon.tiletype TT = TR.get_tile(ref mat);
 
         Assert.IsNotNull(TT, "Tile Type not generated on initial request");
         TR.ClearRegister();
@@ -75,7 +75,7 @@ public class TextureRegisterTests
         TextureRegister TR = TextureRegister.Instance;
         Material mat = TestObjects.tMaterial();
 
-        Voxon.DLL.tiletype TT = TR.get_tile(ref mat);
+        Voxon.tiletype TT = TR.get_tile(ref mat);
 
         Assert.AreNotEqual(0, TT.first_pixel);
         TR.ClearRegister();
@@ -87,9 +87,9 @@ public class TextureRegisterTests
         TextureRegister TR = TextureRegister.Instance;
         Material mat = TestObjects.tMaterial();
 
-        Voxon.DLL.tiletype TT = TR.get_tile(ref mat);
+        Voxon.tiletype TT = TR.get_tile(ref mat);
 
-        Assert.AreEqual(256, TT.height);
+        Assert.AreEqual(256, (System.Int32)TT.height);
         TR.ClearRegister();
     }
 
@@ -99,9 +99,9 @@ public class TextureRegisterTests
         TextureRegister TR = TextureRegister.Instance;
         Material mat = TestObjects.tMaterial();
 
-        Voxon.DLL.tiletype TT = TR.get_tile(ref mat);
+        Voxon.tiletype TT = TR.get_tile(ref mat);
 
-        Assert.AreEqual(256, TT.width);
+        Assert.AreEqual(256, (System.Int32)TT.width);
         TR.ClearRegister();
     }
 
@@ -111,9 +111,9 @@ public class TextureRegisterTests
         TextureRegister TR = TextureRegister.Instance;
         Material mat = TestObjects.tMaterial();
 
-        Voxon.DLL.tiletype TT = TR.get_tile(ref mat);
+        Voxon.tiletype TT = TR.get_tile(ref mat);
 
-        Assert.AreEqual(1024, TT.pitch);
+        Assert.AreEqual(1024, (System.Int32)TT.pitch);
         TR.ClearRegister();
     }
 }

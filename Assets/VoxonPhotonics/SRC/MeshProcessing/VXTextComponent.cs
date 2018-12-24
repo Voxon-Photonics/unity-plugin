@@ -6,9 +6,9 @@ using UnityEngine;
 
 namespace Voxon
 {
-    public class VXTextComponent : MonoBehaviour, IVXDrawable
+    public class VXTextComponent : MonoBehaviour, IDrawable
     {
-        Voxon.DLL.point3d pr, pd, pp;
+        point3d pr, pd, pp;
 
         [Tooltip("right vector - length is size of single character")]
         public Vector3 _pr = new Vector3(0.1f, 0.0f, 0.0f);
@@ -64,7 +64,7 @@ namespace Voxon
             pp = pos.toPoint3d();
         }
 
-        public void SetCharWidth(Voxon.DLL.point3d width)
+        public void SetCharWidth(point3d width)
         {
             pd = width;
         }
@@ -74,7 +74,7 @@ namespace Voxon
             SetCharWidth(width.toPoint3d());
         }
 
-        public void SetCharHeight(Voxon.DLL.point3d height)
+        public void SetCharHeight(point3d height)
         {
             pr = height;
         }

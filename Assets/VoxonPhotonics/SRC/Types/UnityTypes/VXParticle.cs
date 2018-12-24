@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 namespace Voxon
 {
     [RequireComponent(typeof(ParticleSystem))]
-    public class VXParticle : MonoBehaviour, IVXDrawable
+    public class VXParticle : MonoBehaviour, IDrawable
     {
 
         public struct vector3
@@ -63,10 +63,10 @@ namespace Voxon
         };
 
         [DllImport("Poltex_Transform", CallingConvention = CallingConvention.Cdecl)]
-        protected static extern void transform_64(DLL.poltex_t[] source, DLL.poltex_t[] dest, ref matrix3x4 rotransmat, int len);
+        protected static extern void transform_64(poltex_t[] source, poltex_t[] dest, ref matrix3x4 rotransmat, int len);
 
         [DllImport("Poltex_Transform", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void transform_mesh(DLL.poltex_t[] source, DLL.poltex_t[] dest, ref matrix3x4 rotransmat, int len);
+        public static extern void transform_mesh(poltex_t[] source, poltex_t[] dest, ref matrix3x4 rotransmat, int len);
 
         private int draw_flags = 2 | 1 << 3; // 2 - Fill, and Draw from Texture buffer
 
@@ -79,7 +79,7 @@ namespace Voxon
         RegisteredMesh mesh;
 
         // DLL Version (Source is mesh.vertices)
-        DLL.poltex_t[][] destinations;
+        poltex_t[][] destinations;
 
         ParticleSystemRenderMode renderMode;
 
@@ -97,10 +97,10 @@ namespace Voxon
                 load_meshes();
 
                 // Particles destination structures
-                destinations = new DLL.poltex_t[m_particleSystem.main.maxParticles][];
+                destinations = new poltex_t[m_particleSystem.main.maxParticles][];
                 for (int idx = m_particleSystem.main.maxParticles - 1; idx >= 0; --idx)
                 {
-                    destinations[idx] = new DLL.poltex_t[mesh.vertex_count];
+                    destinations[idx] = new poltex_t[mesh.vertex_count];
                 }
             }
 
@@ -146,7 +146,7 @@ namespace Voxon
                 float size = m_Particles[idx].GetCurrentSize(m_particleSystem) * 0.05f;
                 l = FMatrix * m_Particles[idx].position;
 
-                Voxon.DLL.draw_box(l.x - size, -l.z, -l.y - size, l.x + size, -l.z, -l.y + size, 2, (m_Particles[idx].GetCurrentColor(m_particleSystem)).toInt());
+                // Voxon.DLL.draw_box(l.x - size, -l.z, -l.y - size, l.x + size, -l.z, -l.y + size, 2, (m_Particles[idx].GetCurrentColor(m_particleSystem)).toInt());
             }
         }
 
@@ -188,7 +188,7 @@ namespace Voxon
                 // int tmpInt = ((m_Particles[idx].GetCurrentColor(m_particleSystem)).toInt() & 0xffffff) >> 0;
                 // string st = l.x.ToString() + "," + (-l.z).ToString() + "," + (-l.y).ToString() + ": " + tmpInt.ToString();
                 // Debug.Log(st);
-                Voxon.DLL.draw_line(l.x, -l.z, -l.y, l.x, l.z, l.y, ((m_Particles[idx].GetCurrentColor(m_particleSystem)).toInt() & 0xffffff) >> 0);
+                // Voxon.DLL.draw_line(l.x, -l.z, -l.y, l.x, l.z, l.y, ((m_Particles[idx].GetCurrentColor(m_particleSystem)).toInt() & 0xffffff) >> 0);
                 //Voxon.DLL.draw_sphere(l.x, -l.z, -l.y, size, 0, ((m_Particles[idx].GetCurrentColor(m_particleSystem)).toInt() & 0xffffff) >> 0);
 
             }

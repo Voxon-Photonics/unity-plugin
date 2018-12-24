@@ -4,7 +4,7 @@ using UnityEngine.Profiling;
 
 namespace Voxon
 {
-    public class VXComponent : MonoBehaviour, IVXDrawable
+    public class VXComponent : MonoBehaviour, IDrawable
     {
         private Renderer rend;
         private SkinnedMeshRenderer sm_rend;
@@ -15,7 +15,7 @@ namespace Voxon
 
         // Mesh Data
         private RegisteredMesh mesh;
-        private Voxon.DLL.poltex_t[] vt;   // List of vertices
+        private poltex_t[] vt;   // List of vertices
 
         private int submesh_n = 0;      // Count of Submeshes part of mesh
 
@@ -25,7 +25,7 @@ namespace Voxon
 
         private string tag_was = "";
         // Texture
-        Voxon.DLL.tiletype[] textures;
+        tiletype[] textures;
 
         private Matrix4x4 _transform;
 
@@ -206,7 +206,7 @@ namespace Voxon
             try
             {
                 mesh = MeshRegister.Instance.get_registed_mesh(ref Umesh);
-                vt = new DLL.poltex_t[mesh.vertex_count];
+                vt = new poltex_t[mesh.vertex_count];
 
                 BuildMesh();
             }
@@ -220,7 +220,7 @@ namespace Voxon
         {
             try
             {
-                textures = new Voxon.DLL.tiletype[mesh.submesh_count];
+                textures = new tiletype[mesh.submesh_count];
                 for (int submesh = 0; submesh < mesh.submesh_count; submesh++)
                 {
                     if (Umaterials[submesh].mainTexture)

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Voxon
 {
-    public class VXCube : IVXDrawable
+    public class VXCube : IDrawable
     {
         GameObject parent = null;
         Vector3 pp = Vector3.zero;
@@ -12,7 +12,7 @@ namespace Voxon
         Vector3 pf = Vector3.zero;
         Vector3 pd = Vector3.zero;
 
-        DLL.point3d p, r, f, d;
+        point3d p, r, f, d;
 
         int col;
         int fill;

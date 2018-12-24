@@ -6,11 +6,11 @@ using UnityEngine;
 
 namespace Voxon
 {
-    public class VXLine : MonoBehaviour, IVXDrawable
+    public class VXLine : MonoBehaviour, IDrawable
     {
         #region private_variables
         LineRenderer line;
-        Voxon.DLL.poltex_t[] points;
+        point3d[] points;
         #endregion
 
         // Use this for initialization
@@ -26,7 +26,7 @@ namespace Voxon
                 Destroy(this);
             }
 
-            points = new DLL.poltex_t[line.positionCount];
+            points = new point3d[line.positionCount];
 
             VXProcess._drawables.Add(this);
 
@@ -49,7 +49,7 @@ namespace Voxon
 
             for (int idx = 0; idx < line.positionCount - 1; idx++)
             {
-                DLL.draw_line(points[idx].x, points[idx].y, points[idx].z, points[idx+1].x, points[idx + 1].y, points[idx + 1].z, line.startColor.toInt());
+                DLL.draw_line(ref points[idx], ref points[idx+1], line.startColor.toInt());
             }
             
         }

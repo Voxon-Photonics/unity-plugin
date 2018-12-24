@@ -4,11 +4,11 @@ using UnityEngine;
 
 namespace Voxon
 {
-    public class VXVoxel : IVXDrawable
+    public class VXVoxel : IDrawable
     {
         Vector3 vector = Vector3.zero;
 
-        float _x, _y, _z;
+        point3d _position;
         Int32 col;
 
         public VXVoxel(Vector3 vector, Color32 col)
@@ -21,7 +21,7 @@ namespace Voxon
 
         public void Draw()
         {
-            Voxon.DLL.draw_voxel(_x, _y, _z, col);
+            Voxon.DLL.draw_voxel(ref _position, col);
         }
             
         public void set_color(Color32 _col)
@@ -40,9 +40,7 @@ namespace Voxon
             Matrix4x4 FMatrix = Matrix4x4.Scale(new Vector3(2.0f, 0.8f, 2.0f)) * VXProcess.Instance._camera.transform.worldToLocalMatrix;
 
             Vector3 in_v = FMatrix * vector;
-            _x = in_v.x;
-            _y = -in_v.z;
-            _z = -in_v.y;
+            _position = in_v.toPoint3d();
         }
     }
 }

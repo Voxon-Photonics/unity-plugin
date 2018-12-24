@@ -5,15 +5,27 @@ using UnityEngine;
 
 namespace Voxon
 {
-    public class VXBox : IVXDrawable
+    public class VXBox : IDrawable
     {
         GameObject parent;
-        Vector3 _0 = Vector3.zero;
-        Vector3 _1 = Vector3.zero;
 
-        float _0x, _0y, _0z;
-        float _1x, _1y, _1z;
-        int col;
+        Vector3 _0 = Vector3.zero;
+        public Vector3 Position_0
+        {
+            get { return _0; }
+            set { _0 = value; update_transform(); }
+        }
+
+        Vector3 _1 = Vector3.zero;
+        public Vector3 Position_1
+        {
+            get { return _1; }
+            set { _1 = value; update_transform(); }
+        }
+
+        point3d _0p = new point3d(), _1p = new point3d();
+        int _col;
+
         int fill;
 
         public VXBox(Vector3 _0, Vector3 _1, int fill, Color32 col) : this(_0, _1, fill, col, null)
@@ -23,8 +35,8 @@ namespace Voxon
 
         public VXBox(Vector3 _0, Vector3 _1, int fill, Color32 col, GameObject parent)
         {
-            set_0(_0);
-            set_1(_1);
+            Position_0 = _0;
+            Position_1 = _1;
             set_color(col);
             set_fill(fill);
             set_parent(parent);
@@ -34,27 +46,12 @@ namespace Voxon
 
         public void Draw()
         {
-            Voxon.DLL.draw_box(_0x, _0y, _0z, _1x, _1y, _1z, fill, col);
+            Voxon.DLL.draw_box(ref _0p, ref _1p, fill, _col);
         }
 
-        public void set_color(Color32 _col)
+        public void set_color(Color32 color)
         {
-            col = (_col.toInt() & 0xffffff) >> 0;
-        }
-
-        public void set_0(Vector3 point)
-        {
-            _0 = point;
-
-            update_transform();
-
-        }
-
-        public void set_1(Vector3 point)
-        {
-            _1 = point;
-
-            update_transform();
+            _col = (color.toInt() & 0xffffff) >> 0;
         }
 
         public void set_parent(GameObject parent)
@@ -73,9 +70,8 @@ namespace Voxon
             {
                 // Perform camera transform
                 in_v = FMatrix * (_0 + parent.transform.position);
-                _0x = in_v.x;
-                _0y = -in_v.z;
-                _0z = -in_v.y;
+
+                _0p = in_v.toPoint3d();
 
                 // Rotation shifts where 'lower' value lives
                 // What we need to do is convert from a fixed position into a vector
@@ -87,21 +83,15 @@ namespace Voxon
 
                 // Perform camera transform
                 in_v = FMatrix * vector;
-                _1x = in_v.x;
-                _1y = -in_v.z;
-                _1z = -in_v.y;
+                _1p = in_v.toPoint3d();
             }
             else
             {
                 in_v = FMatrix * _0;
-                _0x = in_v.x;
-                _0y = -in_v.z;
-                _0z = -in_v.y;
+                _0p = in_v.toPoint3d();
 
                 in_v = FMatrix * _1;
-                _1x = in_v.x;
-                _1y = -in_v.z;
-                _1z = -in_v.y;
+                _1p = in_v.toPoint3d();
             }
             
         }

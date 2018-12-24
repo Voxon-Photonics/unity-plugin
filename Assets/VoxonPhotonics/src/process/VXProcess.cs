@@ -24,7 +24,7 @@ public class VXProcess : Singleton<VXProcess> {
 
 
     // Drawable Items
-    public static List<Voxon.IVXDrawable> _drawables = new List<Voxon.IVXDrawable>(); 
+    public static List<Voxon.IDrawable> _drawables = new List<Voxon.IDrawable>(); 
     public static List<Voxon.VXGameObject> _gameobjects = new List<Voxon.VXGameObject>();
 
     public static List<string> _logger = new List<string>();
@@ -162,7 +162,30 @@ public class VXProcess : Singleton<VXProcess> {
         _logger.Add(str);
     }
 
-    public static void ComputeTransform(ref Matrix4x4 target_world, ref Vector3[] vertices, ref Vector2[] uvs, ref Voxon.DLL.poltex_t[] out_poltex)
+    public static void ComputeTransform(ref Matrix4x4 target_world, ref Vector3[] vertices, ref Voxon.point3d[] out_poltex)
+    {
+        if (vertices.Length != out_poltex.Length)
+        {
+            throw new System.ArgumentOutOfRangeException("Vertices size does not match out_poltex size");
+        }
+
+        // Build Camera transform
+        Matrix4x4 Matrix = Instance._matrix_scale * Instance._camera.transform.worldToLocalMatrix * target_world;
+
+        Vector4 in_v;
+        for (int idx = vertices.Length - 1; idx >= 0; --idx)
+        {
+            in_v = new Vector4(vertices[idx].x, vertices[idx].y, vertices[idx].z, 1.0f);
+
+            in_v = Matrix * in_v;
+
+            out_poltex[idx].x = in_v.x;
+            out_poltex[idx].y = -in_v.z;
+            out_poltex[idx].z = -in_v.y;
+        }
+    }
+
+    public static void ComputeTransform(ref Matrix4x4 target_world, ref Vector3[] vertices, ref Vector2[] uvs, ref Voxon.poltex_t[] out_poltex)
     {
         if(vertices.Length != out_poltex.Length)
         {
@@ -182,12 +205,12 @@ public class VXProcess : Singleton<VXProcess> {
             out_poltex[idx].x = in_v.x;
             out_poltex[idx].y = -in_v.z;
             out_poltex[idx].z = -in_v.y;
-            out_poltex[idx].u = vertices[idx].x;
-            out_poltex[idx].v = vertices[idx].y;
+            out_poltex[idx].u = uvs[idx].x;
+            out_poltex[idx].v = uvs[idx].y;
         }
     }
 
-    public static void ComputeTransform(ref Matrix4x4 target, ref Vector3[] vertices, ref Voxon.DLL.poltex_t[] out_poltex)
+    public static void ComputeTransform(ref Matrix4x4 target, ref Vector3[] vertices, ref Voxon.poltex_t[] out_poltex)
     {
         Vector2[] uvs = new Vector2[vertices.Length];
 

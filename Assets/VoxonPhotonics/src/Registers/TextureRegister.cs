@@ -8,7 +8,7 @@ public class TextureRegister : Singleton<TextureRegister> {
 
     public struct registered_tile
     {
-        public Voxon.DLL.tiletype texture;
+        public Voxon.tiletype texture;
         public int counter;
     }
 
@@ -19,7 +19,7 @@ public class TextureRegister : Singleton<TextureRegister> {
         Register = new Dictionary<String, registered_tile>();
     }
 
-    public Voxon.DLL.tiletype get_tile(ref Material mat)
+    public Voxon.tiletype get_tile(ref Material mat)
     {
         if(Register == null)
         {
@@ -96,7 +96,7 @@ public class TextureRegister : Singleton<TextureRegister> {
         }
     }
 
-    Voxon.DLL.tiletype LoadTexture(ref Material mat)
+    Voxon.tiletype LoadTexture(ref Material mat)
     {
         //TextureFormat.BGRA32
         Texture2D reordered_textures = new Texture2D((mat.mainTexture as Texture2D).width, (mat.mainTexture as Texture2D).height, TextureFormat.BGRA32, false);
@@ -104,7 +104,7 @@ public class TextureRegister : Singleton<TextureRegister> {
         Color32[] t_col = (mat.mainTexture as Texture2D).GetPixels32();
         reordered_textures.SetPixels32(t_col);
 
-        Voxon.DLL.tiletype texture = new Voxon.DLL.tiletype();
+        Voxon.tiletype texture = new Voxon.tiletype();
 
         texture.height = (IntPtr)reordered_textures.height;
         texture.width = (IntPtr)reordered_textures.width;
