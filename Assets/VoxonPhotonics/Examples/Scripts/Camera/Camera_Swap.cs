@@ -17,14 +17,14 @@ public class Camera_Swap : MonoBehaviour {
 		if(Voxon.Input.GetKeyDown("CameraSwapUp"))
         {
             camera_index = Mathf.Min(++camera_index, cameras.Length - 1);
-            VXProcess.Instance.SetCamera(cameras[camera_index]);
+            VXProcess.Instance.Camera = cameras[camera_index];
             
         }
 
         if (Voxon.Input.GetKeyDown("CameraSwapDown"))
         {
             camera_index = Mathf.Max(--camera_index, 0);
-            VXProcess.Instance.SetCamera(cameras[camera_index]);
+            VXProcess.Instance.Camera = cameras[camera_index];
             
         }
     }

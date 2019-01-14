@@ -35,7 +35,7 @@ namespace Voxon
 
         private void Update()
         {
-            cube.update_transform();
+            cube.Update();
         }
 
         private void OnDrawGizmos()

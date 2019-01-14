@@ -10,63 +10,15 @@ namespace Voxon
     [RequireComponent(typeof(ParticleSystem))]
     public class VXParticle : MonoBehaviour, IDrawable
     {
-
-        public struct vector3
+        public enum ParticleStyle
         {
-            public float x, y, z;
+            Billboard,
+            Box,
+            Mesh,
+            Sphere
         };
 
-        public struct vector4
-        {
-            public float x, y, z, filler;
-            public vector4(Vector3 values)
-            {
-                x = values.x;
-                y = values.y;
-                z = values.z;
-                filler = 0f;
-            }
-        };
-
-        public struct matrix3x4
-        {
-            public vector4 r, d, f, p;
-            public matrix3x4(Vector3 rotations, Vector3 values, Vector3 scale)
-            {
-                // TODO Scaling doesn't work correctly current (Try setting the scale to 20,8.88, 20) there is a clear offset
-                p = new vector4();
-
-                p.x = values.x * scale.x;
-                p.y = -values.z * scale.z;
-                // Offset the z axis (depth)
-                p.z = -values.y * scale.y;
-
-                float cx, sx, cy, sy, cz, sz;
-                cx = Mathf.Cos(rotations.x); sx = Mathf.Sin(rotations.x);
-                cy = Mathf.Cos(rotations.y); sy = Mathf.Sin(rotations.y);
-                cz = Mathf.Cos(rotations.z); sz = Mathf.Sin(rotations.z);
-                // float cysz, sxsy, cxsy;
-
-                r = new vector4(new Vector3(cy * cz, -cx * sz + sx * sy * cz, sx * sz + cx * sy * cz));
-                d = new vector4(new Vector3(cy * sz, cx * cz + sx * sy * sz, -sx * cz + cx * sy * sz));
-                f = new vector4(new Vector3(-sy, sx * cy, cx * cy));
-
-                //d = new vector4(new Vector3(f.y*r.z - f.z*r.y, f.z * r.x - f.x * r.z, f.x * r.y - f.y * r.x));
-            }
-            public matrix3x4(Matrix4x4 source)
-            {
-                r.x = source.GetRow(0).x; r.y = source.GetRow(1).x; r.z = source.GetRow(2).x; r.filler = source.GetRow(3).x;
-                d.x = source.GetRow(0).y; d.y = source.GetRow(1).y; d.z = source.GetRow(2).y; d.filler = source.GetRow(3).y;
-                f.x = source.GetRow(0).z; f.y = source.GetRow(1).z; f.z = source.GetRow(2).z; f.filler = source.GetRow(3).z;
-                p.x = source.GetRow(0).w; p.y = source.GetRow(1).w; p.z = source.GetRow(2).w; p.filler = source.GetRow(3).w;
-            }
-        };
-
-        [DllImport("Poltex_Transform", CallingConvention = CallingConvention.Cdecl)]
-        protected static extern void transform_64(poltex_t[] source, poltex_t[] dest, ref matrix3x4 rotransmat, int len);
-
-        [DllImport("Poltex_Transform", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void transform_mesh(poltex_t[] source, poltex_t[] dest, ref matrix3x4 rotransmat, int len);
+        public ParticleStyle particle_style = ParticleStyle.Billboard;
 
         private int draw_flags = 2 | 1 << 3; // 2 - Fill, and Draw from Texture buffer
 
@@ -115,38 +67,71 @@ namespace Voxon
                 Debug.Log(gameObject.name + ": Skipping");
                 return;
             }
-            if (renderMode == ParticleSystemRenderMode.Mesh)
+
+            switch (particle_style)
             {
-                if(tag == "Sphere")
-                {
+                case ParticleStyle.Billboard:
+                    Draw_Billboard();
+                    break;
+                case ParticleStyle.Box:
+                    Draw_Box();
+                    break;
+                case ParticleStyle.Mesh:
+                    if (renderMode == ParticleSystemRenderMode.Mesh)
+                    {
+                        Draw_Mesh();
+                    }
+                    break;
+                case ParticleStyle.Sphere:
                     Draw_Sphere();
-                }
-                else
-                {
-                    Draw_Mesh();
-                }
-                
-            }
-            else
-            {
-                Draw_Billboard();
+                    break;
+                default:
+                    break;
+
             }
         }
 
         public void Draw_Billboard()        
         {
-            Matrix4x4 FMatrix = Matrix4x4.Scale(new Vector3(2.0f, 0.8f, 2.0f)) * VXProcess.Instance._camera.transform.worldToLocalMatrix;
-
             n_Particles = m_particleSystem.GetParticles(m_Particles);
 
-            Vector3 l;
+            point3d point, min, max;
 
             for (int idx = 0; idx < n_Particles; ++idx)
             {
                 float size = m_Particles[idx].GetCurrentSize(m_particleSystem) * 0.05f;
-                l = FMatrix * m_Particles[idx].position;
+                point = (VXProcess.Instance.Transform * m_Particles[idx].position).toPoint3d();
+                min.x = point.x - size;
+                min.y = point.y;
+                min.z = point.z - size;
 
-                // Voxon.DLL.draw_box(l.x - size, -l.z, -l.y - size, l.x + size, -l.z, -l.y + size, 2, (m_Particles[idx].GetCurrentColor(m_particleSystem)).toInt());
+                max.x = point.x + size;
+                max.y = point.y;
+                max.z = point.z + size;
+
+                DLL.draw_box(ref min, ref max, 2, (m_Particles[idx].GetCurrentColor(m_particleSystem)).toInt());
+            }
+        }
+
+        public void Draw_Box()
+        {
+            n_Particles = m_particleSystem.GetParticles(m_Particles);
+
+            point3d point, min, max;
+
+            for (int idx = 0; idx < n_Particles; ++idx)
+            {
+                float size = m_Particles[idx].GetCurrentSize(m_particleSystem) * 0.05f;
+                point = (VXProcess.Instance.Transform * m_Particles[idx].position).toPoint3d();
+                min.x = point.x - size;
+                min.y = point.y - size;
+                min.z = point.z - size;
+
+                max.x = point.x + size;
+                max.y = point.y + size;
+                max.z = point.z + size;
+
+                DLL.draw_box(ref min, ref max, 2, (m_Particles[idx].GetCurrentColor(m_particleSystem)).toInt());
             }
         }
 
@@ -154,7 +139,7 @@ namespace Voxon
         {
             n_Particles = m_particleSystem.GetParticles(m_Particles);
 
-            Matrix4x4 FMatrix = Matrix4x4.Scale(new Vector3(2.0f, 0.8f, 2.0f)) * VXProcess.Instance._camera.transform.worldToLocalMatrix;
+            Matrix4x4 FMatrix = Matrix4x4.Scale(new Vector3(2.0f, 0.8f, 2.0f)) * VXProcess.Instance.Camera.transform.worldToLocalMatrix;
 
             for (int idx = 0; idx < n_Particles; ++idx)
             {
@@ -174,22 +159,16 @@ namespace Voxon
         // Draw Sphere
         public void Draw_Sphere()
         {
-            Matrix4x4 FMatrix = Matrix4x4.Scale(new Vector3(2.0f, 0.8f, 2.0f)) * VXProcess.Instance._camera.transform.worldToLocalMatrix;
-
             n_Particles = m_particleSystem.GetParticles(m_Particles);
 
-            Vector3 l;
+            point3d point;
 
             for (int idx = 0; idx < n_Particles; ++idx)
             {
                 float size = m_Particles[idx].GetCurrentSize(m_particleSystem) * 0.05f;
-                l = FMatrix * m_Particles[idx].position;
+                point = (VXProcess.Instance.Transform * m_Particles[idx].position).toPoint3d();
 
-                // int tmpInt = ((m_Particles[idx].GetCurrentColor(m_particleSystem)).toInt() & 0xffffff) >> 0;
-                // string st = l.x.ToString() + "," + (-l.z).ToString() + "," + (-l.y).ToString() + ": " + tmpInt.ToString();
-                // Debug.Log(st);
-                // Voxon.DLL.draw_line(l.x, -l.z, -l.y, l.x, l.z, l.y, ((m_Particles[idx].GetCurrentColor(m_particleSystem)).toInt() & 0xffffff) >> 0);
-                //Voxon.DLL.draw_sphere(l.x, -l.z, -l.y, size, 0, ((m_Particles[idx].GetCurrentColor(m_particleSystem)).toInt() & 0xffffff) >> 0);
+                DLL.draw_sphere(ref point, size, 0, ((m_Particles[idx].GetCurrentColor(m_particleSystem)).toInt() & 0xffffff) >> 0);
 
             }
         }

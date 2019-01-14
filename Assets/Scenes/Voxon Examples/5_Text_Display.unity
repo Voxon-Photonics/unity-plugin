@@ -141,7 +141,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _guidelines: 1
-  _camera: {fileID: 36174066}
+  _editor_camera: {fileID: 36174066}
   active: 1
 --- !u!4 &6125914
 Transform:

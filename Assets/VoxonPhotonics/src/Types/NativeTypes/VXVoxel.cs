@@ -37,7 +37,7 @@ namespace Voxon
 
         public void update_transform()
         {
-            Matrix4x4 FMatrix = Matrix4x4.Scale(new Vector3(2.0f, 0.8f, 2.0f)) * VXProcess.Instance._camera.transform.worldToLocalMatrix;
+            Matrix4x4 FMatrix = Matrix4x4.Scale(new Vector3(2.0f, 0.8f, 2.0f)) * VXProcess.Instance.Camera.transform.worldToLocalMatrix;
 
             Vector3 in_v = FMatrix * vector;
             _position = in_v.toPoint3d();

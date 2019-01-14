@@ -141,7 +141,7 @@ namespace Voxon
                     mesh.update_baked_mesh(sm_rend, ref Umesh);
                 }
                 
-                if (sm_rend || VXProcess.Instance._camera.transform.hasChanged || transform.hasChanged || tag_was == "VoxieHide")
+                if (sm_rend || (VXProcess.Instance.HasChanged == true) || transform.hasChanged || tag_was == "VoxieHide")
                 {
                     BuildMesh();
                 }
@@ -179,10 +179,7 @@ namespace Voxon
                 // Set Model View transform
                 Matrix4x4 Matrix;
                 Matrix = transform.localToWorldMatrix;
-                Matrix = VXProcess.Instance._camera.transform.worldToLocalMatrix * Matrix;
-                Matrix = Matrix4x4.Scale(new Vector3(2.0f, 0.8f, 2.0f)) * Matrix;
-
-                
+                Matrix = VXProcess.Instance.Transform * Matrix;
 
                 if (sm_rend)
                 {

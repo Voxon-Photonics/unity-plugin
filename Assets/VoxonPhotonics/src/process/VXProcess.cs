@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class VXProcess : Singleton<VXProcess> {
 
+   
     #region constants
     // Magic Numbers
     const int MAXCONTROLLERS = 4;
@@ -16,31 +17,63 @@ public class VXProcess : Singleton<VXProcess> {
     public bool _guidelines = false;
 
     [Tooltip("Collision 'Camera'\nUtilises GameObject Scale, Rotation and Position")]
-    public GameObject _camera;
+    [SerializeField]
+    private GameObject _editor_camera;
 
     [Tooltip("Disable to turn off VXProcess behaviour")]
     public bool active = true;
     #endregion
 
-
-    // Drawable Items
+    #region drawables
     public static List<Voxon.IDrawable> _drawables = new List<Voxon.IDrawable>(); 
     public static List<Voxon.VXGameObject> _gameobjects = new List<Voxon.VXGameObject>();
-
-    public static List<string> _logger = new List<string>();
-
-    #region internal_vars
-    Matrix4x4 _matrix_scale = Matrix4x4.Scale(new Vector3(2.0f, 0.8f, 2.0f));
     #endregion
 
-    // Use this for initialization
+    #region internal_vars
+    Voxon.VolumetricCamera _camera = new Voxon.VolumetricCamera();
+    static List<string> _logger = new List<string>();
+    #endregion
+
+    #region getters_setters
+    public GameObject Camera
+    {
+        get { if (_camera != null) { return _camera.Camera; } else return null; }
+        set { _camera.Camera = value; }
+    }
+
+    public Matrix4x4 Transform
+    {
+        get { return _camera.Transform; }
+    }
+
+    public Vector3 EulerAngles
+    {
+        get { return _camera.EulerAngles; }
+        set { _camera.EulerAngles = value; }
+    }
+
+    public bool HasChanged
+    {
+        get { return _camera.HasChanged; }
+    }
+    #endregion
+
+    #region unity_functions
+    private void Awake()
+    {
+        _drawables.Clear();
+        _gameobjects.Clear();
+    }
+
     void Start () {
+
+        Camera = _editor_camera;
         // Should VX Load?
-        if(!active)
+        if (!active)
         {
             return;
         }
-        else if (_camera == null)
+        else if (_camera.Camera == null)
         {
             Debug.Log("No Camera Assigned. Disabling");
             active = false;
@@ -98,15 +131,14 @@ public class VXProcess : Singleton<VXProcess> {
             Voxon.DLL.draw_guidelines();
 
         // A camera must always be active while in process
-        if (_camera == null)
+        if (_camera != null && _camera.Camera == null)
         {
-            SetCamera(gameObject);
+            this.Camera = gameObject;
         }
-
 
         Draw();
 
-        _camera.transform.hasChanged = false;
+        if(_camera != null) _camera.ClearUpdated();
 
         // VX quit command; TODO this should be by choice
         if (Voxon.DLL.getkey(0x1) != 0 || !is_breathing)
@@ -125,13 +157,6 @@ public class VXProcess : Singleton<VXProcess> {
         Voxon.DLL.end_frame();
     }
 
-    public void SetCamera(GameObject camera)
-    {
-        _camera = camera;
-        _camera.transform.hasChanged = true;
-        _matrix_scale = Matrix4x4.Scale(camera.transform.localScale);
-    }
-
     private new void OnApplicationQuit()
     {
         Voxon.DLL.Shutdown();
@@ -139,6 +164,9 @@ public class VXProcess : Singleton<VXProcess> {
         base.OnApplicationQuit();
     }
 
+    #endregion
+
+    #region drawing
     private void Draw()
     {
         foreach (var go in _drawables)
@@ -156,12 +184,14 @@ public class VXProcess : Singleton<VXProcess> {
             Voxon.DLL.debug_log(0, 64 + (idx * 8), _logger[idx]);
         }
     }
-
+    
     public void add_log_line(string str)
     {
         _logger.Add(str);
     }
+    #endregion
 
+    #region computing_transforms
     public static void ComputeTransform(ref Matrix4x4 target_world, ref Vector3[] vertices, ref Voxon.point3d[] out_poltex)
     {
         if (vertices.Length != out_poltex.Length)
@@ -170,7 +200,7 @@ public class VXProcess : Singleton<VXProcess> {
         }
 
         // Build Camera transform
-        Matrix4x4 Matrix = Instance._matrix_scale * Instance._camera.transform.worldToLocalMatrix * target_world;
+        Matrix4x4 Matrix = Instance.Transform * target_world;
 
         Vector4 in_v;
         for (int idx = vertices.Length - 1; idx >= 0; --idx)
@@ -193,7 +223,7 @@ public class VXProcess : Singleton<VXProcess> {
         }
 
         // Build Camera transform
-        Matrix4x4 Matrix = Instance._matrix_scale * Instance._camera.transform.worldToLocalMatrix * target_world;
+        Matrix4x4 Matrix = Instance.Transform * target_world;
 
         Vector4 in_v;
         for (int idx = vertices.Length - 1; idx >= 0; --idx)
@@ -216,4 +246,5 @@ public class VXProcess : Singleton<VXProcess> {
 
         ComputeTransform(ref target, ref vertices, ref uvs, ref out_poltex);
     }
+    #endregion
 }
