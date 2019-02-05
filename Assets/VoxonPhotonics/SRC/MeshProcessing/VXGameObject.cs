@@ -43,7 +43,7 @@ namespace Voxon
                 {
                     continue;
                 }
-                if(child.gameObject.GetComponent<ParticleSystem>())
+                if(child.gameObject.GetComponent<ParticleSystem>() || child.gameObject.GetComponent<LineRenderer>())
                 {
                     continue;
                 }

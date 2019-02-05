@@ -95,13 +95,13 @@ public class VXProcess : Singleton<VXProcess> {
         var pack = FindObjectsOfType<Renderer>();
         foreach (Renderer piece in pack)
         {
-            if(piece.gameObject.GetComponent<ParticleSystem>() && !piece.gameObject.GetComponent<Voxon.VXParticle>())
+            if(piece.gameObject.GetComponent<ParticleSystem>())
             {
-                piece.gameObject.AddComponent<Voxon.VXParticle>();
+                continue;
             }
-            else if(piece.gameObject.GetComponent<LineRenderer>() && !piece.gameObject.GetComponent<Voxon.VXLine>())
+            else if(piece.gameObject.GetComponent<LineRenderer>() && !piece.gameObject.GetComponent<Voxon.Line>())
             {
-                piece.gameObject.AddComponent<Voxon.VXLine>();
+                piece.gameObject.AddComponent<Voxon.Line>();
             }
             else
             {
@@ -205,6 +205,7 @@ public class VXProcess : Singleton<VXProcess> {
         Vector4 in_v;
         for (int idx = vertices.Length - 1; idx >= 0; --idx)
         {
+
             in_v = new Vector4(vertices[idx].x, vertices[idx].y, vertices[idx].z, 1.0f);
 
             in_v = Matrix * in_v;

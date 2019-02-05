@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657907, g: 0.49641332, b: 0.5748179, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -170,7 +170,7 @@ GameObject:
   - component: {fileID: 133353336}
   - component: {fileID: 133353338}
   - component: {fileID: 133353337}
-  - component: {fileID: 133353339}
+  - component: {fileID: 133353340}
   m_Layer: 0
   m_Name: FireBoxes_M
   m_TagString: Untagged
@@ -306,7 +306,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1016340097
+  randomSeed: -1558730751
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3607,7 +3607,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
---- !u!114 &133353339
+--- !u!114 &133353340
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -3615,7 +3615,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 133353335}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39febc61753334547ac907d8652f3094, type: 3}
+  m_Script: {fileID: 11500000, guid: 9e7baa45f9d48fc468b238d931188c17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   particle_style: 2
@@ -7163,7 +7163,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &397513561
 Transform:
   m_ObjectHideFlags: 0
@@ -31785,7 +31785,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &824977443
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32070,7 +32070,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1282528548
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32194,7 +32194,6 @@ GameObject:
   - component: {fileID: 1325089728}
   - component: {fileID: 1325089730}
   - component: {fileID: 1325089729}
-  - component: {fileID: 1325089731}
   m_Layer: 0
   m_Name: FireBoxes_S
   m_TagString: Sphere
@@ -35631,18 +35630,6 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
---- !u!114 &1325089731
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1325089727}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39febc61753334547ac907d8652f3094, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  particle_style: 3
 --- !u!1 &1336142401
 GameObject:
   m_ObjectHideFlags: 0
@@ -35738,7 +35725,6 @@ GameObject:
   - component: {fileID: 1370633925}
   - component: {fileID: 1370633927}
   - component: {fileID: 1370633926}
-  - component: {fileID: 1370633928}
   m_Layer: 0
   m_Name: FireBoxes_B
   m_TagString: Sphere
@@ -39175,18 +39161,6 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
---- !u!114 &1370633928
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1370633924}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39febc61753334547ac907d8652f3094, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  particle_style: 0
 --- !u!1 &1390448294
 GameObject:
   m_ObjectHideFlags: 0
@@ -39227,10 +39201,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1390448294}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39febc61753334547ac907d8652f3094, type: 3}
+  m_Script: {fileID: 11500000, guid: 9e7baa45f9d48fc468b238d931188c17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particle_style: 1
+  particle_style: 3
 --- !u!199 &1390448297
 ParticleSystemRenderer:
   serializedVersion: 4
@@ -39267,7 +39241,7 @@ ParticleSystemRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_RenderMode: 0
+  m_RenderMode: 4
   m_SortMode: 0
   m_MinParticleSize: 0
   m_MaxParticleSize: 0.5
@@ -39280,7 +39254,7 @@ ParticleSystemRenderer:
   m_Pivot: {x: 0, y: -0.15, z: 0}
   m_UseCustomVertexStreams: 0
   m_VertexStreams: 00010304
-  m_Mesh: {fileID: 4300000, guid: 4a7d5e38bd60f6e4c891961c69dba2e8, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 2d47761739036e74484a3b009fc67cba, type: 3}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
@@ -39345,7 +39319,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -901118348
+  randomSeed: -380951339
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -39497,7 +39471,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.5
+      scalar: 1
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -42656,7 +42630,6 @@ GameObject:
   - component: {fileID: 1607475657}
   - component: {fileID: 1607475659}
   - component: {fileID: 1607475658}
-  - component: {fileID: 1607475660}
   m_Layer: 0
   m_Name: PoolParticles
   m_TagString: Untagged
@@ -46092,18 +46065,6 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
---- !u!114 &1607475660
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1607475656}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39febc61753334547ac907d8652f3094, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  particle_style: 1
 --- !u!1 &1611108108
 GameObject:
   m_ObjectHideFlags: 0
@@ -46118,7 +46079,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1611108109
 Transform:
   m_ObjectHideFlags: 0
@@ -56933,7 +56894,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1966770083
 MonoBehaviour:
   m_ObjectHideFlags: 0
