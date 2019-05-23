@@ -42,7 +42,7 @@ namespace Voxon
         public void Draw()
         {
             model.Update();
-            Voxon.DLL.draw_box(ref model.Point3dPosition[0], ref model.Point3dPosition[1], model.Fill, model.Color);
+			VXProcess.runtime.DrawBox(ref model.Point3dPosition[0], ref model.Point3dPosition[1], model.Fill, model.Color);
         }
         #endregion
 

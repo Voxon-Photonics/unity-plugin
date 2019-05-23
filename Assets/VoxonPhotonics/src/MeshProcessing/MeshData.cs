@@ -9,7 +9,7 @@ namespace Voxon
     {
         // Mesh Data
         [SerializeField]
-        public poltex_t[] vertices;
+        public poltex[] vertices;
         [SerializeField]
         public string name;
         [SerializeField]

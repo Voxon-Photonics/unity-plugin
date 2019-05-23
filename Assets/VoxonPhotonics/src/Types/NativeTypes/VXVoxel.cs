@@ -21,7 +21,7 @@ namespace Voxon
 
         public void Draw()
         {
-            Voxon.DLL.draw_voxel(ref _position, col);
+			VXProcess.runtime.DrawVoxel(ref _position, col);
         }
             
         public void set_color(Color32 _col)

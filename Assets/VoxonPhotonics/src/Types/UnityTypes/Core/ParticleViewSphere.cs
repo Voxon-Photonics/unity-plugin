@@ -24,7 +24,7 @@ namespace Voxon
                 float size = model.GetParticleSize(idx);
                 point = model.GetParticle(idx);
 
-                DLL.draw_sphere(ref point, size, 0, model.GetParticleColour(idx));
+				VXProcess.runtime.DrawSphere(ref point, size, 0, model.GetParticleColour(idx));
 
             }
         }

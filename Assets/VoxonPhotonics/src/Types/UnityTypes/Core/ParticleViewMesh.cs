@@ -8,7 +8,7 @@ namespace Voxon
     public class ParticleViewMesh : ParticleView
     {
         RegisteredMesh mesh;
-        poltex_t[] transformed_mesh;
+        poltex[] transformed_mesh;
 
         int draw_flags = 2 | 1 << 3; // 2 - Fill, and Draw from Texture buffer
 
@@ -19,7 +19,7 @@ namespace Voxon
             try
             {
                 mesh = MeshRegister.Instance.get_registed_mesh(ref in_mesh);
-                transformed_mesh = new poltex_t[mesh.vertex_count];
+                transformed_mesh = new poltex[mesh.vertex_count];
             }
             catch (Exception E)
             {
@@ -45,7 +45,7 @@ namespace Voxon
 
                 for (int idy = mesh.submesh_count - 1; idy >= 0; --idy)
                 {
-                    DLL.draw_untextured_mesh(transformed_mesh, mesh.vertex_count, mesh.indices[idy], mesh.index_counts[idy], draw_flags, model.GetParticleColour(idx));
+					VXProcess.runtime.DrawUntexturedMesh(transformed_mesh, mesh.vertex_count, mesh.indices[idy], mesh.index_counts[idy], draw_flags, model.GetParticleColour(idx));
                 }
             }
         }

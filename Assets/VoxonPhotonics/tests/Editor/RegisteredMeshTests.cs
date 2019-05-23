@@ -91,9 +91,9 @@ public class RegisteredMeshTests
     [Test]
     public void buildPoltex()
     {
-        Voxon.poltex_t pol = RegisteredMesh.build_poltex(new Vector3(1, 2, 3), new Vector2(4, 5), 6);
+        Voxon.poltex pol = RegisteredMesh.build_poltex(new Vector3(1, 2, 3), new Vector2(4, 5), 6);
 
-        Voxon.poltex_t expected_pol = new Voxon.poltex_t();
+        Voxon.poltex expected_pol = new Voxon.poltex();
         expected_pol.x = 1;
         expected_pol.y = 2;
         expected_pol.z = 3;
@@ -168,7 +168,7 @@ public class RegisteredMeshTests
         Mesh mesh = go.GetComponent<MeshFilter>().sharedMesh;
         RegisteredMesh testRM = new RegisteredMesh(ref mesh);
 
-        Voxon.poltex_t[] vt = new Voxon.poltex_t[mesh.vertexCount];
+        Voxon.poltex[] vt = new Voxon.poltex[mesh.vertexCount];
 
         Matrix4x4 mat = Matrix4x4.identity;
 
@@ -210,7 +210,7 @@ public class RegisteredMeshTests
         Mesh mesh = go.GetComponent<MeshFilter>().sharedMesh;
         RegisteredMesh testRM = new RegisteredMesh(ref mesh);
 
-        Voxon.poltex_t[] vt = new Voxon.poltex_t[mesh.vertexCount];
+        Voxon.poltex[] vt = new Voxon.poltex[mesh.vertexCount];
 
         Matrix4x4 mat = Matrix4x4.Scale(new Vector3(2, 2, 2));
 
@@ -240,7 +240,7 @@ public class RegisteredMeshTests
         Mesh mesh = go.GetComponent<MeshFilter>().sharedMesh;
         RegisteredMesh testRM = new RegisteredMesh(ref mesh);
 
-        Voxon.poltex_t[] vt = new Voxon.poltex_t[mesh.vertexCount];
+        Voxon.poltex[] vt = new Voxon.poltex[mesh.vertexCount];
 
         Matrix4x4 mat = Matrix4x4.Translate(new Vector3(2, 2, 2));
 
@@ -271,7 +271,7 @@ public class RegisteredMeshTests
         Mesh mesh = go.GetComponent<MeshFilter>().sharedMesh;
         RegisteredMesh testRM = new RegisteredMesh(ref mesh);
 
-        Voxon.poltex_t[] vt = new Voxon.poltex_t[mesh.vertexCount];
+        Voxon.poltex[] vt = new Voxon.poltex[mesh.vertexCount];
 
         Matrix4x4 mat = Matrix4x4.Rotate(Quaternion.AngleAxis(-90, new Vector3(1, 0, 0)));
 
@@ -302,7 +302,7 @@ public class RegisteredMeshTests
         Mesh mesh = go.GetComponent<MeshFilter>().sharedMesh;
         RegisteredMesh testRM = new RegisteredMesh(ref mesh);
 
-        Voxon.poltex_t[] vt = new Voxon.poltex_t[mesh.vertexCount];
+        Voxon.poltex[] vt = new Voxon.poltex[mesh.vertexCount];
 
         Matrix4x4 mat = Matrix4x4.TRS(new Vector3(2, 2, 2), Quaternion.AngleAxis(90, new Vector3(1, 0, 0)), new Vector3(2, 2, 2));
 
@@ -346,7 +346,7 @@ public class RegisteredMeshTests
         Mesh mesh = go.GetComponent<MeshFilter>().sharedMesh;
         RegisteredMesh testRM = new RegisteredMesh(ref mesh);
 
-        Voxon.poltex_t[] vt = new Voxon.poltex_t[mesh.vertexCount];
+        Voxon.poltex[] vt = new Voxon.poltex[mesh.vertexCount];
 
         Matrix4x4 mat = Matrix4x4.identity;
 
@@ -389,7 +389,7 @@ public class RegisteredMeshTests
         Mesh mesh = go.GetComponent<MeshFilter>().sharedMesh;
         RegisteredMesh testRM = new RegisteredMesh(ref mesh);
 
-        Voxon.poltex_t[] vt = new Voxon.poltex_t[mesh.vertexCount];
+        Voxon.poltex[] vt = new Voxon.poltex[mesh.vertexCount];
 
         Matrix4x4 mat = Matrix4x4.Scale(new Vector3(2, 2, 2));
 
@@ -421,7 +421,7 @@ public class RegisteredMeshTests
         Mesh mesh = go.GetComponent<MeshFilter>().sharedMesh;
         RegisteredMesh testRM = new RegisteredMesh(ref mesh);
 
-        Voxon.poltex_t[] vt = new Voxon.poltex_t[mesh.vertexCount];
+        Voxon.poltex[] vt = new Voxon.poltex[mesh.vertexCount];
 
         Matrix4x4 mat = Matrix4x4.Translate(new Vector3(2, 2, 2));
 
@@ -454,7 +454,7 @@ public class RegisteredMeshTests
         Mesh mesh = go.GetComponent<MeshFilter>().sharedMesh;
         RegisteredMesh testRM = new RegisteredMesh(ref mesh);
 
-        Voxon.poltex_t[] vt = new Voxon.poltex_t[mesh.vertexCount];
+        Voxon.poltex[] vt = new Voxon.poltex[mesh.vertexCount];
 
         Matrix4x4 mat = Matrix4x4.Rotate(Quaternion.AngleAxis(-90, new Vector3(1, 0, 0)));
 
@@ -487,7 +487,7 @@ public class RegisteredMeshTests
         Mesh mesh = go.GetComponent<MeshFilter>().sharedMesh;
         RegisteredMesh testRM = new RegisteredMesh(ref mesh);
 
-        Voxon.poltex_t[] vt = new Voxon.poltex_t[mesh.vertexCount];
+        Voxon.poltex[] vt = new Voxon.poltex[mesh.vertexCount];
 
         Matrix4x4 mat = Matrix4x4.TRS(new Vector3(2, 2, 2), Quaternion.AngleAxis(90, new Vector3(1, 0, 0)), new Vector3(2, 2, 2));
 

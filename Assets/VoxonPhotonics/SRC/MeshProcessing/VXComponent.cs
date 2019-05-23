@@ -15,7 +15,7 @@ namespace Voxon
 
         // Mesh Data
         private RegisteredMesh mesh;
-        private poltex_t[] vt;   // List of vertices
+        private poltex[] vt;   // List of vertices
 
         private int submesh_n = 0;      // Count of Submeshes part of mesh
 
@@ -150,11 +150,11 @@ namespace Voxon
                 {
                     if (Umaterials[idx].mainTexture)
                     {
-                        Voxon.DLL.draw_textured_mesh(ref textures[idx], vt, mesh.vertex_count, mesh.indices[idx], mesh.index_counts[idx], draw_flags);
+						VXProcess.runtime.DrawTexturedMesh(ref textures[idx], vt, mesh.vertex_count, mesh.indices[idx], mesh.index_counts[idx], draw_flags);
                     }
                     else
                     {
-                        Voxon.DLL.draw_untextured_mesh(vt, mesh.vertex_count, mesh.indices[idx], mesh.index_counts[idx], draw_flags, rend.materials[idx].color.toInt());
+						VXProcess.runtime.DrawUntexturedMesh(vt, mesh.vertex_count, mesh.indices[idx], mesh.index_counts[idx], draw_flags, rend.materials[idx].color.toInt());
                     }
                 }
                 
@@ -203,7 +203,7 @@ namespace Voxon
             try
             {
                 mesh = MeshRegister.Instance.get_registed_mesh(ref Umesh);
-                vt = new poltex_t[mesh.vertex_count];
+                vt = new poltex[mesh.vertex_count];
 
                 BuildMesh();
             }

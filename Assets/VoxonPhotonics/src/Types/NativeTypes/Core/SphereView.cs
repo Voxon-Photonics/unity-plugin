@@ -43,7 +43,7 @@ namespace Voxon
         public void Draw()
         {
             model.Update();
-            Voxon.DLL.draw_sphere(ref model.Point3dPosition[0], model.Radius, model.Fill, model.Color);
+			VXProcess.runtime.DrawSphere(ref model.Point3dPosition[0], model.Radius, model.Fill, model.Color);
         }
         #endregion
 

@@ -16,7 +16,7 @@ namespace Voxon
                 Debug.LogError(E.Message);
             }
 
-            Voxon.DLL.Shutdown();
+			VXProcess.runtime.Shutdown();
         }
     }
 }

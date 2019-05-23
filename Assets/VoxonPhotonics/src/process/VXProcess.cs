@@ -10,10 +10,12 @@ public class VXProcess : Singleton<VXProcess> {
     #region constants
     // Magic Numbers
     const int MAXCONTROLLERS = 4;
-    #endregion
+	#endregion
 
-    #region inspector
-    [Tooltip("Will show capture volume of VX1 while emulating")]
+	public static Voxon.Runtime runtime;
+
+	#region inspector
+	[Tooltip("Will show capture volume of VX1 while emulating")]
     public bool _guidelines = false;
 
     [Tooltip("Collision 'Camera'\nUtilises GameObject Scale, Rotation and Position")]
@@ -80,11 +82,15 @@ public class VXProcess : Singleton<VXProcess> {
             return;
         }
 
+		if(runtime == null)
+		{
+			runtime = new Voxon.Runtime();
+		}
         // Load DLL
-        if (!Voxon.DLL.isLoaded())
+        if (!runtime.isLoaded())
         {
-            Voxon.DLL.Load();
-            Voxon.DLL.Initialise();
+			runtime.Load();
+			runtime.Initialise();
         }
         else
         {
@@ -123,12 +129,12 @@ public class VXProcess : Singleton<VXProcess> {
             return;
         }
 
-        bool is_breathing = Voxon.DLL.start_frame();
+        bool is_breathing = runtime.FrameStart();
 
-        AudioListener.volume = Voxon.DLL.get_volume();
+        AudioListener.volume = runtime.GetVolume();
 
         if (_guidelines)
-            Voxon.DLL.draw_guidelines();
+            runtime.DrawGuidelines();
 
         // A camera must always be active while in process
         if (_camera != null && _camera.Camera == null)
@@ -141,10 +147,10 @@ public class VXProcess : Singleton<VXProcess> {
         if(_camera != null) _camera.ClearUpdated();
 
         // VX quit command; TODO this should be by choice
-        if (Voxon.DLL.getkey(0x1) != 0 || !is_breathing)
+        if (runtime.GetKey(0x1) || !is_breathing)
         {
-            Voxon.DLL.Shutdown();
-            Voxon.DLL.Unload();
+            runtime.Shutdown();
+            runtime.Unload();
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
 #elif UNITY_WEBPLAYER
@@ -154,13 +160,13 @@ public class VXProcess : Singleton<VXProcess> {
 #endif
         }
         
-        Voxon.DLL.end_frame();
+        runtime.FrameEnd();
     }
 
     private new void OnApplicationQuit()
     {
-        Voxon.DLL.Shutdown();
-        Voxon.DLL.Unload();
+        runtime.Shutdown();
+        runtime.Unload();
         base.OnApplicationQuit();
     }
 
@@ -181,7 +187,7 @@ public class VXProcess : Singleton<VXProcess> {
 
         for(int idx = 0; idx < _logger.Count; idx++)
         {
-            Voxon.DLL.debug_log(0, 64 + (idx * 8), _logger[idx]);
+            runtime.LogToScreen(0, 64 + (idx * 8), _logger[idx]);
         }
     }
     
@@ -216,7 +222,7 @@ public class VXProcess : Singleton<VXProcess> {
         }
     }
 
-    public static void ComputeTransform(ref Matrix4x4 target_world, ref Vector3[] vertices, ref Vector2[] uvs, ref Voxon.poltex_t[] out_poltex)
+    public static void ComputeTransform(ref Matrix4x4 target_world, ref Vector3[] vertices, ref Vector2[] uvs, ref Voxon.poltex[] out_poltex)
     {
         if(vertices.Length != out_poltex.Length)
         {
@@ -241,7 +247,7 @@ public class VXProcess : Singleton<VXProcess> {
         }
     }
 
-    public static void ComputeTransform(ref Matrix4x4 target, ref Vector3[] vertices, ref Voxon.poltex_t[] out_poltex)
+    public static void ComputeTransform(ref Matrix4x4 target, ref Vector3[] vertices, ref Voxon.poltex[] out_poltex)
     {
         Vector2[] uvs = new Vector2[vertices.Length];
 

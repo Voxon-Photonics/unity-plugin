@@ -113,17 +113,17 @@ public class Editor_Handler: MonoBehaviour {
         if (state == PlayModeStateChange.ExitingPlayMode)
         {
             Debug.Log("Editor Play Stopping : Shutting down VX1 Simulator");
-            Voxon.DLL.Shutdown();
+			VXProcess.runtime.Shutdown();
         }
     }
 
     public static void DefaultPlayerSettings()
     {
         PlayerSettings.allowFullscreenSwitch = false;
-        PlayerSettings.defaultIsFullScreen = false;
+        PlayerSettings.fullScreenMode = FullScreenMode.ExclusiveFullScreen;
         PlayerSettings.defaultScreenHeight = 480;
         PlayerSettings.defaultScreenWidth = 640;
-        PlayerSettings.displayResolutionDialog = UnityEditor.ResolutionDialogSetting.Disabled;
+        // PlayerSettings.displayResolutionDialog = UnityEditor.ResolutionDialogSetting.Disabled;
         PlayerSettings.forceSingleInstance = true;
         PlayerSettings.resizableWindow = false;
         PlayerSettings.runInBackground = true;

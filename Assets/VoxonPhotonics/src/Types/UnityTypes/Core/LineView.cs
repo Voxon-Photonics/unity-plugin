@@ -46,7 +46,7 @@ namespace Voxon
 
             for (int idx = 0; idx < count; idx++)
             {
-                DLL.draw_line(ref points[idx], ref points[idx + 1], model.Color);
+				VXProcess.runtime.DrawLine(ref points[idx], ref points[idx + 1], model.Color);
             }
         }
         #endregion

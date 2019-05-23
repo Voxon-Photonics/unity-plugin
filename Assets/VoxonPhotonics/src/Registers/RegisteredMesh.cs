@@ -7,7 +7,7 @@ using System.Collections;
 [Serializable]
 public class RegisteredMesh {
     // Mesh Data
-    public Voxon.poltex_t[] vertices;
+    public Voxon.poltex[] vertices;
     public string name;
     public int vertex_count;        // Number of vertices
     public int submesh_count;      // Count of Submeshes part of mesh
@@ -36,7 +36,7 @@ public class RegisteredMesh {
             // Vertices
             vertex_count = mesh.vertexCount;
 
-            vertices = new Voxon.poltex_t[vertex_count];
+            vertices = new Voxon.poltex[vertex_count];
             load_poltex(ref mesh);
 
             // UVs
@@ -95,9 +95,11 @@ public class RegisteredMesh {
             index_counts = meshData.index_counts;
 
             List<Vector2> tmp_uvs = new List<Vector2>();
-            foreach(Voxon.poltex_t vert in meshData.vertices)
+			List<Vector3> tmp_verts = new List<Vector3>();
+			foreach (Voxon.poltex vert in meshData.vertices)
             {
                 tmp_uvs.Add(new Vector2(vert.u, vert.v));
+				tmp_verts.Add(new Vector3(vert.x, vert.y, vert.z));
             }
 
             // Set up output buffer; the assigned data array will change per instance
@@ -105,8 +107,9 @@ public class RegisteredMesh {
 
             cbufferI_uvs = new ComputeBuffer(vertex_count, sizeof(float) * 2, ComputeBufferType.Default);
             cbufferI_uvs.SetData(tmp_uvs.ToArray());
+
             cbufferI_vertices = new ComputeBuffer(vertex_count, sizeof(float) * 3, ComputeBufferType.Default);
-            cbufferI_vertices.SetData(meshData.vertices);
+            cbufferI_vertices.SetData(tmp_verts.ToArray());
 
         }
         catch (Exception E)
@@ -129,9 +132,9 @@ public class RegisteredMesh {
         return counter > 0;
     }
 
-    public static Voxon.poltex_t build_poltex(Vector3 pos, Vector2 uv, int col)
+    public static Voxon.poltex build_poltex(Vector3 pos, Vector2 uv, int col)
     {
-        Voxon.poltex_t _T = new Voxon.poltex_t();
+        Voxon.poltex _T = new Voxon.poltex();
         _T.x = pos.x;
         _T.y = pos.y;
         _T.z = pos.z;
@@ -204,7 +207,7 @@ public class RegisteredMesh {
     ///  Compute Shader call. Set up Kernel, define tranform values and dispatches GPU threads
     ///  Currently only sends thin batches; should see to increase this in future.
     ///  </summary>
-    public void compute_transform_gpu(Matrix4x4 Transform, ref Voxon.poltex_t[] vt, ref Mesh mesh)
+    public void compute_transform_gpu(Matrix4x4 Transform, ref Voxon.poltex[] vt, ref Mesh mesh)
     {
         
         try
@@ -233,7 +236,7 @@ public class RegisteredMesh {
         }
     }
 
-    public void compute_transform_cpu(Matrix4x4 component, ref Voxon.poltex_t[] vt)
+    public void compute_transform_cpu(Matrix4x4 component, ref Voxon.poltex[] vt)
     {
         Vector4 in_v = Vector4.one;
 
@@ -258,15 +261,15 @@ public class RegisteredMesh {
 
     public void destroy()
     {
-        if (cbufferI_uvs != null)
+        if (cbufferI_uvs.IsValid())
         {
             cbufferI_uvs.Release();
         }
-        if (cbufferI_vertices != null)
+        if (cbufferI_vertices.IsValid())
         {
             cbufferI_vertices.Release();
         }
-        if (cbufferO_poltex != null)
+        if (cbufferO_poltex.IsValid())
         {
             cbufferO_poltex.Release();
         }

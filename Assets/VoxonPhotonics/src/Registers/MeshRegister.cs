@@ -30,6 +30,10 @@ public class MeshRegister : Singleton<MeshRegister> {
                 Register.Add(md[idx].name, new RegisteredMesh(ref md[idx]));
             }
         }
+		catch
+		{
+			Debug.Log("Deserialise error on " + s.Name);
+		}
         finally
         {
             s.Close();

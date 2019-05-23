@@ -97,7 +97,7 @@ namespace Voxon
                 return;
             }
 
-            Voxon.DLL.draw_letters(ref pp, ref pr, ref pd, _color, ts);
+			VXProcess.runtime.DrawLetters(ref pp, ref pr, ref pd, _color, ts);
         }
 
         private void OnDestroy()

@@ -36,7 +36,7 @@ namespace Voxon
         public void Draw()
         {
             point3d[] point3D = { cubeModel.P3DPosition, cubeModel.P3DRight, cubeModel.P3DDown, cubeModel.P3DForward };
-            Voxon.DLL.draw_cube(ref point3D[0], ref point3D[1], ref point3D[2], ref point3D[3], cubeModel.Fill, cubeModel.Color);
+			VXProcess.runtime.DrawCube(ref point3D[0], ref point3D[1], ref point3D[2], ref point3D[3], cubeModel.Fill, cubeModel.Color);
         }
     }
 }

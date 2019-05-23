@@ -14,17 +14,17 @@ namespace Voxon
         // Keyboard Input
         public static bool GetKey(string key_name)
         {
-            return Voxon.DLL.get_key((int)InputController.GetKey(key_name));
+            return VXProcess.runtime.GetKey((int)InputController.GetKey(key_name));
         }
 
         public static bool GetKeyUp(string key_name)
         {
-            return Voxon.DLL.get_key_up((int)InputController.GetKey(key_name));
+            return VXProcess.runtime.GetKeyUp((int)InputController.GetKey(key_name));
         }
 
         public static bool GetKeyDown(string key_name)
         {
-            return Voxon.DLL.get_key_down((int)InputController.GetKey(key_name));
+            return VXProcess.runtime.GetKeyDown((int)InputController.GetKey(key_name));
         }
 
         // Player 1 Default Input
@@ -51,37 +51,37 @@ namespace Voxon
         // Multiplayer Input
         public static bool GetButton(string button_name, int player)
         {
-            return Voxon.DLL.get_button((int)InputController.GetButton(button_name, player), player);
+            return VXProcess.runtime.GetButton((int)InputController.GetButton(button_name, player), player);
         }
 
         public static bool GetButtonDown(string button_name, int player)
         {
-            return Voxon.DLL.get_button_down((int)InputController.GetButton(button_name, player), player);
+            return VXProcess.runtime.GetButtonDown((int)InputController.GetButton(button_name, player), player);
         }
 
         public static bool GetButtonUp(string button_name, int player)
         {
-            return Voxon.DLL.get_button_up((int)InputController.GetButton(button_name, player), player);
+            return VXProcess.runtime.GetButtonUp((int)InputController.GetButton(button_name, player), player);
         }
 
         public static float GetAxis(string axis_name, int player)
         {
-            return Voxon.DLL.get_axis((int)InputController.GetAxis(axis_name, player), player);
+            return VXProcess.runtime.GetAxis((int)InputController.GetAxis(axis_name, player), player);
         }
 
         public static bool GetMouseButtonDown(string button_name)
         {
-            return Voxon.DLL.get_mouse_button_down((int)InputController.GetMouseButton(button_name));
+            return VXProcess.runtime.GetMouseButtonDown((int)InputController.GetMouseButton(button_name));
         }
 
         public static bool GetMouseButton(string button_name)
         {
-            return Voxon.DLL.get_mouse_button((int)InputController.GetMouseButton(button_name));
+            return VXProcess.runtime.GetMouseButton((int)InputController.GetMouseButton(button_name));
         }
 
         public static Mouse_Position GetMousePos()
         {
-            return new Mouse_Position(Voxon.DLL.get_mouse_position());
+            return new Mouse_Position(VXProcess.runtime.GetMousePosition());
         }
     }
 }

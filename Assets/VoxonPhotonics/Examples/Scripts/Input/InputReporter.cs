@@ -13,7 +13,7 @@ public class InputReporter : MonoBehaviour {
         int but = (int)InputController.GetButton("Jump", 1);
         for (int i = 0; i < 4; i++)
         {
-            if (Voxon.DLL.get_button_down(but, i))
+            if (VXProcess.runtime.GetButtonDown(but, i))
             {
                 VXProcess.Instance.add_log_line("Player " + i);
             }

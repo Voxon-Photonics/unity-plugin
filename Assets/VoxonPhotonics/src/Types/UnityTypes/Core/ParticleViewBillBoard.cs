@@ -32,7 +32,7 @@ namespace Voxon
                 max.y = point.y;
                 max.z = point.z + size;
 
-                DLL.draw_box(ref min, ref max, 2, model.GetParticleColour(idx));
+				VXProcess.runtime.DrawBox(ref min, ref max, 2, model.GetParticleColour(idx));
             }
         }
         #endregion

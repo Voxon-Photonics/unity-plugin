@@ -6,23 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
-  - enabled: 0
     path: Assets/Scenes/Voxon Examples/3_Particles.unity
     guid: 0085ba01242d6bc4ca6c80b86b343567
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Voxon Examples/1_SpawningObjects.unity
     guid: 2bdc52bdc1c31a84eba8cbb28e684536
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
-  - enabled: 1
-    path: Assets/LineTest.unity
-    guid: eb33d401709e1b242aaa2112508f3dfc
+  m_configObjects: {}

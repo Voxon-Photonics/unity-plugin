@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.Build;
+using UnityEditor.Build.Reporting;
 
 [InitializeOnLoadAttribute]
-public class Unity_BuildPreprocessor : IPreprocessBuild {
+public class Unity_BuildPreprocessor : IPreprocessBuildWithReport {
 
     public int callbackOrder {  get { return 0;  } }
-	public void OnPreprocessBuild(BuildTarget target, string path)
+	public void OnPreprocessBuild(BuildReport report)
     {
 
         if (!AssetDatabase.IsValidFolder("Assets/StreamingAssets"))
