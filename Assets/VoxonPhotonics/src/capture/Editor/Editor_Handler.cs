@@ -11,7 +11,7 @@ public class Editor_Handler: MonoBehaviour {
 
     static Editor_Handler()
     {
-        EditorApplication.playModeStateChanged += PlayStateChange;
+		EditorApplication.playModeStateChanged += PlayStateChange;
         try
         {
             if (FindObjectOfType<VXProcess>() == null)
@@ -110,7 +110,7 @@ public class Editor_Handler: MonoBehaviour {
     private static void PlayStateChange(PlayModeStateChange state)
     {
         // Handle Editor play states (block Play when Input disabled / close VX when Play stopped)
-        if (state == PlayModeStateChange.ExitingPlayMode)
+        if (state == PlayModeStateChange.ExitingPlayMode && VXProcess.runtime != null)
         {
             Debug.Log("Editor Play Stopping : Shutting down VX1 Simulator");
 			VXProcess.runtime.Shutdown();
@@ -119,11 +119,17 @@ public class Editor_Handler: MonoBehaviour {
 
     public static void DefaultPlayerSettings()
     {
-        PlayerSettings.allowFullscreenSwitch = false;
-        PlayerSettings.fullScreenMode = FullScreenMode.ExclusiveFullScreen;
+#if UNITY_2017
+		PlayerSettings.displayResolutionDialog = UnityEditor.ResolutionDialogSetting.Disabled;
+		PlayerSettings.defaultIsFullScreen = true;
+#else
+		PlayerSettings.fullScreenMode = FullScreenMode.ExclusiveFullScreen;
+#endif
+
+		PlayerSettings.SetApiCompatibilityLevel(BuildTargetGroup.Standalone, ApiCompatibilityLevel.NET_4_6);
+		PlayerSettings.allowFullscreenSwitch = false;        
         PlayerSettings.defaultScreenHeight = 480;
         PlayerSettings.defaultScreenWidth = 640;
-        // PlayerSettings.displayResolutionDialog = UnityEditor.ResolutionDialogSetting.Disabled;
         PlayerSettings.forceSingleInstance = true;
         PlayerSettings.resizableWindow = false;
         PlayerSettings.runInBackground = true;

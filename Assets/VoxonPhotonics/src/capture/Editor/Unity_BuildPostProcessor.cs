@@ -3,6 +3,37 @@ using UnityEditor.Build;
 using UnityEngine;
 using System.IO;
 using System;
+#if UNITY_2017
+
+class Unity_BuildPostProcessor : IPostprocessBuild
+{
+	public int callbackOrder { get { return 0; } }
+	public void OnPostprocessBuild(BuildTarget target, string path)
+	{
+		string file_name = System.IO.Path.GetFileName(path);
+		string output_directory = System.IO.Path.GetDirectoryName(path);
+
+		// Generate Batch executable
+		string batch_contents = string.Format("start \"\" \"{0}\" -batchmode", file_name);
+		StreamWriter writer = new StreamWriter(output_directory + "\\VX.bat");
+
+		try
+		{
+			writer.WriteLine(batch_contents);
+		}
+		catch (Exception E)
+		{
+			Debug.LogError("Unable to write batch file");
+			Debug.LogError(E.Message);
+		}
+		finally
+		{
+			writer.Close();
+		}
+	}
+}
+
+#else
 using UnityEditor.Build.Reporting;
 
 class Unity_BuildPostProcessor : IPostprocessBuildWithReport
@@ -43,3 +74,4 @@ class Unity_BuildPostProcessor : IPostprocessBuildWithReport
         }
     }
 }
+#endif

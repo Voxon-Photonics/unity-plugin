@@ -32,11 +32,11 @@ public class MeshRegister : Singleton<MeshRegister> {
         }
 		catch
 		{
-			Debug.Log("Deserialise error on " + s.Name);
+			Debug.LogError("Deserialise error on " + (Application.dataPath + "/StreamingAssets/MeshData.bin") + "\nRebuild MeshData file.");
 		}
         finally
         {
-            s.Close();
+			if(s != null) s.Close();
         }
     }
 

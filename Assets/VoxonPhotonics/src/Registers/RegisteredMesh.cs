@@ -27,7 +27,7 @@ public class RegisteredMesh {
     {
         try
         {
-            Debug.Log("Processing Mesh Data");
+            // Debug.Log("Processing Mesh Data");
             name = mesh.name;
 
             // Mesh Divisions
@@ -261,7 +261,21 @@ public class RegisteredMesh {
 
     public void destroy()
     {
-        if (cbufferI_uvs.IsValid())
+#if UNITY_2017
+		if (cbufferI_uvs != null)
+		{
+			cbufferI_uvs.Release();
+		}
+		if (cbufferI_vertices != null)
+		{
+			cbufferI_vertices.Release();
+		}
+		if (cbufferO_poltex != null)
+		{
+			cbufferO_poltex.Release();
+		}
+#else
+		if (cbufferI_uvs.IsValid())
         {
             cbufferI_uvs.Release();
         }
@@ -273,9 +287,10 @@ public class RegisteredMesh {
         {
             cbufferO_poltex.Release();
         }
-    }
+#endif
+	}
 
-    #if UNITY_EDITOR
+#if UNITY_EDITOR
     public Voxon.MeshData getMeshData()
     {
         Voxon.MeshData meshData = new Voxon.MeshData();
@@ -288,5 +303,5 @@ public class RegisteredMesh {
 
         return meshData;
     }
-    #endif
+#endif
 }

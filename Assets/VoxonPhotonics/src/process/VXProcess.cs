@@ -165,8 +165,11 @@ public class VXProcess : Singleton<VXProcess> {
 
     private new void OnApplicationQuit()
     {
-        runtime.Shutdown();
-        runtime.Unload();
+		if(runtime != null) {
+			runtime.Shutdown();
+			runtime.Unload();
+		}
+        
         base.OnApplicationQuit();
     }
 
