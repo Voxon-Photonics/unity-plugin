@@ -10,14 +10,16 @@ public class InputReporter : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        int but = (int)InputController.GetButton("Jump", 1);
-        for (int i = 0; i < 4; i++)
-        {
-            if (VXProcess.runtime.GetButtonDown(but, i))
-            {
-                VXProcess.Instance.add_log_line("Player " + i);
-            }
-        }
-	    
+		if (VXProcess.Instance.active)
+		{
+			int but = (int)InputController.GetButton("Jump", 1);
+			for (int i = 0; i < 4; i++)
+			{
+				if (VXProcess.runtime.GetButtonDown(but, i))
+				{
+					VXProcess.Instance.add_log_line("Player " + i);
+				}
+			}
+		}
 	}
 }

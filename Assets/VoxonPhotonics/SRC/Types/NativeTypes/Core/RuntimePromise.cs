@@ -10,7 +10,7 @@ namespace Voxon
      * is required. A new interface should be developed as this functionality
      * should remain.
      */
-	public interface IRuntimePromise
+	public interface ORuntimePromise
 	{
 		// Used to provide programs loading runtime a current list of available features
 		HashSet<string> GetFeatures();

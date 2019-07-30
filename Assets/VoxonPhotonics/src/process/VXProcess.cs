@@ -124,7 +124,7 @@ public class VXProcess : Singleton<VXProcess> {
     // Update is called once per frame
     void Update()
     {
-        if(!active)
+        if(!active && runtime != null)
         {
             return;
         }

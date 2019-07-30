@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
+using UnityEngine.Profiling;
 
 public class TextureRegister : Singleton<TextureRegister> {
 
@@ -47,7 +48,7 @@ public class TextureRegister : Singleton<TextureRegister> {
 
     public bool drop_tile(ref Material mat)
     {
-        if (Register.ContainsKey(mat.mainTexture.name))
+        if (Register != null && Register.ContainsKey(mat.mainTexture.name))
         {
             registered_tile rt = Register[(mat.mainTexture.name)];
             rt.counter--;

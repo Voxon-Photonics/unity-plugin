@@ -277,16 +277,22 @@ public class RegisteredMesh {
 #else
 		if (cbufferI_uvs.IsValid())
         {
-            cbufferI_uvs.Release();
-        }
+			cbufferI_uvs.Release();
+			cbufferI_uvs.Dispose();
+			cbufferI_uvs = null;
+		}
         if (cbufferI_vertices.IsValid())
         {
             cbufferI_vertices.Release();
-        }
+			cbufferI_vertices.Dispose();
+			cbufferI_vertices = null;
+		}
         if (cbufferO_poltex.IsValid())
         {
             cbufferO_poltex.Release();
-        }
+			cbufferO_poltex.Dispose();
+			cbufferO_poltex = null;
+		}
 #endif
 	}
 

@@ -92,9 +92,9 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     /// </summary>
     public void OnApplicationQuit()
     {
-#if UNITY_EDITOR
-#else
+// #if UNITY_EDITOR
+// #else
             applicationIsQuitting = true;
-#endif
+// #endif
     }
 }

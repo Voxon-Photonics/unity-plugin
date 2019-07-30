@@ -103,11 +103,11 @@ namespace Voxon
                 // Remove ourselves from Draw cycle
                 VXProcess._drawables.Remove(this);
 
-                // Free Mesh
-                if(Umesh)
+				// Free Mesh
+				if (Umesh && MeshRegister.active)
                     MeshRegister.Instance.drop_mesh(ref Umesh);
 
-                for (int submesh = 0; submesh < submesh_n; submesh++)
+				for (int submesh = 0; submesh < submesh_n; submesh++)
                 {
                     if (Umaterials[submesh].mainTexture)
                     {
@@ -200,6 +200,7 @@ namespace Voxon
 
         private void load_meshes()
         {
+			Profiler.BeginSample("Load Meshes");
             try
             {
                 mesh = MeshRegister.Instance.get_registed_mesh(ref Umesh);
@@ -211,11 +212,13 @@ namespace Voxon
             {
                 ExceptionHandler.Except("Error while Loading Mesh: " + gameObject.name, E);
             }
+			Profiler.EndSample();
         }
 
         private void load_textures()
         {
-            try
+			Profiler.BeginSample("Load Textures");
+			try
             {
                 textures = new tiletype[mesh.submesh_count];
                 for (int submesh = 0; submesh < mesh.submesh_count; submesh++)
@@ -230,6 +233,7 @@ namespace Voxon
             {
                 ExceptionHandler.Except("Error while Loading Textures: " + gameObject.name, E);
             }
+			Profiler.EndSample();
         }
     }
 }

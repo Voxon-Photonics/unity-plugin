@@ -11,6 +11,8 @@ public class MeshRegister : Singleton<MeshRegister> {
     public ComputeShader cshader_main;
     public int kernelHandle;
 
+	public static bool active = false;
+
     [SerializeField]
     private Dictionary<String, RegisteredMesh> Register;
 
@@ -38,7 +40,10 @@ public class MeshRegister : Singleton<MeshRegister> {
         {
 			if(s != null) s.Close();
         }
-    }
+
+		active = true;
+
+	}
 
     void Init()
     {
@@ -84,21 +89,17 @@ public class MeshRegister : Singleton<MeshRegister> {
 
     public bool drop_mesh(ref Mesh mesh)
     {
-        if (Register != null && Register.ContainsKey(mesh.name))
+		if (Register != null && Register.ContainsKey(mesh.name))
         {
-            RegisteredMesh rt = Register[(mesh.name)];
+			
+			RegisteredMesh rt = Register[mesh.name];
             rt.decrement();
 
-            // TODO decide when to drop mesh (disable mesh dropping for now)
-            /*
             if (!rt.isactive() && false)
             {
-                Register.Remove((mesh.name));
+                Register.Remove(mesh.name);
                 rt.destroy();
-
-                return true;
             }
-            */
         }
         return false;
     }
@@ -113,17 +114,24 @@ public class MeshRegister : Singleton<MeshRegister> {
         if (Register == null)
             return;
 
-        while (Register.Count > 0)
+		while (Register.Count > 0)
         {
             RemoveRegister(Register.ElementAt(0).Key);
         }
     }
 
-    private new void OnDestroy()
-    {
-        base.OnDestroy();
+	public new void OnApplicationQuit()
+	{
+		active = false;
+		Clear();
+		base.OnApplicationQuit();
+	}
 
-        Clear();
+	private new void OnDestroy()
+    {
+		active = false;
+		Clear();
+		base.OnDestroy();
     }
 
     private void RemoveRegister(string name)
@@ -134,7 +142,7 @@ public class MeshRegister : Singleton<MeshRegister> {
         }
         else
         {
-            RegisteredMesh rt = Register[name];
+			RegisteredMesh rt = Register[name];
             Register.Remove(name);
             rt.destroy();
         }
