@@ -63,7 +63,6 @@ public class VXProcess : Singleton<VXProcess> {
     #region unity_functions
     private void Awake()
     {
-		Debug.Log("Awake");
         _drawables.Clear();
         _gameobjects.Clear();
     }
@@ -261,7 +260,6 @@ public class VXProcess : Singleton<VXProcess> {
 
 	private void OnLevelWasLoaded(int level)
 	{
-		Debug.Log("Level Loaded");
 		_drawables.Clear();
 		_gameobjects.Clear();
 	}
