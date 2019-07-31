@@ -63,6 +63,7 @@ public class VXProcess : Singleton<VXProcess> {
     #region unity_functions
     private void Awake()
     {
+		Debug.Log("Awake");
         _drawables.Clear();
         _gameobjects.Clear();
     }
@@ -256,5 +257,12 @@ public class VXProcess : Singleton<VXProcess> {
 
         ComputeTransform(ref target, ref vertices, ref uvs, ref out_poltex);
     }
-    #endregion
+	#endregion
+
+	private void OnLevelWasLoaded(int level)
+	{
+		Debug.Log("Level Loaded");
+		_drawables.Clear();
+		_gameobjects.Clear();
+	}
 }
