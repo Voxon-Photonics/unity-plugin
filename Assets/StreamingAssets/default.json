@@ -1,6 +1,6 @@
 {
-    "Keyboard": {
-        "_Buckets": [
+    "keyboard": {
+        "buckets": [
             -1,
             -1,
             -1,
@@ -19,7 +19,7 @@
             7,
             6
         ],
-        "_HashCodes": [
+        "hashCodes": [
             842948034,
             664832977,
             1276278643,
@@ -38,7 +38,7 @@
             0,
             0
         ],
-        "_Next": [
+        "next": [
             -1,
             -1,
             -1,
@@ -57,11 +57,11 @@
             0,
             0
         ],
-        "_Count": 9,
-        "_Version": 9,
-        "_FreeList": -1,
-        "_FreeCount": 0,
-        "_Keys": [
+        "count": 9,
+        "version": 9,
+        "freeList": -1,
+        "freeCount": 0,
+        "keys": [
             "Jump",
             "Quit",
             "Left",
@@ -80,7 +80,7 @@
             "",
             ""
         ],
-        "_Values": [
+        "values": [
             57,
             1,
             30,
@@ -89,7 +89,7 @@
             31,
             16,
             18,
-            20,
+            41,
             0,
             0,
             0,
@@ -100,280 +100,280 @@
             0
         ]
     },
-    "Mouse": {
-        "_Buckets": [
+    "mouse": {
+        "buckets": [
             -1,
             1,
             -1
         ],
-        "_HashCodes": [
+        "hashCodes": [
             1276278643,
             109670392,
             0
         ],
-        "_Next": [
+        "next": [
             -1,
             0,
             0
         ],
-        "_Count": 2,
-        "_Version": 2,
-        "_FreeList": -1,
-        "_FreeCount": 0,
-        "_Keys": [
+        "count": 2,
+        "version": 2,
+        "freeList": -1,
+        "freeCount": 0,
+        "keys": [
             "Left",
             "Right",
             ""
         ],
-        "_Values": [
+        "values": [
             1,
             2,
             0
         ]
     },
-    "J1Buttons": {
-        "_Buckets": [
+    "j1Buttons": {
+        "buckets": [
             0,
             -1,
             -1
         ],
-        "_HashCodes": [
+        "hashCodes": [
             842948034,
             0,
             0
         ],
-        "_Next": [
+        "next": [
             -1,
             0,
             0
         ],
-        "_Count": 1,
-        "_Version": 1,
-        "_FreeList": -1,
-        "_FreeCount": 0,
-        "_Keys": [
+        "count": 1,
+        "version": 1,
+        "freeList": -1,
+        "freeCount": 0,
+        "keys": [
             "Jump",
             "",
             ""
         ],
-        "_Values": [
+        "values": [
             4096,
             0,
             0
         ]
     },
-    "J1Axis": {
-        "_Buckets": [
+    "j1Axis": {
+        "buckets": [
             -1,
             -1,
             -1
         ],
-        "_HashCodes": [
+        "hashCodes": [
             0,
             0,
             0
         ],
-        "_Next": [
+        "next": [
             0,
             0,
             0
         ],
-        "_Count": 0,
-        "_Version": 0,
-        "_FreeList": -1,
-        "_FreeCount": 0,
-        "_Keys": [
+        "count": 0,
+        "version": 0,
+        "freeList": -1,
+        "freeCount": 0,
+        "keys": [
             "",
             "",
             ""
         ],
-        "_Values": [
+        "values": [
             0,
             0,
             0
         ]
     },
-    "J2Buttons": {
-        "_Buckets": [
+    "j2Buttons": {
+        "buckets": [
             0,
             -1,
             -1
         ],
-        "_HashCodes": [
+        "hashCodes": [
             842948034,
             0,
             0
         ],
-        "_Next": [
+        "next": [
             -1,
             0,
             0
         ],
-        "_Count": 1,
-        "_Version": 1,
-        "_FreeList": -1,
-        "_FreeCount": 0,
-        "_Keys": [
+        "count": 1,
+        "version": 1,
+        "freeList": -1,
+        "freeCount": 0,
+        "keys": [
             "Jump",
             "",
             ""
         ],
-        "_Values": [
+        "values": [
             4096,
             0,
             0
         ]
     },
-    "J2Axis": {
-        "_Buckets": [
+    "j2Axis": {
+        "buckets": [
             -1,
             -1,
             -1
         ],
-        "_HashCodes": [
+        "hashCodes": [
             0,
             0,
             0
         ],
-        "_Next": [
+        "next": [
             0,
             0,
             0
         ],
-        "_Count": 0,
-        "_Version": 0,
-        "_FreeList": -1,
-        "_FreeCount": 0,
-        "_Keys": [
+        "count": 0,
+        "version": 0,
+        "freeList": -1,
+        "freeCount": 0,
+        "keys": [
             "",
             "",
             ""
         ],
-        "_Values": [
+        "values": [
             0,
             0,
             0
         ]
     },
-    "J3Buttons": {
-        "_Buckets": [
+    "j3Buttons": {
+        "buckets": [
             0,
             -1,
             -1
         ],
-        "_HashCodes": [
+        "hashCodes": [
             842948034,
             0,
             0
         ],
-        "_Next": [
+        "next": [
             -1,
             0,
             0
         ],
-        "_Count": 1,
-        "_Version": 1,
-        "_FreeList": -1,
-        "_FreeCount": 0,
-        "_Keys": [
+        "count": 1,
+        "version": 1,
+        "freeList": -1,
+        "freeCount": 0,
+        "keys": [
             "Jump",
             "",
             ""
         ],
-        "_Values": [
+        "values": [
             4096,
             0,
             0
         ]
     },
-    "J3Axis": {
-        "_Buckets": [
+    "j3Axis": {
+        "buckets": [
             -1,
             -1,
             -1
         ],
-        "_HashCodes": [
+        "hashCodes": [
             0,
             0,
             0
         ],
-        "_Next": [
+        "next": [
             0,
             0,
             0
         ],
-        "_Count": 0,
-        "_Version": 0,
-        "_FreeList": -1,
-        "_FreeCount": 0,
-        "_Keys": [
+        "count": 0,
+        "version": 0,
+        "freeList": -1,
+        "freeCount": 0,
+        "keys": [
             "",
             "",
             ""
         ],
-        "_Values": [
+        "values": [
             0,
             0,
             0
         ]
     },
-    "J4Buttons": {
-        "_Buckets": [
+    "j4Buttons": {
+        "buckets": [
             0,
             -1,
             -1
         ],
-        "_HashCodes": [
+        "hashCodes": [
             842948034,
             0,
             0
         ],
-        "_Next": [
+        "next": [
             -1,
             0,
             0
         ],
-        "_Count": 1,
-        "_Version": 1,
-        "_FreeList": -1,
-        "_FreeCount": 0,
-        "_Keys": [
+        "count": 1,
+        "version": 1,
+        "freeList": -1,
+        "freeCount": 0,
+        "keys": [
             "Jump",
             "",
             ""
         ],
-        "_Values": [
+        "values": [
             4096,
             0,
             0
         ]
     },
-    "J4Axis": {
-        "_Buckets": [
+    "j4Axis": {
+        "buckets": [
             -1,
             -1,
             -1
         ],
-        "_HashCodes": [
+        "hashCodes": [
             0,
             0,
             0
         ],
-        "_Next": [
+        "next": [
             0,
             0,
             0
         ],
-        "_Count": 0,
-        "_Version": 0,
-        "_FreeList": -1,
-        "_FreeCount": 0,
-        "_Keys": [
+        "count": 0,
+        "version": 0,
+        "freeList": -1,
+        "freeCount": 0,
+        "keys": [
             "",
             "",
             ""
         ],
-        "_Values": [
+        "values": [
             0,
             0,
             0
