@@ -16,7 +16,7 @@ namespace Voxon.Examples.Input
             {
                 pos.x -= 0.1f;
             }
-            if (Voxon.Input.GetKey("Up"))
+            if (Voxon.Input.GetKey("Up") || Voxon.Input.GetButton("Jump"))
             {
                 pos.z -= 0.1f;
             }

@@ -3,6 +3,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Voxon
 {
@@ -50,6 +51,13 @@ namespace Voxon
                 var texImporter = AssetImporter.GetAtPath(path) as TextureImporter;
                 if (texImporter != null) texImporter.isReadable = true;
                 AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceUpdate);
+
+                Texture2D tex = AssetDatabase.LoadAssetAtPath (path, typeof(Texture2D)) as Texture2D;
+                if (tex.height != tex.width)
+                {
+                    EditorUtility.DisplayDialog("Reimported Textures Error", path + " texture not uniform.", "Ok");
+                    Debug.LogError(path + " texture not uniform. Will crash on play");
+                }
             }
             EditorUtility.DisplayDialog("Reimported Textures", "Textures Reimported.", "Ok");
         }
@@ -69,7 +77,7 @@ namespace Voxon
 
                 AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceUpdate);
             }
-            EditorUtility.DisplayDialog("Reimported Textures", "Textures Reimported.", "Ok");
+            EditorUtility.DisplayDialog("Reimported Meshes", "Meshes Reimported.", "Ok");
         }
 
         [MenuItem("Voxon/Tools/Prebuild Mesh")]
@@ -107,6 +115,7 @@ namespace Voxon
 
         private static void PlayStateChange(PlayModeStateChange state)
         {
+
             // Handle Editor play states (block Play when Input disabled / close VX when Play stopped)
             if (state != PlayModeStateChange.ExitingPlayMode || VXProcess.Runtime == null) return;
         

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 namespace Voxon
 {
@@ -10,6 +11,7 @@ namespace Voxon
    
         #region constants
         #endregion
+
 
         public static Runtime Runtime;
 
@@ -24,6 +26,9 @@ namespace Voxon
 
         [Tooltip("Disable to turn off VXProcess behaviour")]
         public bool active = true;
+        
+        [Tooltip("Error texture")]
+        public Texture2D ErrorTexture;
         #endregion
 
         #region drawables

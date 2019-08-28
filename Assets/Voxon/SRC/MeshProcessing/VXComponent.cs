@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.Profiling;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 namespace Voxon
 {
@@ -226,6 +227,13 @@ namespace Voxon
                 {
                     if (_umaterials[submesh].mainTexture)
                     {
+                        // Catch non-Uniform Textures
+                        if (_umaterials[submesh].mainTexture.height != _umaterials[submesh].mainTexture.width)
+                        {
+                            Debug.LogError(_umaterials[submesh].mainTexture.name + " is not uniform. Replacing with Error texture");
+                            _umaterials[submesh].mainTexture = VXProcess.Instance.ErrorTexture;
+                        }
+                            
                         _textures[submesh] = TextureRegister.Instance.get_tile(ref _umaterials[submesh]);
                     }
                 }
