@@ -1,4 +1,6 @@
 ﻿
+using UnityEngine;
+
 namespace Voxon
 {
     /// <summary>  
@@ -64,5 +66,23 @@ namespace Voxon
         {
             return new MousePosition(VXProcess.Runtime.GetMousePosition());
         }
+
+        public static Vector3 GetSpaceNavPos()
+        {
+            var fpos = VXProcess.Runtime.GetSpaceNavPosition();
+            return new Vector3(fpos[0]/350,-fpos[2]/350, fpos[1]/350);
+        }
+        
+        public static Vector3 GetSpaceNavRot()
+        {
+            var frot = VXProcess.Runtime.GetSpaceNavRotation();
+            return new Vector3(frot[0]/35,-frot[2]/35, frot[1]/35);
+        }
+
+        public static bool GetSpaceNavButton(string buttonName)
+        {
+            return VXProcess.Runtime.GetSpaceNavButton((int) InputController.GetSpaceNavButton(buttonName));
+        }
+        
     }
 }

@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using Microsoft.Win32;
+using UnityEngine;
 
 namespace Voxon
 {
@@ -34,7 +36,6 @@ namespace Voxon
 
 			foreach (string feature in featureNames)
 			{
-				// Debug.Log("Loading:\t" + feature);
 				_features.Add(feature, _tClassType.GetMethod(feature));
 			}
 		}
@@ -220,6 +221,24 @@ namespace Voxon
 		public float[] GetMousePosition()
 		{
 			return (float[])_features["GetMousePosition"].Invoke(_runtime, null);
+		}
+
+		public float[] GetSpaceNavPosition()
+		{
+			return (float[])_features["GetSpaceNavPosition"].Invoke(_runtime, null);
+			return new float[3];
+		}
+		
+		public float[] GetSpaceNavRotation()
+		{
+			return (float[])_features["GetSpaceNavRotation"].Invoke(_runtime, null);
+			return new float[3];
+		}
+		
+		public bool GetSpaceNavButton(int button)
+		{
+			var paras = new object[] { button };
+			return (bool)_features["GetSpaceNavButton"].Invoke(_runtime, paras);
 		}
 
 		public float GetVolume()

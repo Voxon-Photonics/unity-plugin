@@ -18,6 +18,7 @@ namespace Voxon.Editor
             {
                 InputController.Instance.keyboard.Clear();
                 InputController.Instance.mouse.Clear();
+                InputController.Instance.spacenav.Clear();
                 InputController.Instance.j1Axis.Clear();
                 InputController.Instance.j1Buttons.Clear();
                 InputController.Instance.j2Axis.Clear();

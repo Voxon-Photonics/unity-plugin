@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using TMPro.EditorUtilities;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -7,8 +8,7 @@ using UnityEngine.UI;
 namespace Voxon
 {
     public class VXProcess : Singleton<VXProcess> {
-
-   
+        
         #region constants
         #endregion
 
@@ -141,9 +141,13 @@ namespace Voxon
             {
                 Camera = gameObject;
             }
+            else if (_camera != null && _camera.HasChanged)
+            {
+                _camera?.ForceUpdate();
+            }
 
             Draw();
-
+            
             _camera?.ClearUpdated();
 
             // VX quit command; TODO this should be by choice

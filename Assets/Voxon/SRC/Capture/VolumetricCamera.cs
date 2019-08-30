@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Experimental.PlayerLoop;
 
 namespace Voxon
 {
@@ -42,6 +43,10 @@ namespace Voxon
 
         public bool HasChanged => _camera.transform.hasChanged;
 
+        public void ForceUpdate()
+        {
+            UpdateTransform();
+        }
         #endregion
 
         #region private_functions

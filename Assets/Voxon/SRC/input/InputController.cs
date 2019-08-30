@@ -102,7 +102,7 @@ namespace Voxon
 
         NUMPAD_Divide = 0xB5,
         NUMPAD_Multiply = 0x37,
-        NUMPAD_Minux = 0x4A,
+        NUMPAD_Minus = 0x4A,
         NUMPAD_Plus = 0x4E,
         NUMPAD_Enter = 0x9C,
 
@@ -163,7 +163,13 @@ namespace Voxon
         Mouse_2 = 0x2,
         Mouse_3 = 0x4
     }
-
+    
+    public enum SpaceNav_Button
+    {
+        _,
+        SpaceNav_1 = 0x1,
+        SpaceNav_2 = 0x2,
+    }
 
     public struct MousePosition
     {
@@ -187,6 +193,7 @@ namespace Voxon
 
     [System.Serializable] public class KeyBindings : SerializableDictionary<string, Keys> { public KeyBindings():base(new System.Collections.Generic.StaticStringComparer()) { } }
     [System.Serializable] public class MouseBindings : SerializableDictionary<string, Mouse_Button> { public MouseBindings() : base(new System.Collections.Generic.StaticStringComparer()) { } }
+    [System.Serializable] public class SpaceNavBindings : SerializableDictionary<string, SpaceNav_Button> { public SpaceNavBindings() : base(new System.Collections.Generic.StaticStringComparer()) { } }
     [System.Serializable] public class ButtonBindings : SerializableDictionary<string, Buttons> { public ButtonBindings() : base(new System.Collections.Generic.StaticStringComparer()) { } }
     [System.Serializable] public class AxisBindings : SerializableDictionary<string, Axis> { public AxisBindings() : base(new System.Collections.Generic.StaticStringComparer()) { } }
 
@@ -195,8 +202,7 @@ namespace Voxon
     ///  </summary>
     public class InputController : Singleton<InputController>
     {
-        [Header("Load / Save")]
-        public string filename = "default.json";
+        [Header("Load / Save")] public string filename = "default.json";
 
         [FormerlySerializedAs("Keyboard")] [Header("Keyboard")]
         public KeyBindings keyboard = new KeyBindings();
@@ -204,17 +210,27 @@ namespace Voxon
         [FormerlySerializedAs("Mouse")] [Header("Mouse")]
         public MouseBindings mouse = new MouseBindings();
 
+        [Header("SpaceNav")] 
+        public SpaceNavBindings spacenav = new SpaceNavBindings();
+
         [FormerlySerializedAs("J1Buttons")] [Header("Joy 1")]
         public ButtonBindings j1Buttons = new ButtonBindings();
+
         [FormerlySerializedAs("J1Axis")] public AxisBindings j1Axis = new AxisBindings();
+
         [FormerlySerializedAs("J2Buttons")] [Header("Joy 2")]
         public ButtonBindings j2Buttons = new ButtonBindings();
+
         [FormerlySerializedAs("J2Axis")] public AxisBindings j2Axis = new AxisBindings();
+
         [FormerlySerializedAs("J3Buttons")] [Header("Joy 3")]
         public ButtonBindings j3Buttons = new ButtonBindings();
+
         [FormerlySerializedAs("J3Axis")] public AxisBindings j3Axis = new AxisBindings();
+
         [FormerlySerializedAs("J4Buttons")] [Header("Joy 4")]
         public ButtonBindings j4Buttons = new ButtonBindings();
+
         [FormerlySerializedAs("J4Axis")] public AxisBindings j4Axis = new AxisBindings();
 
 
@@ -227,7 +243,7 @@ namespace Voxon
         public static void LoadData()
         {
             Debug.Log($"Load: {Instance.filename}");
-        
+
             string filePath = Path.Combine(Application.streamingAssetsPath, Instance.filename);
             if (File.Exists(filePath))
             {
@@ -247,6 +263,7 @@ namespace Voxon
                     var file = new FileInfo(filePath);
                     file.Directory?.Create();
                 }
+
                 SaveData();
             }
         }
@@ -255,7 +272,7 @@ namespace Voxon
         {
             var save = new InputData();
             save.From_IC();
-        
+
             string dataAsJson = JsonUtility.ToJson(save, true);
             string filePath = Path.Combine(Application.streamingAssetsPath, Instance.filename);
 
@@ -298,6 +315,7 @@ namespace Voxon
                 case 3:
                     return Instance.j4Buttons.ContainsKey(button) ? Instance.j4Buttons[button] : Buttons._;
             }
+
             return Buttons._;
         }
 
@@ -318,6 +336,7 @@ namespace Voxon
                     return Instance.j4Axis.ContainsKey(axis) ? Instance.j4Axis[axis] : Axis._;
 
             }
+
             return Axis._;
         }
 
@@ -334,7 +353,21 @@ namespace Voxon
             }
         }
 
-        [ExecuteInEditMode]
+        public static SpaceNav_Button GetSpaceNavButton(string key)
+        {
+            if (Instance.spacenav.ContainsKey(key))
+            {
+                return Instance.spacenav[key];
+            }
+            else
+            {
+                Debug.Log($"Does not contain this string: {key}");
+                return SpaceNav_Button._;
+            }
+        }
+    
+
+    [ExecuteInEditMode]
         private void OnEnable()
         {
             if (filename == "")

@@ -131,6 +131,37 @@
             0
         ]
     },
+    "spaceNav": {
+        "buckets": [
+            -1,
+            1,
+            0
+        ],
+        "hashCodes": [
+            1637139197,
+            790082812,
+            0
+        ],
+        "next": [
+            -1,
+            -1,
+            0
+        ],
+        "count": 2,
+        "version": 2,
+        "freeList": -1,
+        "freeCount": 0,
+        "keys": [
+            "LeftButton",
+            "RightButton",
+            ""
+        ],
+        "values": [
+            1,
+            2,
+            0
+        ]
+    },
     "j1Buttons": {
         "buckets": [
             0,

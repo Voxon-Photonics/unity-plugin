@@ -14,6 +14,8 @@ namespace Voxon
         private KeyBindings keyboard;
         [FormerlySerializedAs("Mouse")] [SerializeField]
         private MouseBindings mouse;
+        [SerializeField]
+        private SpaceNavBindings spaceNav;
         [FormerlySerializedAs("J1Buttons")] [SerializeField]
         private ButtonBindings j1Buttons;
         [FormerlySerializedAs("J1Axis")] [SerializeField]
@@ -36,6 +38,7 @@ namespace Voxon
         {
             keyboard = new KeyBindings();
             mouse = new MouseBindings();
+            spaceNav = new SpaceNavBindings();
             j1Buttons = new ButtonBindings();
             j1Axis = new AxisBindings();
             j2Buttons = new ButtonBindings();
@@ -51,6 +54,7 @@ namespace Voxon
 
             KeyBindCopy(ref InputController.Instance.keyboard, ref keyboard);
             MouseBindCopy(InputController.Instance.mouse, mouse);
+            SpaceNavBindCopy(InputController.Instance.spacenav, spaceNav);
 
             ButBindCopy(InputController.Instance.j1Buttons, j1Buttons);
             ButBindCopy(InputController.Instance.j2Buttons, j2Buttons);
@@ -67,7 +71,8 @@ namespace Voxon
         {
             KeyBindCopy(ref keyboard, ref InputController.Instance.keyboard);
             MouseBindCopy(mouse, InputController.Instance.mouse);
-
+            SpaceNavBindCopy(spaceNav, InputController.Instance.spacenav);
+            
             ButBindCopy(j1Buttons, InputController.Instance.j1Buttons);
             ButBindCopy(j2Buttons, InputController.Instance.j2Buttons);
             ButBindCopy(j3Buttons, InputController.Instance.j3Buttons);
@@ -90,6 +95,16 @@ namespace Voxon
         }
 
         private void MouseBindCopy(MouseBindings from, MouseBindings to)
+        {
+            to.Clear();
+
+            foreach (string key in from.Keys)
+            {
+                to.Add(key, from[key]);
+            }
+        }
+        
+        private void SpaceNavBindCopy(SpaceNavBindings from, SpaceNavBindings to)
         {
             to.Clear();
 

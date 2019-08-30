@@ -184,3 +184,6 @@ public class MyDictionaryDrawer3 : DictionaryDrawer<string, Axis> { }
 
 [CustomPropertyDrawer(typeof(MouseBindings))]
 public class MyDictionaryDrawer4 : DictionaryDrawer<string, Mouse_Button> { }
+
+[CustomPropertyDrawer(typeof(SpaceNavBindings))]
+public class MyDictionaryDrawer5 : DictionaryDrawer<string, SpaceNav_Button> { }
