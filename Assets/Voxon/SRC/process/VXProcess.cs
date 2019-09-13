@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using TMPro.EditorUtilities;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -18,6 +17,9 @@ namespace Voxon
         #region inspector
         [FormerlySerializedAs("_guidelines")] [Tooltip("Will show capture volume of VX1 while emulating")]
         public bool guidelines;
+        
+        [Tooltip("Disable to turn hide version information on front panel")]
+        public bool show_version = true;
 
         [FormerlySerializedAs("_editor_camera")]
         [Tooltip("Collision 'Camera'\nUtilises GameObject Scale, Rotation and Position")]
@@ -26,7 +28,7 @@ namespace Voxon
 
         [Tooltip("Disable to turn off VXProcess behaviour")]
         public bool active = true;
-        
+
         [Tooltip("Error texture")]
         public Texture2D ErrorTexture;
         #endregion
@@ -38,6 +40,8 @@ namespace Voxon
 
         #region internal_vars
 
+        private string _dll_version = "";
+        private static string _sdk_version = ""; 
         private VolumetricCamera _camera = new VolumetricCamera();
         static List<string> _logger = new List<string>();
         #endregion
@@ -92,6 +96,10 @@ namespace Voxon
             {
                 Runtime.Load();
                 Runtime.Initialise();
+
+                _dll_version = Runtime.GetDLLVersion().ToString().Substring(0, 8);
+                _sdk_version = VXProcess.Runtime.GetSDKVersion();
+                Debug.Log($"SDK Version: {_sdk_version}, DLL Version: {_dll_version}");
             }
             else
             {
@@ -135,6 +143,13 @@ namespace Voxon
 
             if (guidelines)
                 Runtime.DrawGuidelines();
+
+            if (show_version)
+            {
+                Runtime.LogToScreen(20, 560,$"DLL Version: {_dll_version}" );
+                Runtime.LogToScreen(20, 570,$"SDK Version: {_sdk_version}" );
+            }
+                
 
             // A camera must always be active while in process
             if (_camera != null && _camera.Camera == null)

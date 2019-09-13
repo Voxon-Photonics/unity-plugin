@@ -115,7 +115,6 @@ namespace Voxon
 
         private static void PlayStateChange(PlayModeStateChange state)
         {
-
             // Handle Editor play states (block Play when Input disabled / close VX when Play stopped)
             if (state != PlayModeStateChange.ExitingPlayMode || VXProcess.Runtime == null) return;
         

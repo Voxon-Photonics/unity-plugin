@@ -293,5 +293,15 @@ namespace Voxon
 		{
 			_features["Unload"].Invoke(_runtime, null);
 		}
+
+		public long GetDLLVersion()
+		{
+			return (long)_features["GetDLLVersion"].Invoke(_runtime, null);
+		}
+
+		public string GetSDKVersion()
+		{
+			return (string) _features["GetSDKVersion"].Invoke(_runtime, null);
+		}
 	}
 }
