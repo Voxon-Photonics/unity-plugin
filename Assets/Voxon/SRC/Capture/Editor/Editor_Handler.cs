@@ -12,6 +12,10 @@ namespace Voxon
 
         static EditorHandler()
         {
+            #if !UNITY_2018_4
+                Debug.LogWarning("Voxon Plugin may not be compatible with this version of Unity. Please use 2018.4.X (LTS)");
+            #endif
+            
             EditorApplication.playModeStateChanged += PlayStateChange;
             try
             {

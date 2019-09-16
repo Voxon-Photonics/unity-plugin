@@ -13,14 +13,20 @@ public class SpaceNavigator : MonoBehaviour
         var rotation = VXProcess.Runtime.GetSpaceNavRotation();
 
         var v3pos = transform.position;
-        v3pos.x += position[0]/350;
-        v3pos.y -= position[2]/350;
-        v3pos.z -= position[1]/350;
-        transform.position = v3pos;
+        if (position != null)
+        {
+            v3pos.x += position[0]/350;
+            v3pos.y -= position[2]/350;
+            v3pos.z -= position[1]/350;
+            transform.position = v3pos;    
+        }
 
-        var v3rot = new Vector3(rotation[0]/35,-rotation[2]/35,-rotation[1]/35);
-        transform.Rotate(v3rot);
-        
+        if (rotation != null)
+        {
+            var v3rot = new Vector3(rotation[0]/35,rotation[2]/35,-rotation[1]/35);
+            transform.Rotate(v3rot);    
+        }
+
         if (Voxon.Input.GetSpaceNavButton("LeftButton") && Voxon.Input.GetSpaceNavButton("RightButton"))
         {
             VXProcess.Instance.Camera.transform.position = Vector3.zero;
