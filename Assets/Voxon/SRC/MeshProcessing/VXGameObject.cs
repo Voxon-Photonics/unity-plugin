@@ -13,14 +13,6 @@ namespace Voxon
 
         public void Start()
         {
-            // We will use this to add our components to draw list
-
-            // VoxieDraw objects cannot degenerate
-            if (gameObject.CompareTag("VoxieDraw"))
-            {
-                _canDegen = false;
-            }
-
             // We always want animations to be computed (as otherwise they would only appear when a camera was active)
             if (gameObject.GetComponent<Animator>())
             {

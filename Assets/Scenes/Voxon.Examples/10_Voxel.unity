@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44405273, g: 0.4934626, b: 0.5729057, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -112,7 +112,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &975131225
+--- !u!1 &199956397
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -120,8 +120,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 975131227}
-  - component: {fileID: 975131226}
+  - component: {fileID: 199956399}
+  - component: {fileID: 199956398}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -129,13 +129,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!108 &975131226
+--- !u!108 &199956398
 Light:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 975131225}
+  m_GameObject: {fileID: 199956397}
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 1
@@ -167,326 +167,117 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!4 &975131227
+--- !u!4 &199956399
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 975131225}
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
+  m_GameObject: {fileID: 199956397}
+  m_LocalRotation: {x: 0.46136194, y: -0.2273872, z: 0.12362151, w: 0.84862113}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1 &1056957895
+--- !u!1 &225125563
 GameObject:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1056957897}
-  - component: {fileID: 1056957896}
+  - component: {fileID: 225125565}
+  - component: {fileID: 225125564}
   m_Layer: 0
-  m_Name: Voxon.InputController
+  m_Name: VoxelGroup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1056957896
+--- !u!114 &225125564
 MonoBehaviour:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1056957895}
+  m_GameObject: {fileID: 225125563}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bdce307c928d7144a803bdd7b0a1226a, type: 3}
+  m_Script: {fileID: 11500000, guid: c95ee73e994dc73468d26708ce470781, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  filename: default.json
-  keyboard:
-    buckets: ffffffffffffffffffffffff010000000500000002000000ffffffffffffffff0000000003000000ffffffffffffffff08000000ffffffffffffffff0700000006000000
-    hashCodes: c25d3e32d18ba0277377124cf86f8906f919075ceab07d513234eb46f963bb071692154e0000000000000000000000000000000000000000000000000000000000000000
-    next: ffffffffffffffffffffffffffffffffffffffffffffffff04000000ffffffffffffffff0000000000000000000000000000000000000000000000000000000000000000
-    count: 9
-    version: 19
-    freeList: -1
-    freeCount: 0
-    keys:
-    - Jump
-    - Quit
-    - Left
-    - Right
-    - Up
-    - Down
-    - RotLeft
-    - RotRight
-    - Hide
-    - 
-    - 
-    - 
-    - 
-    - 
-    - 
-    - 
-    - 
-    values: 39000000010000001e00000020000000110000001f0000001000000012000000290000000000000000000000000000000000000000000000000000000000000000000000
-  mouse:
-    buckets: ffffffff01000000ffffffff
-    hashCodes: 7377124cf86f890600000000
-    next: ffffffff0000000000000000
-    count: 2
-    version: 5
-    freeList: -1
-    freeCount: 0
-    keys:
-    - Left
-    - Right
-    - 
-    values: 010000000200000000000000
-  spacenav:
-    buckets: ffffffff0100000000000000
-    hashCodes: fdc29461fcb4172f00000000
-    next: ffffffffffffffff00000000
-    count: 2
-    version: 57
-    freeList: -1
-    freeCount: 0
-    keys:
-    - LeftButton
-    - RightButton
-    - 
-    values: 010000000200000000000000
-  j1Buttons:
-    buckets: 00000000ffffffffffffffff
-    hashCodes: c25d3e320000000000000000
-    next: ffffffff0000000000000000
-    count: 1
-    version: 3
-    freeList: -1
-    freeCount: 0
-    keys:
-    - Jump
-    - 
-    - 
-    values: 080000000000000000000000
-  j1Axis:
-    buckets: ffffffffffffffffffffffff
-    hashCodes: 000000000000000000000000
-    next: 000000000000000000000000
-    count: 0
-    version: 0
-    freeList: -1
-    freeCount: 0
-    keys:
-    - 
-    - 
-    - 
-    values: 000000000000000000000000
-  j2Buttons:
-    buckets: 00000000ffffffffffffffff
-    hashCodes: c25d3e320000000000000000
-    next: ffffffff0000000000000000
-    count: 1
-    version: 3
-    freeList: -1
-    freeCount: 0
-    keys:
-    - Jump
-    - 
-    - 
-    values: 080000000000000000000000
-  j2Axis:
-    buckets: ffffffffffffffffffffffff
-    hashCodes: 000000000000000000000000
-    next: 000000000000000000000000
-    count: 0
-    version: 0
-    freeList: -1
-    freeCount: 0
-    keys:
-    - 
-    - 
-    - 
-    values: 000000000000000000000000
-  j3Buttons:
-    buckets: 00000000ffffffffffffffff
-    hashCodes: c25d3e320000000000000000
-    next: ffffffff0000000000000000
-    count: 1
-    version: 3
-    freeList: -1
-    freeCount: 0
-    keys:
-    - Jump
-    - 
-    - 
-    values: 080000000000000000000000
-  j3Axis:
-    buckets: ffffffffffffffffffffffff
-    hashCodes: 000000000000000000000000
-    next: 000000000000000000000000
-    count: 0
-    version: 0
-    freeList: -1
-    freeCount: 0
-    keys:
-    - 
-    - 
-    - 
-    values: 000000000000000000000000
-  j4Buttons:
-    buckets: 00000000ffffffffffffffff
-    hashCodes: c25d3e320000000000000000
-    next: ffffffff0000000000000000
-    count: 1
-    version: 3
-    freeList: -1
-    freeCount: 0
-    keys:
-    - Jump
-    - 
-    - 
-    values: 080000000000000000000000
-  j4Axis:
-    buckets: ffffffffffffffffffffffff
-    hashCodes: 000000000000000000000000
-    next: 000000000000000000000000
-    count: 0
-    version: 0
-    freeList: -1
-    freeCount: 0
-    keys:
-    - 
-    - 
-    - 
-    values: 000000000000000000000000
---- !u!4 &1056957897
+  voxelParams:
+  - vector: {x: 1, y: 1.5, z: 1}
+    voxelColor: {r: 1, g: 1, b: 1, a: 0}
+  - vector: {x: 3, y: 1.5, z: 0}
+    voxelColor: {r: 0, g: 1, b: 0.054833174, a: 0}
+--- !u!4 &225125565
 Transform:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1056957895}
+  m_GameObject: {fileID: 225125563}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1119543975
+--- !u!1 &239105648
 GameObject:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1119543979}
-  - component: {fileID: 1119543978}
-  - component: {fileID: 1119543977}
-  - component: {fileID: 1119543976}
-  - component: {fileID: 1119543980}
+  - component: {fileID: 239105650}
+  - component: {fileID: 239105649}
   m_Layer: 0
-  m_Name: Model
+  m_Name: Voxon.VXProcess
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!65 &1119543976
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1119543975}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!23 &1119543977
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1119543975}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 3ed0c54dd65f37249b2d18871f2aabdf, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
---- !u!33 &1119543978
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1119543975}
-  m_Mesh: {fileID: 4300000, guid: 0c57f798fd015db4fb495d674b4e155b, type: 3}
---- !u!4 &1119543979
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1119543975}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.000100000005, y: 0.000100000005, z: 0.000100000005}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1119543980
+--- !u!114 &239105649
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1119543975}
+  m_GameObject: {fileID: 239105648}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 228fb5f436f3d7f4e9787901f9fb1da5, type: 3}
+  m_Script: {fileID: 11500000, guid: e420ecae1ec191940807ec3ce8267b47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1388381792
+  guidelines: 1
+  show_version: 1
+  editorCamera: {fileID: 656801501}
+  active: 1
+  ErrorTexture: {fileID: 0}
+--- !u!4 &239105650
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 239105648}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &457262189
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -494,9 +285,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1388381795}
-  - component: {fileID: 1388381794}
-  - component: {fileID: 1388381793}
+  - component: {fileID: 457262192}
+  - component: {fileID: 457262191}
+  - component: {fileID: 457262190}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -504,21 +295,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &1388381793
+--- !u!81 &457262190
 AudioListener:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1388381792}
+  m_GameObject: {fileID: 457262189}
   m_Enabled: 1
---- !u!20 &1388381794
+--- !u!20 &457262191
 Camera:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1388381792}
+  m_GameObject: {fileID: 457262189}
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
@@ -554,13 +345,13 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!4 &1388381795
+--- !u!4 &457262192
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1388381792}
+  m_GameObject: {fileID: 457262189}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -568,55 +359,13 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1838111319
+--- !u!1 &656801501 stripped
 GameObject:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 1995373690718174, guid: f3d6745943794b548af80428879f21e8,
+    type: 3}
+  m_PrefabInstance: {fileID: 707123176}
   m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1838111321}
-  - component: {fileID: 1838111320}
-  m_Layer: 0
-  m_Name: Voxon.VXProcess
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1838111320
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1838111319}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e420ecae1ec191940807ec3ce8267b47, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  guidelines: 1
-  show_version: 1
-  editorCamera: {fileID: 2133698056}
-  active: 1
-  ErrorTexture: {fileID: 0}
---- !u!4 &1838111321
-Transform:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1838111319}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &2133698055
+--- !u!1001 &707123176
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -657,7 +406,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4282493003479850, guid: f3d6745943794b548af80428879f21e8, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4282493003479850, guid: f3d6745943794b548af80428879f21e8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -673,21 +422,204 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3d6745943794b548af80428879f21e8, type: 3}
---- !u!1 &2133698056 stripped
+--- !u!1 &1596691851
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 1995373690718174, guid: f3d6745943794b548af80428879f21e8,
-    type: 3}
-  m_PrefabInstance: {fileID: 2133698055}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2133698057
-MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2133698056}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1596691853}
+  - component: {fileID: 1596691852}
+  m_Layer: 0
+  m_Name: Voxon.InputController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1596691852
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1596691851}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c51decb7efdeb2a4fbd39c8205365009, type: 3}
+  m_Script: {fileID: 11500000, guid: bdce307c928d7144a803bdd7b0a1226a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  filename: default.json
+  keyboard:
+    buckets: ffffffffffffffffffffffff010000000500000002000000ffffffffffffffff0000000003000000ffffffffffffffff08000000ffffffffffffffff0700000006000000
+    hashCodes: c25d3e32d18ba0277377124cf86f8906f919075ceab07d513234eb46f963bb071692154e0000000000000000000000000000000000000000000000000000000000000000
+    next: ffffffffffffffffffffffffffffffffffffffffffffffff04000000ffffffffffffffff0000000000000000000000000000000000000000000000000000000000000000
+    count: 9
+    version: 9
+    freeList: -1
+    freeCount: 0
+    keys:
+    - Jump
+    - Quit
+    - Left
+    - Right
+    - Up
+    - Down
+    - RotLeft
+    - RotRight
+    - Hide
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    values: 39000000010000001e00000020000000110000001f0000001000000012000000290000000000000000000000000000000000000000000000000000000000000000000000
+  mouse:
+    buckets: ffffffff01000000ffffffff
+    hashCodes: 7377124cf86f890600000000
+    next: ffffffff0000000000000000
+    count: 2
+    version: 2
+    freeList: -1
+    freeCount: 0
+    keys:
+    - Left
+    - Right
+    - 
+    values: 010000000200000000000000
+  spacenav:
+    buckets: ffffffff0100000000000000
+    hashCodes: fdc29461fcb4172f00000000
+    next: ffffffffffffffff00000000
+    count: 2
+    version: 2
+    freeList: -1
+    freeCount: 0
+    keys:
+    - LeftButton
+    - RightButton
+    - 
+    values: 010000000200000000000000
+  j1Buttons:
+    buckets: 00000000ffffffffffffffff
+    hashCodes: c25d3e320000000000000000
+    next: ffffffff0000000000000000
+    count: 1
+    version: 1
+    freeList: -1
+    freeCount: 0
+    keys:
+    - Jump
+    - 
+    - 
+    values: 080000000000000000000000
+  j1Axis:
+    buckets: ffffffffffffffffffffffff
+    hashCodes: 000000000000000000000000
+    next: 000000000000000000000000
+    count: 0
+    version: 0
+    freeList: -1
+    freeCount: 0
+    keys:
+    - 
+    - 
+    - 
+    values: 000000000000000000000000
+  j2Buttons:
+    buckets: 00000000ffffffffffffffff
+    hashCodes: c25d3e320000000000000000
+    next: ffffffff0000000000000000
+    count: 1
+    version: 1
+    freeList: -1
+    freeCount: 0
+    keys:
+    - Jump
+    - 
+    - 
+    values: 080000000000000000000000
+  j2Axis:
+    buckets: ffffffffffffffffffffffff
+    hashCodes: 000000000000000000000000
+    next: 000000000000000000000000
+    count: 0
+    version: 0
+    freeList: -1
+    freeCount: 0
+    keys:
+    - 
+    - 
+    - 
+    values: 000000000000000000000000
+  j3Buttons:
+    buckets: 00000000ffffffffffffffff
+    hashCodes: c25d3e320000000000000000
+    next: ffffffff0000000000000000
+    count: 1
+    version: 1
+    freeList: -1
+    freeCount: 0
+    keys:
+    - Jump
+    - 
+    - 
+    values: 080000000000000000000000
+  j3Axis:
+    buckets: ffffffffffffffffffffffff
+    hashCodes: 000000000000000000000000
+    next: 000000000000000000000000
+    count: 0
+    version: 0
+    freeList: -1
+    freeCount: 0
+    keys:
+    - 
+    - 
+    - 
+    values: 000000000000000000000000
+  j4Buttons:
+    buckets: 00000000ffffffffffffffff
+    hashCodes: c25d3e320000000000000000
+    next: ffffffff0000000000000000
+    count: 1
+    version: 1
+    freeList: -1
+    freeCount: 0
+    keys:
+    - Jump
+    - 
+    - 
+    values: 080000000000000000000000
+  j4Axis:
+    buckets: ffffffffffffffffffffffff
+    hashCodes: 000000000000000000000000
+    next: 000000000000000000000000
+    count: 0
+    version: 0
+    freeList: -1
+    freeCount: 0
+    keys:
+    - 
+    - 
+    - 
+    values: 000000000000000000000000
+--- !u!4 &1596691853
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1596691851}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

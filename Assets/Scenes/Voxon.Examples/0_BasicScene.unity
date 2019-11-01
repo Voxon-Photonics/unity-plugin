@@ -410,6 +410,7 @@ GameObject:
   - component: {fileID: 706741198}
   - component: {fileID: 706741197}
   - component: {fileID: 706741196}
+  - component: {fileID: 706741200}
   m_Layer: 0
   m_Name: Plane
   m_TagString: VoxieHide
@@ -490,6 +491,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &706741200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 706741195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60eac8eddcd5eb6489debd5b0b12de82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  voxelCount: 100
 --- !u!1 &745909433
 GameObject:
   m_ObjectHideFlags: 0
@@ -589,8 +603,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   guidelines: 1
+  show_version: 1
   editorCamera: {fileID: 1756280383}
   active: 1
+  ErrorTexture: {fileID: 0}
 --- !u!4 &834048955
 Transform:
   m_ObjectHideFlags: 1
@@ -804,14 +820,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   filename: default.json
   keyboard:
-    _Buckets: ffffffffffffffffffffffff010000000500000002000000ffffffffffffffff0000000003000000ffffffffffffffff08000000ffffffffffffffff0700000006000000
-    _HashCodes: c25d3e32d18ba0277377124cf86f8906f919075ceab07d513234eb46f963bb071692154e0000000000000000000000000000000000000000000000000000000000000000
-    _Next: ffffffffffffffffffffffffffffffffffffffffffffffff04000000ffffffffffffffff0000000000000000000000000000000000000000000000000000000000000000
-    _Count: 9
-    _Version: 30
-    _FreeList: -1
-    _FreeCount: 0
-    _Keys:
+    buckets: ffffffffffffffffffffffff010000000500000002000000ffffffffffffffff0000000003000000ffffffffffffffff08000000ffffffffffffffff0700000006000000
+    hashCodes: c25d3e32d18ba0277377124cf86f8906f919075ceab07d513234eb46f963bb071692154e0000000000000000000000000000000000000000000000000000000000000000
+    next: ffffffffffffffffffffffffffffffffffffffffffffffff04000000ffffffffffffffff0000000000000000000000000000000000000000000000000000000000000000
+    count: 9
+    version: 30
+    freeList: -1
+    freeCount: 0
+    keys:
     - Jump
     - Quit
     - Left
@@ -829,124 +845,137 @@ MonoBehaviour:
     - 
     - 
     - 
-    _Values: 39000000010000001e00000020000000110000001f0000001000000012000000290000000000000000000000000000000000000000000000000000000000000000000000
+    values: 39000000010000001e00000020000000110000001f0000001000000012000000290000000000000000000000000000000000000000000000000000000000000000000000
   mouse:
-    _Buckets: ffffffff01000000ffffffff
-    _HashCodes: 7377124cf86f890600000000
-    _Next: ffffffff0000000000000000
-    _Count: 2
-    _Version: 5
-    _FreeList: -1
-    _FreeCount: 0
-    _Keys:
+    buckets: ffffffff01000000ffffffff
+    hashCodes: 7377124cf86f890600000000
+    next: ffffffff0000000000000000
+    count: 2
+    version: 5
+    freeList: -1
+    freeCount: 0
+    keys:
     - Left
     - Right
     - 
-    _Values: 010000000200000000000000
+    values: 010000000200000000000000
+  spacenav:
+    buckets: ffffffffffffffffffffffff
+    hashCodes: 000000000000000000000000
+    next: 000000000000000000000000
+    count: 0
+    version: 0
+    freeList: -1
+    freeCount: 0
+    keys:
+    - 
+    - 
+    - 
+    values: 000000000000000000000000
   j1Buttons:
-    _Buckets: 00000000ffffffffffffffff
-    _HashCodes: c25d3e320000000000000000
-    _Next: ffffffff0000000000000000
-    _Count: 1
-    _Version: 3
-    _FreeList: -1
-    _FreeCount: 0
-    _Keys:
+    buckets: 00000000ffffffffffffffff
+    hashCodes: c25d3e320000000000000000
+    next: ffffffff0000000000000000
+    count: 1
+    version: 3
+    freeList: -1
+    freeCount: 0
+    keys:
     - Jump
     - 
     - 
-    _Values: 001000000000000000000000
+    values: 001000000000000000000000
   j1Axis:
-    _Buckets: ffffffffffffffffffffffff
-    _HashCodes: 000000000000000000000000
-    _Next: 000000000000000000000000
-    _Count: 0
-    _Version: 0
-    _FreeList: -1
-    _FreeCount: 0
-    _Keys:
+    buckets: ffffffffffffffffffffffff
+    hashCodes: 000000000000000000000000
+    next: 000000000000000000000000
+    count: 0
+    version: 0
+    freeList: -1
+    freeCount: 0
+    keys:
     - 
     - 
     - 
-    _Values: 000000000000000000000000
+    values: 000000000000000000000000
   j2Buttons:
-    _Buckets: 00000000ffffffffffffffff
-    _HashCodes: c25d3e320000000000000000
-    _Next: ffffffff0000000000000000
-    _Count: 1
-    _Version: 3
-    _FreeList: -1
-    _FreeCount: 0
-    _Keys:
+    buckets: 00000000ffffffffffffffff
+    hashCodes: c25d3e320000000000000000
+    next: ffffffff0000000000000000
+    count: 1
+    version: 3
+    freeList: -1
+    freeCount: 0
+    keys:
     - Jump
     - 
     - 
-    _Values: 001000000000000000000000
+    values: 001000000000000000000000
   j2Axis:
-    _Buckets: ffffffffffffffffffffffff
-    _HashCodes: 000000000000000000000000
-    _Next: 000000000000000000000000
-    _Count: 0
-    _Version: 0
-    _FreeList: -1
-    _FreeCount: 0
-    _Keys:
+    buckets: ffffffffffffffffffffffff
+    hashCodes: 000000000000000000000000
+    next: 000000000000000000000000
+    count: 0
+    version: 0
+    freeList: -1
+    freeCount: 0
+    keys:
     - 
     - 
     - 
-    _Values: 000000000000000000000000
+    values: 000000000000000000000000
   j3Buttons:
-    _Buckets: 00000000ffffffffffffffff
-    _HashCodes: c25d3e320000000000000000
-    _Next: ffffffff0000000000000000
-    _Count: 1
-    _Version: 3
-    _FreeList: -1
-    _FreeCount: 0
-    _Keys:
+    buckets: 00000000ffffffffffffffff
+    hashCodes: c25d3e320000000000000000
+    next: ffffffff0000000000000000
+    count: 1
+    version: 3
+    freeList: -1
+    freeCount: 0
+    keys:
     - Jump
     - 
     - 
-    _Values: 001000000000000000000000
+    values: 001000000000000000000000
   j3Axis:
-    _Buckets: ffffffffffffffffffffffff
-    _HashCodes: 000000000000000000000000
-    _Next: 000000000000000000000000
-    _Count: 0
-    _Version: 0
-    _FreeList: -1
-    _FreeCount: 0
-    _Keys:
+    buckets: ffffffffffffffffffffffff
+    hashCodes: 000000000000000000000000
+    next: 000000000000000000000000
+    count: 0
+    version: 0
+    freeList: -1
+    freeCount: 0
+    keys:
     - 
     - 
     - 
-    _Values: 000000000000000000000000
+    values: 000000000000000000000000
   j4Buttons:
-    _Buckets: 00000000ffffffffffffffff
-    _HashCodes: c25d3e320000000000000000
-    _Next: ffffffff0000000000000000
-    _Count: 1
-    _Version: 3
-    _FreeList: -1
-    _FreeCount: 0
-    _Keys:
+    buckets: 00000000ffffffffffffffff
+    hashCodes: c25d3e320000000000000000
+    next: ffffffff0000000000000000
+    count: 1
+    version: 3
+    freeList: -1
+    freeCount: 0
+    keys:
     - Jump
     - 
     - 
-    _Values: 001000000000000000000000
+    values: 001000000000000000000000
   j4Axis:
-    _Buckets: ffffffffffffffffffffffff
-    _HashCodes: 000000000000000000000000
-    _Next: 000000000000000000000000
-    _Count: 0
-    _Version: 0
-    _FreeList: -1
-    _FreeCount: 0
-    _Keys:
+    buckets: ffffffffffffffffffffffff
+    hashCodes: 000000000000000000000000
+    next: 000000000000000000000000
+    count: 0
+    version: 0
+    freeList: -1
+    freeCount: 0
+    keys:
     - 
     - 
     - 
-    _Values: 000000000000000000000000
+    values: 000000000000000000000000
 --- !u!4 &1874747007
 Transform:
   m_ObjectHideFlags: 1

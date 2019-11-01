@@ -20,7 +20,7 @@ namespace Voxon
 
         public void Draw()
         {
-			VXProcess.Runtime.DrawVoxel(ref _position, _col);
+            VXProcess.Runtime.DrawVoxel(ref _position, _col);
         }
             
         public void set_color(Color32 col)
@@ -30,16 +30,24 @@ namespace Voxon
 
         public void set_vector(Vector3 point)
         {
-            _vector = point;
+            // Debug.Log("Point: " + point.ToString());
+            this._vector = point;
             update_transform();
         }
 
         public void update_transform()
         {
-            Matrix4x4 fMatrix = Matrix4x4.Scale(new Vector3(2.0f, 0.8f, 2.0f)) * VXProcess.Instance.Camera.transform.worldToLocalMatrix;
-
-            Vector3 inV = fMatrix * _vector;
-            _position = inV.ToPoint3d();
+            Matrix4x4 fMatrix = VXProcess.Instance.Transform;
+            if (fMatrix == Matrix4x4.zero)
+            {
+                Debug.Log("EMPTY TRANSFORM");
+            }
+            else
+            {
+                Vector3 inV = fMatrix * _vector;
+                _position = inV.ToPoint3d();    
+            }
+            
         }
     }
 }

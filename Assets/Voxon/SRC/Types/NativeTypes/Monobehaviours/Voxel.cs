@@ -34,7 +34,8 @@ namespace Voxon
         {
             foreach (Vboi vp in voxelParams)
             {
-                Gizmos.DrawIcon(vp.vector, "Light Gizmo.tiff", true);
+                Gizmos.color = Color.white;
+                Gizmos.DrawIcon(vp.vector, "Light Gizmo.tiff", false);
             }
         
         }
