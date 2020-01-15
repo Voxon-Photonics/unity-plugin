@@ -602,7 +602,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e420ecae1ec191940807ec3ce8267b47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  guidelines: 1
+  guidelines: 0
   show_version: 1
   editorCamera: {fileID: 1756280383}
   active: 1
@@ -759,6 +759,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1756280382}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1756280388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1756280383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95102eba8eefd174c9bfb3b7a1c87aef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1788538050
 GameObject:
   m_ObjectHideFlags: 1
@@ -818,17 +830,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdce307c928d7144a803bdd7b0a1226a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  filename: default.json
+  filename: Helix.json
   keyboard:
-    buckets: ffffffffffffffffffffffff010000000500000002000000ffffffffffffffff0000000003000000ffffffffffffffff08000000ffffffffffffffff0700000006000000
-    hashCodes: c25d3e32d18ba0277377124cf86f8906f919075ceab07d513234eb46f963bb071692154e0000000000000000000000000000000000000000000000000000000000000000
+    buckets: ffffffffffffffffffffffff010000000500000002000000ffffffff00000000ffffffff03000000ffffffffffffffff08000000ffffffffffffffff0700000006000000
+    hashCodes: 26f77254d18ba0277377124cf86f8906f919075ceab07d513234eb46f963bb071692154e0000000000000000000000000000000000000000000000000000000000000000
     next: ffffffffffffffffffffffffffffffffffffffffffffffff04000000ffffffffffffffff0000000000000000000000000000000000000000000000000000000000000000
     count: 9
-    version: 30
+    version: 32
     freeList: -1
     freeCount: 0
     keys:
-    - Jump
+    - Helix
     - Quit
     - Left
     - Right

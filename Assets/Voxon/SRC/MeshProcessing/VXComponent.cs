@@ -30,10 +30,17 @@ namespace Voxon
         tiletype[] _textures;
 
         private Matrix4x4 _transform;
+        
+        // Clean up
+        public bool CanExpire = false;
+        public float TimeToLive = 2.0f;
+        private float TimeLeftAlive; 
 
         // Use this for initialization
         void Start()
         {
+            TimeLeftAlive = TimeToLive;
+            
             _drawFlags = (int)flags | 1 << 3;
             try
             {
@@ -90,6 +97,23 @@ namespace Voxon
                 ExceptionHandler.Except($"Error while building {gameObject.name}", e);
             }
 
+        }
+
+        private void Update()
+        {
+            if (CanExpire)
+            {
+                TimeLeftAlive -= Time.deltaTime;
+                if (TimeLeftAlive <= 0)
+                {
+                    DestroyImmediate(this);
+                }
+            }
+        }
+
+        public void Refresh()
+        {
+            TimeLeftAlive = TimeToLive;
         }
 
         public void set_flag(int flag)
@@ -151,7 +175,7 @@ namespace Voxon
                 
                 for (var idx = 0; idx < _mesh.submeshCount; idx++)
                 {
-                    if (_umaterials[idx].mainTexture)
+                    if (_umaterials[idx].HasProperty("_MainTex"))
                     {
 						VXProcess.Runtime.DrawTexturedMesh(ref _textures[idx], _vt, _mesh.vertexCount, _mesh.indices[idx], _mesh.indexCounts[idx], _drawFlags);
                     }
@@ -225,7 +249,7 @@ namespace Voxon
                 _textures = new tiletype[_mesh.submeshCount];
                 for (var submesh = 0; submesh < _mesh.submeshCount; submesh++)
                 {
-                    if (_umaterials[submesh].mainTexture)
+                    if (_umaterials[submesh].HasProperty("_MainTex") && _umaterials[submesh].mainTexture)
                     {
                         _textures[submesh] = TextureRegister.Instance.get_tile(ref _umaterials[submesh]);
                     }

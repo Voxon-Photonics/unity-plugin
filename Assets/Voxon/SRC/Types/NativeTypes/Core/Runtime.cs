@@ -12,8 +12,12 @@ namespace Voxon
 	{
 		private string _pluginFilePath = "";
 		private const string PluginFileName = "C#-Runtime.dll";
+		
 		private const string PluginTypeName = "Voxon.Runtime";
+		private const string HelixTypeName = "Voxon.HelixRuntime";
 
+		public string ActiveRuntime;
+		
 		private static Type _tClassType;
 		private static object _runtime;
 
@@ -26,7 +30,15 @@ namespace Voxon
 
 			Assembly asm = Assembly.LoadFrom(_pluginFilePath);
 
-			_tClassType = asm.GetType(PluginTypeName);
+			_tClassType = asm.GetType(HelixTypeName);
+			ActiveRuntime = HelixTypeName;
+			if (_tClassType == null)
+			{
+				Debug.LogWarning("Helix Interface Not Available. SDK Out of date");
+				_tClassType = asm.GetType(PluginTypeName);
+				ActiveRuntime = PluginTypeName;
+			}
+
 			_runtime = Activator.CreateInstance(_tClassType);
 
 			MethodInfo makeRequestMethod = _tClassType.GetMethod("GetFeatures");
@@ -38,6 +50,7 @@ namespace Voxon
 			{
 				_features.Add(feature, _tClassType.GetMethod(feature));
 			}
+			
 		}
 
 		private void FindDll()
@@ -302,6 +315,30 @@ namespace Voxon
 		public string GetSDKVersion()
 		{
 			return (string) _features["GetSDKVersion"].Invoke(_runtime, null);
+		}
+
+		public void SetHelixMode(bool helixMode)
+		{
+			if (_features.ContainsKey("SetHelixMode"))
+			{
+				var paras = new object[] { helixMode };
+				_features["SetHelixMode"].Invoke(_runtime, paras);
+				
+			}
+		}
+		public bool GetHelixMode()
+		{
+			return _features.ContainsKey("GetHelixMode") && (bool) _features["GetHelixMode"].Invoke(_runtime, null);
+		}
+		
+		public float GetExternalRadius()
+		{
+			if (_features.ContainsKey("GetExternalRadius"))
+			{
+				return (float) _features["GetExternalRadius"].Invoke(_runtime, null);
+			}
+
+			return 0.0f;
 		}
 	}
 }
