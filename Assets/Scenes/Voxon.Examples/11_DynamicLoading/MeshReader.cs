@@ -7,6 +7,7 @@ using DataStructures.ViliWonka.KDTree;
 
 public class MeshReader : MonoBehaviour
 {
+    public float delayBeforeActivation = 3.0f; // Seconds
     public float radius = 400;
     public GameObject camera;
     private bool added = false;
@@ -20,24 +21,25 @@ public class MeshReader : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Invoke("Initialise", delayBeforeActivation);
+    }
+
+    void Initialise() // Requires all statics to be active at this point
+    {
+        Debug.Log("Building Point Cloud");
+        added = true;
+
+        meshFilters = FindObjectsOfType<MeshFilter>();
+        pointCloud = new Vector3[meshFilters.Length];
+            
+        for(int i = 0; i < pointCloud.Length; i++)
+            pointCloud[i] = meshFilters[i].gameObject.transform.position;
+                
+        tree = new KDTree(pointCloud, maxPointsPerLeafNode);
     }
 
     private void Update()
     {
-        if (!added && Voxon.Input.GetKeyDown("Jump"))
-        {
-            Debug.Log("Building Point Cloud");
-            added = true;
-
-            meshFilters = GetComponentsInChildren<MeshFilter>();
-            pointCloud = new Vector3[meshFilters.Length];
-            
-            for(int i = 0; i < pointCloud.Length; i++)
-                pointCloud[i] = meshFilters[i].gameObject.transform.position;
-                
-            tree = new KDTree(pointCloud, maxPointsPerLeafNode);
-        }
-
         if (added)
         {
             KDQuery query = new KDQuery();

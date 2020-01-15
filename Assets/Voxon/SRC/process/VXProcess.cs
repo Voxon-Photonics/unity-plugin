@@ -21,6 +21,9 @@ namespace Voxon
         [Tooltip("Disable to turn hide version information on front panel")]
         public bool show_version = true;
 
+        [Tooltip("Enable runtime applying VXGameobjects to all objects on load")]
+        public bool apply_vxgameobject = true;
+
         [FormerlySerializedAs("_editor_camera")]
         [Tooltip("Collision 'Camera'\nUtilises GameObject Scale, Rotation and Position")]
         [SerializeField]
@@ -106,26 +109,28 @@ namespace Voxon
                 Debug.LogWarning("DLL was already loaded!");
             }
 
-            // Load all existing drawable components
-            Renderer[] pack = FindObjectsOfType<Renderer>();
-            foreach (Renderer piece in pack)
-            {
-                if(piece.gameObject.GetComponent<ParticleSystem>())
+            if(apply_vxgameobject){
+                // Load all existing drawable components
+                Renderer[] pack = FindObjectsOfType<Renderer>();
+                foreach (Renderer piece in pack)
                 {
-                }
-                else if(piece.gameObject.GetComponent<LineRenderer>() && !piece.gameObject.GetComponent<Line>())
-                {
-                    piece.gameObject.AddComponent<Line>();
-                }
-                else
-                {
-                    GameObject parent = piece.transform.root.gameObject;
-                    if (!parent.GetComponent<VXGameObject>())
+                    if(piece.gameObject.GetComponent<ParticleSystem>())
                     {
-                        Gameobjects.Add(parent.AddComponent<VXGameObject>());
                     }
+                    else if(piece.gameObject.GetComponent<LineRenderer>() && !piece.gameObject.GetComponent<Line>())
+                    {
+                        piece.gameObject.AddComponent<Line>();
+                    }
+                    else
+                    {
+                        GameObject parent = piece.transform.root.gameObject;
+                        if (!parent.GetComponent<VXGameObject>())
+                        {
+                            Gameobjects.Add(parent.AddComponent<VXGameObject>());
+                        }
+                    }
+                
                 }
-            
             }
         }
 
