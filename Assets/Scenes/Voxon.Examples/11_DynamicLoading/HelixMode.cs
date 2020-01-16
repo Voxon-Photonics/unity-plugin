@@ -25,10 +25,8 @@ public class HelixMode : MonoBehaviour
             VXProcess.Runtime.SetHelixMode(!is_helix_mode);
             remaining = delay;
             Debug.Log("Helix Mode set to " + !is_helix_mode);
-            if (!is_helix_mode)
-            {
-                Debug.Log("Radius = " + VXProcess.Runtime.GetExternalRadius());
-            }
+            Debug.Log("External Radius = " + VXProcess.Runtime.GetExternalRadius());
+            Debug.Log("Interanl Radius = " + VXProcess.Runtime.GetInternalRadius());
         }
     }
 }

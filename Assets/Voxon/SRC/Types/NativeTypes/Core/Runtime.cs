@@ -338,5 +338,33 @@ namespace Voxon
 
 			return 0.0f;
 		}
+		
+		public void SetExternalRadius(float radius)
+		{
+			if (_features.ContainsKey("SetExternalRadius"))
+			{
+				var paras = new object[] { radius };
+				_features["SetExternalRadius"].Invoke(_runtime, paras);
+			}
+		}
+		
+		public float GetInternalRadius()
+		{
+			if (_features.ContainsKey("GetInternalRadius"))
+			{
+				return (float) _features["GetInternalRadius"].Invoke(_runtime, null);
+			}
+
+			return 0.0f;
+		}
+		
+		public void SetInternalRadius(float radius)
+		{
+			if (_features.ContainsKey("SetInternalRadius"))
+			{
+				var paras = new object[] { radius };
+				_features["SetInternalRadius"].Invoke(_runtime, paras);
+			}
+		}
 	}
 }
