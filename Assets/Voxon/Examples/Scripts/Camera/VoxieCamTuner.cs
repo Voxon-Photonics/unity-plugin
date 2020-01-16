@@ -25,6 +25,9 @@ public class VoxieCamTuner : MonoBehaviour {
     float currentSpeed;
     public bool loadSettingsFromFile = true, saveOnChange = true;
 
+    const float SPACENAV_SPEED_FACTOR = 0.0028571428571429f;
+    const float SPACENAV_ROTATION_FACTOR = 0.028571428571429f;
+        
     /*
       
       
@@ -49,12 +52,12 @@ String Name         Default Key         Function
 Cam_Reset_Pos       B               :   Reset the camera's position to last loaded file or default
 Cam_Reset_Rot       N               :   Reset the camera's rotation to last loaded file or default
 Cam_Reset_Scale     M               :   Reset the camera's scale to last loaded file or default
-Cam_Foward          Numpad +        :   Move the camera forward
-Cam_Backward        Numpad -        :   Move the camera backward
-Cam_Up              Numpad 8        :   Move the camera up
-Cam_Down            Numpad 5        :   move the camera down
-Cam_Left            Numpad 4        :   Move the camera left
-Cam_Right           Numpad 6        :   Move the camera right
+Cam_Foward          Arrow Up        :   Move the camera forward
+Cam_Backward        Arrow Down      :   Move the camera backward
+Cam_Up              Right Shift     :   Move the camera up
+Cam_Down            Right Ctrl      :   move the camera down
+Cam_Left            Arrow Left      :   Move the camera left
+Cam_Right           Arrow Right     :   Move the camera right
 Cam_Scale           Z               :   Modify scale hold down this key while pressing the camera directions to change the rotation.
 Cam_Rotation        X               :   Modify rotations hold down this key while pressing the camera directions to change the rotation.
 Cam_Print           P               :   Press this button to display the Y,X,Z infomation to the debug menu
@@ -124,11 +127,10 @@ Cam_Control         Left ALT        :   Hold down this button to load and save t
         if (Voxon.Input.GetKey("Cam_Print"))
         {
             camPrint();
-
-       
         }
 
 
+        /*
         if (Voxon.Input.GetKey("Cam_Scale"))
         {
 
@@ -164,7 +166,9 @@ Cam_Control         Left ALT        :   Hold down this button to load and save t
 
             }
         }
-        else if (Voxon.Input.GetKey("Cam_Rotation"))
+        */
+        
+        if (Voxon.Input.GetKey("Cam_Rotation"))
         {
             // rotation
 
@@ -199,28 +203,9 @@ Cam_Control         Left ALT        :   Hold down this button to load and save t
 
             }
 
-        } else {  
-            // reset
-
-            if (Voxon.Input.GetKey("Cam_Reset_Pos"))
-            {
-                VXProcess.add_log_line("**** Voxon Camera Position Reset ****");
-                transform.SetPositionAndRotation(originalPos, transform.rotation);
-
-            }
-            if (Voxon.Input.GetKey("Cam_Reset_Rot"))
-            {
-                VXProcess.add_log_line("**** Voxon Camera Rotation Reset ****");
-                transform.SetPositionAndRotation(transform.position, originalRot);
-
-            }
-            if (Voxon.Input.GetKey("Cam_Reset_Scale"))
-            {
-                VXProcess.add_log_line("**** Voxon Camera Scale Reset ****");
-                transform.localScale = originalScale;
-
-            }
-
+        }
+        else
+        {
 
             // directions
 
@@ -229,41 +214,79 @@ Cam_Control         Left ALT        :   Hold down this button to load and save t
                 transform.Translate(Vector3.forward * currentSpeed * Time.deltaTime);
 
             }
+
             if (Voxon.Input.GetKey("Cam_Backward"))
             {
                 transform.Translate(Vector3.back * currentSpeed * Time.deltaTime);
-
             }
+
             if (Voxon.Input.GetKey("Cam_Left"))
             {
                 transform.Translate(Vector3.left * currentSpeed * Time.deltaTime);
 
             }
+
             if (Voxon.Input.GetKey("Cam_Right"))
             {
                 transform.Translate(Vector3.right * currentSpeed * Time.deltaTime);
             }
+
             if (Voxon.Input.GetKey("Cam_Up"))
             {
                 transform.Translate(Vector3.up * currentSpeed * Time.deltaTime);
 
             }
+
             if (Voxon.Input.GetKey("Cam_Down"))
             {
                 transform.Translate(Vector3.down * currentSpeed * Time.deltaTime);
             }
-
-          
-          
-
         }
 
-
-      
-
-    
+        // Space Navigator
+        if (Voxon.Input.GetSpaceNavButton("LeftButton") || Voxon.Input.GetKey("Cam_ScaleUp"))
+        {
+            VXProcess.Instance.Camera.transform.localScale *= (1.05f);
+        }
         
-    
+        if(Voxon.Input.GetSpaceNavButton("RightButton") || Voxon.Input.GetKey("Cam_ScaleDown"))
+        {
+            VXProcess.Instance.Camera.transform.localScale *= (0.95f);
+        }
+        
+        var position = VXProcess.Runtime.GetSpaceNavPosition();
+        var rotation = VXProcess.Runtime.GetSpaceNavRotation();
+        
+        if (rotation != null)
+        {
+            var v3rot = new Vector3(rotation[0]/70,rotation[2]/70,-rotation[1]/70);
+            transform.Rotate(v3rot);    
+        }
+        
+        var v3pos = transform.position;
+        if (position != null)
+        {
+            v3pos.x += currentSpeed*(position[0]/350.0f);
+            v3pos.y += currentSpeed*(position[2]/350.0f);
+            v3pos.z -= currentSpeed*(position[1]/350.0f);
+            VXProcess.Instance.Camera.transform.position = v3pos;
+        }
+        
+        // reset
+
+        if (Voxon.Input.GetKey("Cam_Reset"))
+        {
+            VXProcess.add_log_line("**** Voxon Camera Position Reset ****");
+            transform.SetPositionAndRotation(originalPos, originalRot);
+            transform.localScale = originalScale;
+        }
+
+        if (Voxon.Input.GetSpaceNavButton("LeftButton") && Voxon.Input.GetSpaceNavButton("RightButton"))
+        {
+            VXProcess.Instance.Camera.transform.position = originalPos;
+            VXProcess.Instance.Camera.transform.rotation = originalRot;
+            VXProcess.Instance.Camera.transform.localScale = originalScale;
+        }
 
     }
 

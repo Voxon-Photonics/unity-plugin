@@ -239,13 +239,11 @@ namespace Voxon
 		public float[] GetSpaceNavPosition()
 		{
 			return (float[])_features["GetSpaceNavPosition"].Invoke(_runtime, null);
-			return new float[3];
 		}
 		
 		public float[] GetSpaceNavRotation()
 		{
 			return (float[])_features["GetSpaceNavRotation"].Invoke(_runtime, null);
-			return new float[3];
 		}
 		
 		public bool GetSpaceNavButton(int button)
