@@ -22,7 +22,7 @@ namespace Voxon
         public bool show_version = true;
 
         [Tooltip("Enable runtime applying VXGameobjects to all objects on load")]
-        public bool apply_vxgameobject = true;
+        public bool apply_vx_on_load = true;
 
         [FormerlySerializedAs("_editor_camera")]
         [Tooltip("Collision 'Camera'\nUtilises GameObject Scale, Rotation and Position")]
@@ -109,7 +109,7 @@ namespace Voxon
                 Debug.LogWarning("DLL was already loaded!");
             }
 
-            if(apply_vxgameobject){
+            if(apply_vx_on_load){
                 // Load all existing drawable components
                 Renderer[] pack = FindObjectsOfType<Renderer>();
                 foreach (Renderer piece in pack)

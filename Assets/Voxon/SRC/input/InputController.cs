@@ -117,6 +117,11 @@ namespace Voxon
         NUMPAD_8 = 0x48,
         NUMPAD_9 = 0x49,
         NUMPAD_Dot = 0x53,
+        
+        ARROW_Up = 0xC8,
+        ARROW_Down = 0xD0,
+        ARROW_Left = 0xCB,
+        ARROW_Right = 0xCD
 
     };
 
