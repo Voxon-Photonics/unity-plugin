@@ -159,7 +159,7 @@ namespace Voxon
             {
                 if (!gameObject.activeInHierarchy || CompareTag("VoxieHide"))
                 {
-                    Debug.Log($"{gameObject.name}: Skipping");
+                    // Debug.Log($"{gameObject.name}: Skipping");
                     return;
                 }
                 
