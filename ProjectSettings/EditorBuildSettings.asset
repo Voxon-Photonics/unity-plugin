@@ -5,7 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Voxon.Examples/0_BasicScene.unity
     guid: 3acb38ccfb791514fb2c0bd3f81a30b4
   - enabled: 0
@@ -38,4 +38,7 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scenes/Voxon.Examples/11_DynamicLoading.unity
+    guid: cda7875d843045c4194d291446bde1e1
   m_configObjects: {}

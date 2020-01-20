@@ -13,6 +13,8 @@ public class StaticSpawner : MonoBehaviour
     public Vector3 minVector = new Vector3();
 
     public Vector3 maxVector = new Vector3();
+
+    public GameObject spawnable; 
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +22,7 @@ public class StaticSpawner : MonoBehaviour
         GameObject go;
         for (int x = 0; x < objCount; ++x)
         {
-            go = Instantiate(original,
+            go = Instantiate(spawnable,
                 new Vector3(
                     Random.Range(minVector.x, maxVector.x),
                     0.5f,
