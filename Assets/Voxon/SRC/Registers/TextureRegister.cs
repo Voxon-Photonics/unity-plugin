@@ -21,7 +21,7 @@ namespace Voxon
             _register = new Dictionary<string, RegisteredTile>();
         }
 
-        public tiletype get_tile(ref Material mat)
+        public tiletype get_tile(ref Texture2D in_texture)
         {
             if(_register == null)
             {
@@ -30,37 +30,37 @@ namespace Voxon
 
 
             RegisteredTile rt;
-            if (_register.ContainsKey(mat.mainTexture.name))
+            if (_register.ContainsKey(in_texture.name))
             {
-                rt = _register[(mat.mainTexture.name)];
+                rt = _register[in_texture.name];
                 rt.Counter++;
-                _register[(mat.mainTexture.name)] = rt;
+                _register[in_texture.name] = rt;
 
                 return rt.Texture;
             }
             else
             {
-                rt = new RegisteredTile {Counter = 1, Texture = LoadTexture(ref mat)};
-                _register.Add(mat.mainTexture.name, rt);
+                rt = new RegisteredTile {Counter = 1, Texture = LoadTexture(ref in_texture)};
+                _register.Add(in_texture.name, rt);
                 return rt.Texture;
             }
         }
 
-        public bool drop_tile(ref Material mat)
+        public bool drop_tile(ref Texture2D texture)
         {
-            if (_register == null || !_register.ContainsKey(mat.mainTexture.name)) return false;
+            if (_register == null || !_register.ContainsKey(texture.name)) return false;
         
-            RegisteredTile rt = _register[(mat.mainTexture.name)];
+            RegisteredTile rt = _register[texture.name];
             rt.Counter--;
 
             if(rt.Counter <= 0)
             {
-                _register.Remove(mat.mainTexture.name);
+                _register.Remove(texture.name);
                 Marshal.FreeHGlobal(rt.Texture.first_pixel);
                 return true;
             }
 
-            _register[(mat.mainTexture.name)] = rt;
+            _register[texture.name] = rt;
             return false;
         }
 
@@ -91,15 +91,15 @@ namespace Voxon
             }
         }
 
-        tiletype LoadTexture(ref Material mat)
+        tiletype LoadTexture(ref Texture2D in_texture)
         {
             //TextureFormat.BGRA32
-            var reorderedTextures = new Texture2D(((Texture2D) mat.mainTexture).width, ((Texture2D) mat.mainTexture).height, TextureFormat.BGRA32, false);
+            var reorderedTextures = new Texture2D(in_texture.width, in_texture.height, TextureFormat.BGRA32, false);
 
-            Color32[] tCol = ((Texture2D) mat.mainTexture)?.GetPixels32();
+            Color32[] tCol = in_texture.GetPixels32();
             reorderedTextures.SetPixels32(tCol);
 
-            var texture = new tiletype
+            var out_texture = new tiletype
             {
                 height = (IntPtr) reorderedTextures.height,
                 width = (IntPtr) reorderedTextures.width,
@@ -108,9 +108,43 @@ namespace Voxon
                     Marshal.AllocHGlobal(Marshal.SizeOf(typeof(byte)) * reorderedTextures.GetRawTextureData().Length)
             };
 
-            Marshal.Copy(reorderedTextures.GetRawTextureData(), 0, texture.first_pixel, reorderedTextures.GetRawTextureData().Length);
+            Marshal.Copy(reorderedTextures.GetRawTextureData(), 0, out_texture.first_pixel, reorderedTextures.GetRawTextureData().Length);
 
-            return texture;
+            Destroy(reorderedTextures);
+            return out_texture;
+        }
+        
+        public tiletype refresh_tile(ref Texture2D tex)
+        {
+            if(_register == null)
+            {
+                Debug.Log("New Dictionary");
+                _register = new Dictionary<string, RegisteredTile>();
+            }
+
+            if (!_register.ContainsKey(tex.name))
+            {
+                return get_tile(ref tex);
+            } else
+            {
+                return RefreshTexture(ref tex);
+            }
+        }
+        
+        tiletype RefreshTexture(ref Texture2D texture)
+        {
+            // Debug.Log("Refreshing Texture: " + texture.name);
+            var reorderedTextures = new Texture2D(texture.width, texture.height, TextureFormat.BGRA32, false);
+
+            Color32[] tCol = texture.GetPixels32();
+            reorderedTextures.SetPixels32(tCol);
+
+            RegisteredTile rt = _register[texture.name];
+            Marshal.Copy(reorderedTextures.GetRawTextureData(), 0, rt.Texture.first_pixel, reorderedTextures.GetRawTextureData().Length);
+            _register[texture.name] = rt;
+
+            Destroy(reorderedTextures);
+            return rt.Texture;
         }
 
     }

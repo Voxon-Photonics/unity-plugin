@@ -137,7 +137,7 @@ namespace Voxon
         // Update is called once per frame
         void Update()
         {
-            if(!active && Runtime != null)
+            if(!active || Runtime == null)
             {
                 return;
             }

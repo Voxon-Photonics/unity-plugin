@@ -259,16 +259,19 @@ Cam_Control         Left ALT        :   Hold down this button to load and save t
         
         if (rotation != null)
         {
-            var v3rot = new Vector3(rotation[0]/70,rotation[2]/70,-rotation[1]/70);
+            // Rotation [Roll, Pitch, Yaw]
+            // v3rot (pitch, yaw, roll)
+            var v3rot = new Vector3(rotation[1]/70,-rotation[2]/70,rotation[0]/70);
+            // var v3rot = new Vector3(rotation[1]/70,rotation[0]/70,-rotation[2]/70);
             transform.Rotate(v3rot);    
         }
         
         var v3pos = transform.position;
         if (position != null)
         {
-            v3pos.x += currentSpeed*(position[0]/350.0f);
+            v3pos.x -= currentSpeed*(position[0]/350.0f);
             v3pos.y += currentSpeed*(position[2]/350.0f);
-            v3pos.z -= currentSpeed*(position[1]/350.0f);
+            v3pos.z += currentSpeed*(position[1]/350.0f);
             VXProcess.Instance.Camera.transform.position = v3pos;
         }
         

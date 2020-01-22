@@ -17,7 +17,7 @@ namespace Voxon.tests
         public void GetTile()
         {
             TextureRegister tr = TextureRegister.Instance;
-            Material mat = TestObjects.Material();
+            Texture2D mat = (Texture2D)TestObjects.Material().mainTexture;
 
             tiletype tt = tr.get_tile(ref mat);
 
@@ -29,9 +29,9 @@ namespace Voxon.tests
         public void DropTileUnloading()
         {
             TextureRegister tr = TextureRegister.Instance;
-            Material mat = TestObjects.Material();
+            Texture2D mat = (Texture2D)TestObjects.Material().mainTexture;
 
-            tr.get_tile(ref mat);
+            tiletype tt = tr.get_tile(ref mat);
             bool dropSuccessful = tr.drop_tile(ref mat);
 
             Assert.True(dropSuccessful, "Tile was not unloaded from library");
@@ -42,7 +42,7 @@ namespace Voxon.tests
         public void DropTileDecrement()
         {
             TextureRegister tr = TextureRegister.Instance;
-            Material mat = TestObjects.Material();
+            Texture2D mat = (Texture2D)TestObjects.Material().mainTexture;
 
             // Initial load
             tr.get_tile(ref mat);
@@ -60,7 +60,7 @@ namespace Voxon.tests
         public void DropTileMissing()
         {
             TextureRegister tr = TextureRegister.Instance;
-            Material mat = TestObjects.Material();
+            Texture2D mat = (Texture2D)TestObjects.Material().mainTexture;
 
             bool dropSuccessful = tr.drop_tile(ref mat);
 
@@ -72,7 +72,7 @@ namespace Voxon.tests
         public void GetTexturePointer()
         {
             TextureRegister tr = TextureRegister.Instance;
-            Material mat = TestObjects.Material();
+            Texture2D mat = (Texture2D)TestObjects.Material().mainTexture;
 
             tiletype tt = tr.get_tile(ref mat);
 
@@ -84,7 +84,7 @@ namespace Voxon.tests
         public void GetHeight()
         {
             TextureRegister tr = TextureRegister.Instance;
-            Material mat = TestObjects.Material();
+            Texture2D mat = (Texture2D)TestObjects.Material().mainTexture;
 
             tiletype tt = tr.get_tile(ref mat);
 
@@ -96,7 +96,7 @@ namespace Voxon.tests
         public void GetWidth()
         {
             TextureRegister tr = TextureRegister.Instance;
-            Material mat = TestObjects.Material();
+            Texture2D mat = (Texture2D)TestObjects.Material().mainTexture;
 
             tiletype tt = tr.get_tile(ref mat);
 
@@ -108,7 +108,7 @@ namespace Voxon.tests
         public void GetPitch()
         {
             TextureRegister tr = TextureRegister.Instance;
-            Material mat = TestObjects.Material();
+            Texture2D mat = (Texture2D)TestObjects.Material().mainTexture;
 
             tiletype tt = tr.get_tile(ref mat);
 

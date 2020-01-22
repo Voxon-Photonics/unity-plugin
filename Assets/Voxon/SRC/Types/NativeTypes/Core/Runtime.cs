@@ -148,6 +148,12 @@ namespace Voxon
 			var paras = new object[] { position, col };
 			_features["DrawVoxel"].Invoke(_runtime, paras);
 		}
+		
+		public void DrawVoxels(ref point3d[] positions, ref int[] colours, int voxel_count)
+		{
+			var paras = new object[] { positions, colours, voxel_count };
+			_features["DrawVoxels"].Invoke(_runtime, paras);
+		}
 
 		public void FrameEnd()
 		{
@@ -314,16 +320,7 @@ namespace Voxon
 		{
 			return (string) _features["GetSDKVersion"].Invoke(_runtime, null);
 		}
-
-		public void SetHelixMode(bool helixMode)
-		{
-			if (_features.ContainsKey("SetHelixMode"))
-			{
-				var paras = new object[] { helixMode };
-				_features["SetHelixMode"].Invoke(_runtime, paras);
-				
-			}
-		}
+		
 		public bool GetHelixMode()
 		{
 			return _features.ContainsKey("GetHelixMode") && (bool) _features["GetHelixMode"].Invoke(_runtime, null);

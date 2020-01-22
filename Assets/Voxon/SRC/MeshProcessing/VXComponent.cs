@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.Profiling;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
 namespace Voxon
 {
@@ -42,6 +43,12 @@ namespace Voxon
             TimeLeftAlive = TimeToLive;
             
             _drawFlags = (int)flags | 1 << 3;
+
+            if (GetComponent<VideoPlayer>() && GetComponent<VXVideoPlayer>() == null)
+            {
+                gameObject.AddComponent<VXVideoPlayer>();
+            }
+            
             try
             {
                 try
@@ -138,7 +145,8 @@ namespace Voxon
                 {
                     if (_umaterials[submesh].mainTexture)
                     {
-                        TextureRegister.Instance.drop_tile(ref _umaterials[submesh]);
+                        Texture2D tmpText2D = _umaterials[submesh].mainTexture as Texture2D;
+                        TextureRegister.Instance.drop_tile(ref tmpText2D);
                     }
                 }
             }
@@ -177,7 +185,7 @@ namespace Voxon
                 {
                     if (_umaterials[idx].HasProperty("_MainTex"))
                     {
-						VXProcess.Runtime.DrawTexturedMesh(ref _textures[idx], _vt, _mesh.vertexCount, _mesh.indices[idx], _mesh.indexCounts[idx], _drawFlags);
+                        VXProcess.Runtime.DrawTexturedMesh(ref _textures[idx], _vt, _mesh.vertexCount, _mesh.indices[idx], _mesh.indexCounts[idx], _drawFlags);
                     }
                     else
                     {
@@ -243,7 +251,7 @@ namespace Voxon
 
         private void load_textures()
         {
-			Profiler.BeginSample("Load Textures");
+            Profiler.BeginSample("Load Textures");
 			try
             {
                 _textures = new tiletype[_mesh.submeshCount];
@@ -251,7 +259,8 @@ namespace Voxon
                 {
                     if (_umaterials[submesh].HasProperty("_MainTex") && _umaterials[submesh].mainTexture)
                     {
-                        _textures[submesh] = TextureRegister.Instance.get_tile(ref _umaterials[submesh]);
+                        Texture2D tmpText2D = _umaterials[submesh].mainTexture as Texture2D;
+                        _textures[submesh] = TextureRegister.Instance.get_tile(ref tmpText2D);
                     }
                 }
             }
@@ -260,6 +269,19 @@ namespace Voxon
                 ExceptionHandler.Except($"Error while Loading Textures: {gameObject.name}", e);
             }
 			Profiler.EndSample();
+        }
+        
+        public void RefreshDynamicTexture(ref Texture2D dynamic_texture)
+        {
+            for (var submesh = 0; submesh < _mesh.submeshCount; submesh++)
+            {
+                if (_umaterials[submesh].HasProperty("_MainTex") 
+                    && _umaterials[submesh].mainTexture
+                    && _umaterials[submesh].mainTexture.name == dynamic_texture.name)
+                {
+                    _textures[submesh] = TextureRegister.Instance.refresh_tile(ref dynamic_texture);
+                }
+            }
         }
     }
 }
