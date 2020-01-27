@@ -8,21 +8,30 @@ namespace Voxon.Examples.Input
         // Update is called once per frame
         void Update () {
             Vector3 pos = transform.position;
-            if (Voxon.Input.GetKey("Left"))
-            {
-                pos.x += 0.1f;
-            }
-            if (Voxon.Input.GetKey("Right"))
+            if (Voxon.Input.GetKey("Cam_Left"))
             {
                 pos.x -= 0.1f;
             }
-            if (Voxon.Input.GetKey("Up") || Voxon.Input.GetButton("Jump"))
+            if (Voxon.Input.GetKey("Cam_Right"))
+            {
+                pos.x += 0.1f;
+            }
+            if (Voxon.Input.GetKey("Cam_Forward"))
+            {
+                pos.z += 0.1f;
+            }
+            if (Voxon.Input.GetKey("Cam_Backward"))
             {
                 pos.z -= 0.1f;
             }
-            if (Voxon.Input.GetKey("Down"))
+            
+            if (Voxon.Input.GetKey("Cam_Up"))
             {
-                pos.z += 0.1f;
+                pos.y += 0.1f;
+            }
+            if (Voxon.Input.GetKey("Cam_Down"))
+            {
+                pos.y -= 0.1f;
             }
 
             Vector3 worldRot = VXProcess.Instance.EulerAngles;
