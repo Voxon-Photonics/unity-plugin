@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Voxon;
@@ -54,5 +55,10 @@ public class TextureReflection : MonoBehaviour
         {
             _vxc = GetComponent<VXComponent>();
         }
+    }
+
+    private void LateUpdate()
+    {
+        _camera.Render();
     }
 }
