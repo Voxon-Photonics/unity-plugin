@@ -10,8 +10,14 @@ namespace Voxon
 {
 	public enum ColorMode
 	{
-		WHITE = 0,
+		// Dual Color - Currently Disabled
+		// BG = 4 
+		// RG  = 3,
+		// RB = 2,
+		// Full Color
 		RGB = 1,
+		// Monochrome
+		WHITE = 0,
 		RED = -1,
 		GREEN = -2,
 		YELLOW = -3,

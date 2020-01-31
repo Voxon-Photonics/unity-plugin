@@ -21,6 +21,7 @@ public class ColorModeSwap : MonoBehaviour
             {
                 currentColor = ColorMode.RGB;
             }
+            Debug.Log((currentColor.ToString()));
             VXProcess.Runtime.SetDisplayColor(currentColor);
         }
     }
