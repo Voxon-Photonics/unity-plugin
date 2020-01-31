@@ -8,13 +8,24 @@ using UnityEngine;
 
 namespace Voxon
 {
+	public enum ColorMode
+	{
+		WHITE = 0,
+		RGB = 1,
+		RED = -1,
+		GREEN = -2,
+		YELLOW = -3,
+		BLUE = -4,
+		MAGENTA = -5,
+		CYAN = -6
+	};
+	
 	public class Runtime : IRuntimePromise
 	{
 		private string _pluginFilePath = "";
 		private const string PluginFileName = "C#-Runtime.dll";
 		
 		private const string PluginTypeName = "Voxon.Runtime";
-		private const string HelixTypeName = "Voxon.HelixRuntime";
 
 		public string ActiveRuntime;
 		
@@ -30,13 +41,13 @@ namespace Voxon
 
 			Assembly asm = Assembly.LoadFrom(_pluginFilePath);
 
-			_tClassType = asm.GetType(HelixTypeName);
-			ActiveRuntime = HelixTypeName;
+			_tClassType = asm.GetType(PluginTypeName);
+			ActiveRuntime = PluginTypeName;
 			if (_tClassType == null)
 			{
-				Debug.LogWarning("Helix Interface Not Available. SDK Out of date");
-				_tClassType = asm.GetType(PluginTypeName);
-				ActiveRuntime = PluginTypeName;
+				Debug.LogError("Voxon Runtime Interface Not Available. Ensure C#-Runtime.dll is available.");
+				_runtime = null;
+				return;
 			}
 
 			_runtime = Activator.CreateInstance(_tClassType);
@@ -148,10 +159,16 @@ namespace Voxon
 			var paras = new object[] { position, col };
 			_features["DrawVoxel"].Invoke(_runtime, paras);
 		}
-		
-		public void DrawVoxels(ref point3d[] positions, ref int[] colours, int voxel_count)
+
+		public void DrawVoxelBatch(ref poltex[] positions, int voxel_count, int colour)
 		{
-			var paras = new object[] { positions, colours, voxel_count };
+			var paras = new object[] { positions, voxel_count, colour };
+			_features["DrawVoxelBatch"].Invoke(_runtime, paras);
+		}
+
+		public void DrawVoxels(ref point3d[] positions, int voxel_count, ref int[] colours)
+		{
+			var paras = new object[] { positions, voxel_count, colours };
 			_features["DrawVoxels"].Invoke(_runtime, paras);
 		}
 
@@ -301,6 +318,27 @@ namespace Voxon
 			_features["SetAspectRatio"].Invoke(_runtime, paras);
 		}
 
+		public void SetColorMode(int colour)
+		{
+			var paras = new object[] { colour };
+			_features["SetColorMode"].Invoke(_runtime, paras);
+		}
+		
+		public int GetColorMode()
+		{
+			return (int)_features["isInitialised"].Invoke(_runtime, null);
+		}
+
+		public void SetDisplayColor(ColorMode color)
+		{
+			SetColorMode((int)color);
+		}
+		
+		public ColorMode GetDisplayColor()
+		{
+			return (ColorMode) GetColorMode();
+		}
+
 		public void Shutdown()
 		{
 			_features["Shutdown"].Invoke(_runtime, null);
@@ -321,11 +359,21 @@ namespace Voxon
 			return (string) _features["GetSDKVersion"].Invoke(_runtime, null);
 		}
 		
+		#region Helix Controls
 		public bool GetHelixMode()
 		{
 			return _features.ContainsKey("GetHelixMode") && (bool) _features["GetHelixMode"].Invoke(_runtime, null);
 		}
-		
+
+		public void SetSimulatorHelixMode(bool helix)
+		{
+			if (_features.ContainsKey("SetSimulatorHelixMode"))
+			{
+				var paras = new object[] { helix };
+				_features["SetSimulatorHelixMode"].Invoke(_runtime, paras);
+			}
+		}
+
 		public float GetExternalRadius()
 		{
 			if (_features.ContainsKey("GetExternalRadius"))
@@ -363,5 +411,62 @@ namespace Voxon
 				_features["SetInternalRadius"].Invoke(_runtime, paras);
 			}
 		}
+		
+		#endregion
+
+		#region Menu Controls
+		public void MenuReset(MenuUpdateHandler menuUpdate, object userdata)
+		{
+			var paras = new object[] { menuUpdate, userdata };
+			_features["MenuReset"].Invoke(_runtime, paras);
+		}
+
+		public void MenuAddTab(string text, int x, int y, int width, int height)
+		{
+			var paras = new object[] { text, x, y, width, height };
+			_features["MenuAddTab"].Invoke(_runtime, paras);
+		}
+
+		public void MenuAddText(int id, string text, int x, int y, int width, int height, int colour)
+		{
+			var paras = new object[] { id, text, x, y, width, height, colour };
+			_features["MenuAddText"].Invoke(_runtime, paras);
+		}
+
+		public void MenuAddButton(int id, string text, int x, int y, int width, int height, int colour, int position)
+		{
+			var paras = new object[] { id, text, x, y, width, height, colour, position };
+			_features["MenuAddButton"].Invoke(_runtime, paras);
+		}
+
+		public void MenuAddVerticleSlider(int id, string text, int x, int y, int width, int height, int colour, int initial_value,
+			double min, double max, double minor_step, double major_step)
+		{
+			var paras = new object[] { id, text, x, y, width, height, colour, initial_value, min, max, minor_step, major_step };
+			_features["MenuAddVerticleSlider"].Invoke(_runtime, paras);
+		}
+
+		public void MenuAddHorizontalSlider(int id, string text, int x, int y, int width, int height, int colour, int initial_value,
+			double min, double max, double minor_step, double major_step)
+		{
+			var paras = new object[] { id, text, x, y, width, height, colour, initial_value, min, max, minor_step, major_step };
+			_features["MenuAddHorizontalSlider"].Invoke(_runtime, paras);
+		}
+
+		public void MenuAddEdit(int id, string text, int x, int y, int width, int height, int colour, bool hasFollowupButton = false)
+		{
+			var paras = new object[] { id, text, x, y, width, height, colour, hasFollowupButton };
+			_features["MenuAddEdit"].Invoke(_runtime, paras);
+		}
+
+		public void MenuUpdateItem(int id, string st, int down, double v)
+		{
+			var paras = new object[] { id, st, down, v };
+			_features["MenuReset"].Invoke(_runtime, paras);
+		}
+		
+		#endregion
+
+		
 	}
 }
