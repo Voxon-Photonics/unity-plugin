@@ -19,9 +19,9 @@ public class ColorModeSwap : MonoBehaviour
             currentColor--;
             if (currentColor < ColorMode.CYAN)
             {
-                currentColor = ColorMode.RGB;
+                currentColor = ColorMode.BG;
             }
-            Debug.Log((currentColor.ToString()));
+            Debug.Log((currentColor.ToString()) + " : " + (int)currentColor);
             VXProcess.Runtime.SetDisplayColor(currentColor);
         }
     }
