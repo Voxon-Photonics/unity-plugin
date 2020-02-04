@@ -168,6 +168,7 @@ namespace Voxon
 
 		public void DrawVoxelBatch(ref poltex[] positions, int voxel_count, int colour)
 		{
+			// colour
 			var paras = new object[] { positions, voxel_count, colour };
 			_features["DrawVoxelBatch"].Invoke(_runtime, paras);
 		}

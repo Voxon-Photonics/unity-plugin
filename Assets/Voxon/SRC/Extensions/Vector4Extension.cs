@@ -10,4 +10,11 @@ public static class Vector4Extension
 
         return p3d;
     }
+    
+    public static Voxon.poltex ToPoltex(this Vector4 v4)
+    {
+        Voxon.poltex p3d = new Voxon.poltex() {x = v4.x, y = -v4.z, z = -v4.y};
+
+        return p3d;
+    }
 }
