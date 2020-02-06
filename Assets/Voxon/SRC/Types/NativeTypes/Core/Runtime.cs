@@ -166,7 +166,7 @@ namespace Voxon
 			_features["DrawVoxel"].Invoke(_runtime, paras);
 		}
 
-		public void DrawVoxelBatch(ref poltex[] positions, int voxel_count, int colour)
+		public void DrawVoxelBatch(ref point3d[] positions, int voxel_count, int colour)
 		{
 			// colour
 			var paras = new object[] { positions, voxel_count, colour };
@@ -471,9 +471,42 @@ namespace Voxon
 			var paras = new object[] { id, st, down, v };
 			_features["MenuReset"].Invoke(_runtime, paras);
 		}
-		
 		#endregion
-
 		
+		#region Emulator
+		public float SetEmulatorHorizontalAngle(float radians)
+		{
+			var paras = new object[] { radians };
+			return (float) _features["SetEmulatorHorizontalAngle"].Invoke(_runtime, paras);
+		}
+
+		public float SetEmulatorVerticalAngle(float radians)
+		{
+			var paras = new object[] { radians };
+			return (float)_features["SetEmulatorVerticalAngle"].Invoke(_runtime, paras);
+		}
+
+		public float SetEmulatorDistance(float distance)
+		{
+			var paras = new object[] { distance };
+			return (float)_features["SetEmulatorDistance"].Invoke(_runtime, paras);
+		}
+		
+		public float GetEmulatorHorizontalAngle()
+		{
+			return (float) _features["GetEmulatorHorizontalAngle"].Invoke(_runtime, null);
+		}
+
+		public float GetEmulatorVerticalAngle()
+		{
+			return (float)_features["GetEmulatorVerticalAngle"].Invoke(_runtime, null);
+		}
+
+		public float GetEmulatorDistance()
+		{
+			return (float)_features["GetEmulatorDistance"].Invoke(_runtime, null);
+		}
+
+		#endregion
 	}
 }

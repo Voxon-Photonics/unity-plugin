@@ -7,7 +7,7 @@ namespace Voxon
     {
         private Vector3[] _points;
 
-        private poltex[] _voxelPositions;
+        private point3d[] _voxelPositions;
         private int _voxelCount = 0;
         private Int32 _col = 0;
 
@@ -34,7 +34,7 @@ namespace Voxon
         {
             this._voxelCount = points.Length;
             this._points = points;
-            this._voxelPositions = new poltex[this._voxelCount];
+            this._voxelPositions = new point3d[this._voxelCount];
             update_transform();
         }
 
@@ -51,8 +51,7 @@ namespace Voxon
             
                 inV = component * inV;
                 
-                _voxelPositions[idx] = inV.ToPoltex();
-                _voxelPositions[idx].col = _col;
+                _voxelPositions[idx] = inV.ToPoint3d();
             }
             
         }
