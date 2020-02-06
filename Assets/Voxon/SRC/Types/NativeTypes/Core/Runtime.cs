@@ -25,6 +25,14 @@ namespace Voxon
 		MAGENTA = -5,
 		CYAN = -6
 	};
+
+	public enum MENUPOSITION
+	{
+		SINGLE = 3,
+		FIRST = 1,
+		MIDDLE = 0,
+		END = 2
+	}
 	
 	public class Runtime : IRuntimePromise
 	{
@@ -422,7 +430,7 @@ namespace Voxon
 		#endregion
 
 		#region Menu Controls
-		public void MenuReset(MenuUpdateHandler menuUpdate, object userdata)
+		public void MenuReset(MenuUpdateHandler menuUpdate, IntPtr userdata)
 		{
 			var paras = new object[] { menuUpdate, userdata };
 			_features["MenuReset"].Invoke(_runtime, paras);
@@ -446,14 +454,14 @@ namespace Voxon
 			_features["MenuAddButton"].Invoke(_runtime, paras);
 		}
 
-		public void MenuAddVerticleSlider(int id, string text, int x, int y, int width, int height, int colour, int initial_value,
+		public void MenuAddVerticleSlider(int id, string text, int x, int y, int width, int height, int colour, double initial_value,
 			double min, double max, double minor_step, double major_step)
 		{
 			var paras = new object[] { id, text, x, y, width, height, colour, initial_value, min, max, minor_step, major_step };
 			_features["MenuAddVerticleSlider"].Invoke(_runtime, paras);
 		}
 
-		public void MenuAddHorizontalSlider(int id, string text, int x, int y, int width, int height, int colour, int initial_value,
+		public void MenuAddHorizontalSlider(int id, string text, int x, int y, int width, int height, int colour, double initial_value,
 			double min, double max, double minor_step, double major_step)
 		{
 			var paras = new object[] { id, text, x, y, width, height, colour, initial_value, min, max, minor_step, major_step };
