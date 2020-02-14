@@ -183,7 +183,7 @@ namespace Voxon
                 
                 for (var idx = 0; idx < _mesh.submeshCount; idx++)
                 {
-                    if (_umaterials[idx].HasProperty("_MainTex"))
+                    if (_umaterials[idx].HasProperty("_MainTex") && _umaterials[idx].mainTexture != null)
                     {
                         VXProcess.Runtime.DrawTexturedMesh(ref _textures[idx], _vt, _mesh.vertexCount, _mesh.indices[idx], _mesh.indexCounts[idx], _drawFlags);
                     }
