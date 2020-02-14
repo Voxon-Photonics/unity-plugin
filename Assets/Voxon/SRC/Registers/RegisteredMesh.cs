@@ -251,15 +251,9 @@ namespace Voxon
                 inV.z = vertices[idx].z;
             
                 inV = component * inV;
-
-                vt[idx] = inV.ToPoltex();
-                /*
-                vt[idx].x = inV.x;
-                vt[idx].y = -inV.z;
-                vt[idx].z = -inV.y;
-                vt[idx].u = vertices[idx].u;
-                vt[idx].v = vertices[idx].v;
-                */
+                
+                // Generate Poltex from Vec4, and add U/V values
+                vt[idx] = inV.ToPoltex(vertices[idx].u, vertices[idx].v);
             }
 
         }
