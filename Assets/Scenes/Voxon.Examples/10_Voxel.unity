@@ -214,7 +214,7 @@ MonoBehaviour:
   - vector: {x: 1, y: 1.5, z: 1}
     voxelColor: {r: 1, g: 1, b: 1, a: 0}
   - vector: {x: 3, y: 1.5, z: 0}
-    voxelColor: {r: 0, g: 1, b: 0.054833174, a: 0}
+    voxelColor: {r: 0, g: 1, b: 0, a: 0}
 --- !u!4 &225125565
 Transform:
   m_ObjectHideFlags: 0
@@ -260,6 +260,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   guidelines: 1
   show_version: 1
+  apply_vx_on_load: 1
   editorCamera: {fileID: 656801501}
   active: 1
   ErrorTexture: {fileID: 0}
@@ -451,7 +452,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdce307c928d7144a803bdd7b0a1226a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  filename: default.json
+  filename: 10_Input.json
   keyboard:
     buckets: ffffffffffffffffffffffff010000000500000002000000ffffffffffffffff0000000003000000ffffffffffffffff08000000ffffffffffffffff0700000006000000
     hashCodes: c25d3e32d18ba0277377124cf86f8906f919075ceab07d513234eb46f963bb071692154e0000000000000000000000000000000000000000000000000000000000000000

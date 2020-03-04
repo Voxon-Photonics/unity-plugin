@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 namespace Voxon
@@ -9,6 +10,7 @@ namespace Voxon
 
         private point3d _position;
         private Int32 _col;
+        private bool isCoroutineExecuting = false;
 
         public VXVoxel(Vector3 vector, Color32 col)
         {
@@ -34,20 +36,30 @@ namespace Voxon
             this._vector = point;
             update_transform();
         }
+        
+        IEnumerator DelayedUpdate(float time)
+        {
+            if (isCoroutineExecuting)
+                yield break;
+            isCoroutineExecuting = true;
+            yield return new WaitForSeconds(time);
+            update_transform();
+            isCoroutineExecuting = false;
+        }
 
         public void update_transform()
         {
             Matrix4x4 fMatrix = VXProcess.Instance.Transform;
             if (fMatrix == Matrix4x4.zero)
             {
-                Debug.Log("EMPTY TRANSFORM");
+                Debug.Log("EMPTY TRANSFORM: Delay Update");
+                DelayedUpdate(1.0f);
             }
             else
             {
                 Vector3 inV = fMatrix * _vector;
                 _position = inV.ToPoint3d();    
             }
-            
         }
     }
 }

@@ -88,7 +88,7 @@ namespace Voxon
 				return;
 			}
 
-#if NET_4_6
+#if false
 			RegistryKey dll = Registry.LocalMachine.OpenSubKey("SOFTWARE\\Voxon\\Voxon");
 			if (dll != null)
 			{
@@ -96,10 +96,22 @@ namespace Voxon
 					$"{(string) Registry.LocalMachine.OpenSubKey("SOFTWARE\\Voxon\\Voxon")?.GetValue("Path")}{PluginFileName}";
 				return;
 			}
-			
 #endif
+
+			string voxon_path = Environment.GetEnvironmentVariable("VOXON_RUNTIME", EnvironmentVariableTarget.User);
 			
-			string[] paths = Environment.GetEnvironmentVariable("Path")?.Split(';');
+			if (File.Exists($"{voxon_path}{PluginFileName}"))
+			{
+				_pluginFilePath = $"{voxon_path}{PluginFileName}";
+				return;
+			}
+			else
+			{
+				Debug.Log($"{voxon_path}{PluginFileName} Doesn't Exist");
+				
+			}
+			
+			string[] paths = Environment.GetEnvironmentVariable("Path", EnvironmentVariableTarget.User)?.Split(';');
 
 			if (paths == null) return;
 			

@@ -141,13 +141,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdce307c928d7144a803bdd7b0a1226a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  filename: default.json
+  filename: 15_Input.json
   keyboard:
     buckets: ffffffffffffffffffffffff010000000500000002000000ffffffffffffffffffffffff03000000ffffffffffffffff08000000ffffffffffffffff0700000006000000
     hashCodes: 92ab9755d18ba0277377124cf86f8906f919075ceab07d513234eb46f963bb071692154e0000000000000000000000000000000000000000000000000000000000000000
     next: ffffffffffffffffffffffff00000000ffffffffffffffff04000000ffffffffffffffff0000000000000000000000000000000000000000000000000000000000000000
     count: 9
-    version: 9
+    version: 19
     freeList: -1
     freeCount: 0
     keys:
@@ -174,7 +174,7 @@ MonoBehaviour:
     hashCodes: 7377124cf86f890600000000
     next: ffffffff0000000000000000
     count: 2
-    version: 2
+    version: 5
     freeList: -1
     freeCount: 0
     keys:
@@ -187,7 +187,7 @@ MonoBehaviour:
     hashCodes: fdc29461fcb4172f00000000
     next: ffffffffffffffff00000000
     count: 2
-    version: 2
+    version: 5
     freeList: -1
     freeCount: 0
     keys:
@@ -200,7 +200,7 @@ MonoBehaviour:
     hashCodes: c25d3e320000000000000000
     next: ffffffff0000000000000000
     count: 1
-    version: 1
+    version: 3
     freeList: -1
     freeCount: 0
     keys:
@@ -226,7 +226,7 @@ MonoBehaviour:
     hashCodes: c25d3e320000000000000000
     next: ffffffff0000000000000000
     count: 1
-    version: 1
+    version: 3
     freeList: -1
     freeCount: 0
     keys:
@@ -252,7 +252,7 @@ MonoBehaviour:
     hashCodes: c25d3e320000000000000000
     next: ffffffff0000000000000000
     count: 1
-    version: 1
+    version: 3
     freeList: -1
     freeCount: 0
     keys:
@@ -278,7 +278,7 @@ MonoBehaviour:
     hashCodes: c25d3e320000000000000000
     next: ffffffff0000000000000000
     count: 1
-    version: 1
+    version: 3
     freeList: -1
     freeCount: 0
     keys:
