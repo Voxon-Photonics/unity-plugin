@@ -410,7 +410,6 @@ GameObject:
   - component: {fileID: 706741198}
   - component: {fileID: 706741197}
   - component: {fileID: 706741196}
-  - component: {fileID: 706741200}
   m_Layer: 0
   m_Name: Plane
   m_TagString: VoxieHide
@@ -491,19 +490,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &706741200
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 706741195}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60eac8eddcd5eb6489debd5b0b12de82, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  voxelCount: 100
 --- !u!1 &745909433
 GameObject:
   m_ObjectHideFlags: 0
@@ -760,18 +746,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1756280382}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1756280388
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1756280383}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95102eba8eefd174c9bfb3b7a1c87aef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1788538050
 GameObject:
   m_ObjectHideFlags: 1
@@ -831,7 +805,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdce307c928d7144a803bdd7b0a1226a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  filename: 0_Input.json
+  filename: 0_BasicSceneInput.json
   keyboard:
     buckets: ffffffff12000000ffffffff07000000ffffffff1100000019000000ffffffff0a000000160000000400000009000000ffffffff1400000002000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0f0000000300000017000000ffffffffffffffffffffffffffffffff1a00000001000000ffffffffffffffff0e0000000800000018000000
     hashCodes: c25d3e32d18ba0277377124cf86f8906f919075ceab07d513234eb46f963bb071692154e25d018102f8fe0342003e125efaf8969b3df380ed51e475ada392c20330e0c4dac2fef2d315e167a90a0d52b89d4e2129c35f60ff30cc825e9cc0949d6c6b67ac3387b5700340c1e00000000000000000000000000000000000000000000000000000000000000000000000000000000

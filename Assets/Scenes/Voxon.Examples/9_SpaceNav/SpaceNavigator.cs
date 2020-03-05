@@ -51,7 +51,7 @@ public class SpaceNavigator : MonoBehaviour
         if (position != null)
         {
             v3pos.x += movement_speed*(position[0]/35.0f);
-            v3pos.y = (VXProcess.Instance.Camera.transform.localScale.y / 2.0f);
+            v3pos.y += movement_speed*(position[2]/35.0f);
             v3pos.z -= movement_speed*(position[1]/35.0f);
             VXProcess.Instance.Camera.transform.position = v3pos;
         }

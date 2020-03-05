@@ -316,33 +316,47 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdce307c928d7144a803bdd7b0a1226a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  filename: 7_Input.json
+  filename: 7_LevelLoadingInput.json
   keyboard:
-    buckets: ffffffffffffffffffffffff
-    hashCodes: 000000000000000000000000
-    next: 000000000000000000000000
-    count: 0
-    version: 0
+    buckets: ffffffffffffffffffffffff010000000500000002000000ffffffffffffffff0000000003000000ffffffffffffffff08000000ffffffffffffffff0700000006000000
+    hashCodes: c25d3e32d18ba0277377124cf86f8906f919075ceab07d513234eb46f963bb071692154e0000000000000000000000000000000000000000000000000000000000000000
+    next: ffffffffffffffffffffffffffffffffffffffffffffffff04000000ffffffffffffffff0000000000000000000000000000000000000000000000000000000000000000
+    count: 9
+    version: 9
     freeList: -1
     freeCount: 0
     keys:
+    - Jump
+    - Quit
+    - Left
+    - Right
+    - Up
+    - Down
+    - RotLeft
+    - RotRight
+    - Hide
     - 
     - 
     - 
-    values: 000000000000000000000000
+    - 
+    - 
+    - 
+    - 
+    - 
+    values: 39000000010000001e00000020000000110000001f0000001000000012000000140000000000000000000000000000000000000000000000000000000000000000000000
   mouse:
-    buckets: ffffffffffffffffffffffff
-    hashCodes: 000000000000000000000000
-    next: 000000000000000000000000
-    count: 0
-    version: 0
+    buckets: ffffffff01000000ffffffff
+    hashCodes: 7377124cf86f890600000000
+    next: ffffffff0000000000000000
+    count: 2
+    version: 2
     freeList: -1
     freeCount: 0
     keys:
+    - Left
+    - Right
     - 
-    - 
-    - 
-    values: 000000000000000000000000
+    values: 010000000200000000000000
   spacenav:
     buckets: ffffffffffffffffffffffff
     hashCodes: 000000000000000000000000
@@ -357,18 +371,18 @@ MonoBehaviour:
     - 
     values: 000000000000000000000000
   j1Buttons:
-    buckets: ffffffffffffffffffffffff
-    hashCodes: 000000000000000000000000
-    next: 000000000000000000000000
-    count: 0
-    version: 0
+    buckets: 00000000ffffffffffffffff
+    hashCodes: c25d3e320000000000000000
+    next: ffffffff0000000000000000
+    count: 1
+    version: 1
     freeList: -1
     freeCount: 0
     keys:
+    - Jump
     - 
     - 
-    - 
-    values: 000000000000000000000000
+    values: 001000000000000000000000
   j1Axis:
     buckets: ffffffffffffffffffffffff
     hashCodes: 000000000000000000000000
@@ -383,18 +397,18 @@ MonoBehaviour:
     - 
     values: 000000000000000000000000
   j2Buttons:
-    buckets: ffffffffffffffffffffffff
-    hashCodes: 000000000000000000000000
-    next: 000000000000000000000000
-    count: 0
-    version: 0
+    buckets: 00000000ffffffffffffffff
+    hashCodes: c25d3e320000000000000000
+    next: ffffffff0000000000000000
+    count: 1
+    version: 1
     freeList: -1
     freeCount: 0
     keys:
+    - Jump
     - 
     - 
-    - 
-    values: 000000000000000000000000
+    values: 001000000000000000000000
   j2Axis:
     buckets: ffffffffffffffffffffffff
     hashCodes: 000000000000000000000000
@@ -409,18 +423,18 @@ MonoBehaviour:
     - 
     values: 000000000000000000000000
   j3Buttons:
-    buckets: ffffffffffffffffffffffff
-    hashCodes: 000000000000000000000000
-    next: 000000000000000000000000
-    count: 0
-    version: 0
+    buckets: 00000000ffffffffffffffff
+    hashCodes: c25d3e320000000000000000
+    next: ffffffff0000000000000000
+    count: 1
+    version: 1
     freeList: -1
     freeCount: 0
     keys:
+    - Jump
     - 
     - 
-    - 
-    values: 000000000000000000000000
+    values: 001000000000000000000000
   j3Axis:
     buckets: ffffffffffffffffffffffff
     hashCodes: 000000000000000000000000
@@ -435,18 +449,18 @@ MonoBehaviour:
     - 
     values: 000000000000000000000000
   j4Buttons:
-    buckets: ffffffffffffffffffffffff
-    hashCodes: 000000000000000000000000
-    next: 000000000000000000000000
-    count: 0
-    version: 0
+    buckets: 00000000ffffffffffffffff
+    hashCodes: c25d3e320000000000000000
+    next: ffffffff0000000000000000
+    count: 1
+    version: 1
     freeList: -1
     freeCount: 0
     keys:
+    - Jump
     - 
     - 
-    - 
-    values: 000000000000000000000000
+    values: 001000000000000000000000
   j4Axis:
     buckets: ffffffffffffffffffffffff
     hashCodes: 000000000000000000000000

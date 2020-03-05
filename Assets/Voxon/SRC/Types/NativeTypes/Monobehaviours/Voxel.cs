@@ -20,13 +20,13 @@ namespace Voxon
         //public Vector3 vector = Vector3.zero;
         //public Color voxel_color = Color.white;
 
-        private List<VXVoxel_> _voxels = new List<VXVoxel_>();
+        private List<VXVoxel> _voxels = new List<VXVoxel>();
         // Use this for initialization
         private void Start()
         {
             foreach(Vboi vp in voxelParams)
             {
-                _voxels.Add(new VXVoxel_(vp.vector, vp.voxelColor));
+                _voxels.Add(new VXVoxel(vp.vector, vp.voxelColor));
             }
         }
 

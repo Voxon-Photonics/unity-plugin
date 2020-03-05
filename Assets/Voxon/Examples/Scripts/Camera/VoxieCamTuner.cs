@@ -129,8 +129,7 @@ Cam_Control         Left ALT        :   Hold down this button to load and save t
             camPrint();
         }
 
-
-        /*
+        
         if (Voxon.Input.GetKey("Cam_Scale"))
         {
 
@@ -166,7 +165,6 @@ Cam_Control         Left ALT        :   Hold down this button to load and save t
 
             }
         }
-        */
         
         if (Voxon.Input.GetKey("Cam_Rotation"))
         {
@@ -244,12 +242,12 @@ Cam_Control         Left ALT        :   Hold down this button to load and save t
         }
 
         // Space Navigator
-        if (Voxon.Input.GetSpaceNavButton("LeftButton") || Voxon.Input.GetKey("Cam_ScaleUp"))
+        if (Voxon.Input.GetSpaceNavButton("LeftButton"))
         {
             VXProcess.Instance.Camera.transform.localScale *= (1.05f);
         }
         
-        if(Voxon.Input.GetSpaceNavButton("RightButton") || Voxon.Input.GetKey("Cam_ScaleDown"))
+        if(Voxon.Input.GetSpaceNavButton("RightButton"))
         {
             VXProcess.Instance.Camera.transform.localScale *= (0.95f);
         }
@@ -286,6 +284,7 @@ Cam_Control         Left ALT        :   Hold down this button to load and save t
 
         if (Voxon.Input.GetSpaceNavButton("LeftButton") && Voxon.Input.GetSpaceNavButton("RightButton"))
         {
+            VXProcess.add_log_line("**** Voxon Camera Position Reset ****");
             VXProcess.Instance.Camera.transform.position = originalPos;
             VXProcess.Instance.Camera.transform.rotation = originalRot;
             VXProcess.Instance.Camera.transform.localScale = originalScale;

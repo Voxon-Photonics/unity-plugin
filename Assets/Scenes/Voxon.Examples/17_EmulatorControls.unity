@@ -232,7 +232,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdce307c928d7144a803bdd7b0a1226a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  filename: 17_Input.json
+  filename: 17_EmulatorControlsInput.json
   keyboard:
     buckets: ffffffffffffffffffffffff01000000050000000200000007000000ffffffffffffffff03000000ffffffffffffffff0800000006000000ffffffffffffffff04000000
     hashCodes: 92ab9755d18ba0277377124cf86f8906f919075ceab07d5103a891366e1ea3091692154e0000000000000000000000000000000000000000000000000000000000000000
