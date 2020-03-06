@@ -88,7 +88,7 @@ namespace Voxon
 				return;
 			}
 
-#if false
+#if NET_4_6
 			RegistryKey dll = Registry.LocalMachine.OpenSubKey("SOFTWARE\\Voxon\\Voxon");
 			if (dll != null)
 			{
