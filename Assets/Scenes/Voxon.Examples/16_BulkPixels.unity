@@ -621,8 +621,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 10
   height: 10
-  x_units: 500
-  z_units: 500
+  x_units: 200
+  z_units: 200
   colour:
     serializedVersion: 2
     rgba: 4294967295

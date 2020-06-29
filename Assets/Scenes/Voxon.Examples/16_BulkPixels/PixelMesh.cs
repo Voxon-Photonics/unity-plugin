@@ -94,14 +94,14 @@ public class PixelMesh : MonoBehaviour
 
                 positions[idx].y = Mathf.Sin(x * .1f + Time.time * 2);
                 
-                int red = (x > x_mid ? 1 : 0);
-                int green = (positions[idx].y > 0 ? 1 : 0);
-                int blue = (z > z_mid ? 1 : 0);;
+                int red = (x > x_mid ? 0xFF : 0);
+                int green = (positions[idx].y > 0 ? 0xFF : 0);
+                int blue = (z > z_mid ? 0xFF : 0);;
                 int rgb24 = (red << 16) | (green << 8) | (blue); // the colour
                 
-                // int rgb24 = (255 << 16); //RED ONLY
-                // int rgb24 = (255 << 8); //GREEN ONLY
-                // int rgb24 = (255); // BLUE ONLY
+                //int rgb24 = (255 << 16); //RED ONLY
+                //int rgb24 = (255 << 8); //GREEN ONLY
+                //int rgb24 = (255); // BLUE ONLY
                 // return (col.r << 16) | (col.g << 8) | col.b;
                 // colours[idx] = new Color32(rgb24);
                 // Debug.Log(red + " : " + green + " : " + blue);

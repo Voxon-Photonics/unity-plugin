@@ -11,7 +11,7 @@ namespace Voxon
         #region constants
         #endregion
 
-
+        public static string BuildDate = "2020/06/26";
         public static Runtime Runtime;
 
         #region inspector
@@ -44,7 +44,6 @@ namespace Voxon
         #region internal_vars
 
         private string _dll_version = "";
-        private static string _sdk_version = ""; 
         private VolumetricCamera _camera = new VolumetricCamera();
         static List<string> _logger = new List<string>();
         #endregion
@@ -101,8 +100,8 @@ namespace Voxon
                 Runtime.Initialise();
 
                 _dll_version = Runtime.GetDLLVersion().ToString().Substring(0, 8);
-                _sdk_version = VXProcess.Runtime.GetSDKVersion();
-                Debug.Log($"SDK Version: {_sdk_version}, DLL Version: {_dll_version}");
+                Debug.Log($"Voxon Unity Plugin. Compatible with Unity versions >= 2018.4");
+                Debug.Log($"DLL Version: {_dll_version}");
             }
             else
             {
@@ -152,7 +151,6 @@ namespace Voxon
             if (show_version)
             {
                 Runtime.LogToScreen(20, 560,$"DLL Version: {_dll_version}" );
-                Runtime.LogToScreen(20, 570,$"SDK Version: {_sdk_version}" );
             }
                 
 
