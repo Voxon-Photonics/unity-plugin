@@ -14,7 +14,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Voxon.Examples/2_ComplexMesh.unity
     guid: 61ad4db3eb69a3a449a3bf0f73892fc7
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Voxon.Examples/3_Particles.unity
     guid: 0085ba01242d6bc4ca6c80b86b343567
   - enabled: 0
@@ -26,15 +26,15 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Voxon.Examples/6_InternalTypes.unity
     guid: 886b01d729f86ed4680028580bb75dd0
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Voxon.Examples/7_LevelLoading_1.unity
     guid: b6d5a2516e905944a9e51323a57bb685
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Voxon.Examples/7_LevelLoading_2.unity
     guid: 16096674f793ffe43a40f4f2c05271e9
   - enabled: 0
-    path: Assets/Scenes/Voxon.Examples/7_Blank.unity
-    guid: e00ff19eb9b64144882aec15b22d2d3e
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
