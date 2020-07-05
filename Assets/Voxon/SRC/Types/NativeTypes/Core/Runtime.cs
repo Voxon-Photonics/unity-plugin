@@ -53,28 +53,45 @@ namespace Voxon
 			_features = new Dictionary<string, MethodInfo>();
 			FindDll();
 
-			Assembly asm = Assembly.LoadFrom(_pluginFilePath);
+			if (!System.IO.File.Exists(_pluginFilePath))
+			{
+				Debug.LogError("C#-Runtime.dll not found in Runtime directory.\nPlease ensure Voxon Runtime is correctly installed");
+				Windows.Error("C#-Runtime.dll not found in Runtime directory.\nPlease ensure Voxon Runtime is correctly installed");
+				_runtime = null;
+				Application.Quit();
+			}
 
+			Assembly asm = Assembly.LoadFrom(_pluginFilePath);
 			_tClassType = asm.GetType(PluginTypeName);
 			ActiveRuntime = PluginTypeName;
 			if (_tClassType == null)
 			{
-				Debug.LogError("Voxon Runtime Interface Not Available. Ensure C#-Runtime.dll is available.");
+				Debug.LogError("Voxon Runtime failed to load from local C#-Runtime.dll.");
+				Windows.Error("Voxon Runtime failed to load from local C#-Runtime.dll.");
 				_runtime = null;
-				return;
+				Application.Quit();
 			}
 
-			_runtime = Activator.CreateInstance(_tClassType);
-
-			MethodInfo makeRequestMethod = _tClassType.GetMethod("GetFeatures");
-			if (makeRequestMethod == null) return;
-
-			var featureNames = (HashSet<string>) makeRequestMethod.Invoke(_runtime, null);
-
-			foreach (string feature in featureNames)
+			try
 			{
-				_features.Add(feature, _tClassType.GetMethod(feature));
+				_runtime = Activator.CreateInstance(_tClassType);
+
+				MethodInfo makeRequestMethod = _tClassType.GetMethod("GetFeatures");
+				if (makeRequestMethod == null) return;
+
+				var featureNames = (HashSet<string>) makeRequestMethod.Invoke(_runtime, null);
+
+				foreach (string feature in featureNames)
+				{
+					_features.Add(feature, _tClassType.GetMethod(feature));
+				}
 			}
+			catch (Exception e)
+			{
+				Windows.Alert($"Voxon Runtime Bridge failed to load.\nCheck your version of C#-bridge-interface.dll\n{e}");
+				Application.Quit();
+			}
+			
 			
 		}
 

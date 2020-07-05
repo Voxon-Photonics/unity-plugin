@@ -11,7 +11,7 @@ namespace Voxon
         #region constants
         #endregion
 
-        public static string BuildDate = "2020/06/26";
+        public const string BuildDate = "2020/07/02";
         public static Runtime Runtime;
 
         #region inspector
@@ -100,8 +100,12 @@ namespace Voxon
                 Runtime.Initialise();
 
                 _dll_version = Runtime.GetDLLVersion().ToString().Substring(0, 8);
-                Debug.Log($"Voxon Unity Plugin. Compatible with Unity versions >= 2018.4");
-                Debug.Log($"DLL Version: {_dll_version}");
+                
+                #if (UNITY_EDITOR)
+                    Debug.Log($"Voxon Unity Plugin. Compatible with Unity versions >= 2018.4");
+                    Debug.Log($"Voxon Runtime version: {_dll_version}");
+                    Debug.Log($"C# Interface version: {typeof(Voxon.IRuntimePromise).Assembly.GetName().Version}");
+                #endif
             }
             else
             {
