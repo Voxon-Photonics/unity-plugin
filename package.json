@@ -1,10 +1,7 @@
 {
-  "name": "changelog-generator",
+  "name": "unity-package",
   "author": "Ben Weatherall",
-  "git-remote-path": "https://github.com/mrAllWeather/changelog-generator/",
+  "git-remote-path": "https://bitbucket.org/voxon-photonics/unitypackage/",
   "auto-push": true,
-  "version": "0.1.15",
-  "bin": {
-    "changelog-generator": "./index.js"
-  }
+  "version": "1.0.0.2"
 }
