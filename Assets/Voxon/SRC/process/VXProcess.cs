@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -9,14 +10,18 @@ namespace Voxon
     public class VXProcess : Singleton<VXProcess> {
         
         #region constants
+        public const string BuildDate = "2020/07/02";
         #endregion
 
-        public const string BuildDate = "2020/07/02";
         public static Runtime Runtime;
 
         #region inspector
         [FormerlySerializedAs("_guidelines")] [Tooltip("Will show capture volume of VX1 while emulating")]
         public bool guidelines;
+        
+        [Tooltip("Display volumes per second on front panel")]
+        public bool show_vps = true;
+        
         
         [Tooltip("Disable to turn hide version information on front panel")]
         public bool show_version = true;
@@ -32,8 +37,6 @@ namespace Voxon
         [Tooltip("Disable to turn off VXProcess behaviour")]
         public bool active = true;
 
-        [Tooltip("Error texture")]
-        public Texture2D ErrorTexture;
         #endregion
 
         #region drawables
@@ -46,8 +49,14 @@ namespace Voxon
         private string _dll_version = "";
         private VolumetricCamera _camera = new VolumetricCamera();
         static List<string> _logger = new List<string>();
+        private List<float> frame_delta = new List<float>();
         #endregion
 
+        #region public_vars
+
+        public int _logger_max_lines = 10;
+
+        #endregion
         #region getters_setters
         public GameObject Camera
         {
@@ -209,7 +218,7 @@ namespace Voxon
                 go.Draw();
             }
 
-            while(_logger.Count > 10)
+            while(_logger.Count > _logger_max_lines)
             {
                 _logger.RemoveAt(0);
             }
@@ -217,6 +226,25 @@ namespace Voxon
             for(var idx = 0; idx < _logger.Count; idx++)
             {
                 Runtime.LogToScreen(0, 64 + (idx * 8), _logger[idx]);
+            }
+
+            if (show_vps)
+            {
+                frame_delta.Add	(Time.deltaTime);
+                while (frame_delta.Count > 60)
+                {
+                    frame_delta.RemoveAt(0);
+                }
+
+                float average_delta = 1 / frame_delta.Average();
+                float max = (1/frame_delta.Min()); // Quickest Frame == highest vps
+                float min = (1/frame_delta.Max());
+                float max_dist = max - average_delta;
+                float min_dist = min - average_delta;
+                float dist = (Mathf.Abs(max) - Mathf.Abs(min)) / 2;
+                Runtime.LogToScreen(20, 485, "VPS: " + (average_delta).ToString("F2") + " ( +/- " + dist.ToString("F2") + ")");
+                Runtime.LogToScreen(40, 500, "Min Fps: " + min.ToString("F2"));
+                Runtime.LogToScreen(40, 515, "Max Fps: " + max.ToString("F2"));
             }
         }
     

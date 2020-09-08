@@ -71,7 +71,7 @@ namespace Voxon
                     _umaterials = _smRend.materials;
 
                     _smRend.updateWhenOffscreen = true;
-                }
+				}
                 else
                 {
                     _umesh = GetComponent<MeshFilter>().sharedMesh;
@@ -280,6 +280,21 @@ namespace Voxon
                     && _umaterials[submesh].mainTexture.name == dynamic_texture.name)
                 {
                     _textures[submesh] = TextureRegister.Instance.refresh_tile(ref dynamic_texture);
+                }
+            }
+        }
+
+        public void LoadRenderTexture(ref RenderTexture dynamic_texture)
+        {
+            for (var submesh = 0; submesh < _mesh.submeshCount; submesh++)
+            {
+                if (_umaterials[submesh].HasProperty("_MainTex") 
+                    && _umaterials[submesh].mainTexture
+                    && _umaterials[submesh].mainTexture.name == dynamic_texture.name)
+                {
+					Texture2D texture2D = new Texture2D(dynamic_texture.width, dynamic_texture.height);
+					Graphics.ConvertTexture(dynamic_texture, texture2D);
+                    _textures[submesh] = TextureRegister.Instance.refresh_tile(ref texture2D);
                 }
             }
         }
