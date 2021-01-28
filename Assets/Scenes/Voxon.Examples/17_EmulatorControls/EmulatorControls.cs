@@ -6,7 +6,6 @@ using Voxon;
 
 public class EmulatorControls : MonoBehaviour
 {
-    private bool _initialised = false;
     public float VerticleAngle;
     public float HorizontalAngle;
     public float Distance;

@@ -9,7 +9,7 @@ public class MeshReader : MonoBehaviour
 {
     public float delayBeforeActivation = 3.0f; // Seconds
     public float radius = 400;
-    public GameObject camera;
+    public new GameObject camera;
     private bool added = false;
     
     private Vector3[] pointCloud;

@@ -292,7 +292,6 @@ namespace Voxon
 			MeshData md = new MeshData();
 
 			// Copy Actions
-			IntPtr ptr;
 			int offset = 0;
 
 			// TotalBytes - (Cut by providing stream!)
