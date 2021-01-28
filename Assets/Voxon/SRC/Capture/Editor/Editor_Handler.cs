@@ -57,11 +57,6 @@ namespace Voxon
                 AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceUpdate);
 
                 Texture2D tex = AssetDatabase.LoadAssetAtPath (path, typeof(Texture2D)) as Texture2D;
-                if (tex.height != tex.width)
-                {
-                    EditorUtility.DisplayDialog("Reimported Textures Error", path + " texture not uniform.", "Ok");
-                    Debug.LogError(path + " texture not uniform. Will crash on play");
-                }
             }
             EditorUtility.DisplayDialog("Reimported Textures", "Textures Reimported.", "Ok");
         }
@@ -87,37 +82,242 @@ namespace Voxon
         [MenuItem("Voxon/Tools/Prebuild Mesh")]
         public static void PrebuildMesh()
         {
-            string[] guids = AssetDatabase.FindAssets("t:Mesh", null);
+			// Prebuild 
+			string scene_path = UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene().path;
+			string scene_directory = Path.GetDirectoryName(scene_path).Replace("Assets/","");
+			string scene_filename = Path.GetFileNameWithoutExtension(scene_path);
+
+			Debug.Log("Prebuilding Meshes for Scene");
+            // string[] guids = AssetDatabase.FindAssets("t:Mesh", null);
 
             MeshRegister meshRegister = MeshRegister.Instance;
+			meshRegister.Clear();
 
-            foreach (string guid in guids)
+			/* All Meshes in Scene */
+			MeshFilter[] meshes = FindObjectsOfType<MeshFilter>();
+
+			Debug.Log($"{meshes.Length} mesh filters in scene");
+
+			for(uint idx = 0; idx < meshes.Length; idx++)
+			{
+				Mesh sharedmesh = meshes[idx].sharedMesh;
+
+				string path = UnityEditor.AssetDatabase.GetAssetPath(sharedmesh);
+
+				// We don't rename default resources
+				if (!path.StartsWith("Library"))
+				{
+					meshes[idx].name = path;
+				}
+
+				meshRegister.get_registed_mesh(ref sharedmesh);
+			}
+
+			SkinnedMeshRenderer[] skinned_meshes = FindObjectsOfType<SkinnedMeshRenderer>();
+
+			Debug.Log($"{skinned_meshes.Length} skinned meshes in scene");
+
+			for (uint idx = 0; idx < skinned_meshes.Length; idx++)
+			{
+				Mesh mesh = skinned_meshes[idx].sharedMesh;
+				string path = UnityEditor.AssetDatabase.GetAssetPath(skinned_meshes[idx]);
+				// We don't rename default resources
+				if (!path.StartsWith("Library"))
+				{
+					meshes[idx].name = path;
+				}
+
+				meshRegister.get_registed_mesh(ref mesh);
+			}
+
+			/* All Meshes in project 
+			foreach (string guid in guids)
             {
                 string path = AssetDatabase.GUIDToAssetPath(guid);
                 if (path == "") continue;
 
                 var t = (Mesh)AssetDatabase.LoadAssetAtPath(path, typeof(Mesh));
+
+				// We don't rename default resources
+				if (!path.StartsWith("Library"))
+				{
+					t.name = path;
+				}
+
                 meshRegister.get_registed_mesh(ref t);
             }
+			*/
 
-            // Create an instance of the type and serialize it.
-            IFormatter formatter = new BinaryFormatter();
+			// Create an instance of the type and serialize it.
+			IFormatter formatter = new BinaryFormatter();
 
-            if (!AssetDatabase.IsValidFolder($"{Application.dataPath}/StreamingAssets"))
+
+            if (!AssetDatabase.IsValidFolder($"{Application.dataPath}/StreamingAssets/{scene_directory}"))
             {
-                Directory.CreateDirectory($"{Application.dataPath}/StreamingAssets");
-            }
-        
-            using (var s = new FileStream($"{Application.dataPath}/StreamingAssets/MeshData.bin", FileMode.Create))
-            {
-                formatter.Serialize(s, meshRegister.PackMeshes());
+                Directory.CreateDirectory($"{Application.dataPath}/StreamingAssets/{scene_directory}");
             }
 
-            EditorUtility.DisplayDialog("Prebuild Mesh", message: ($"{meshRegister.Length()} Meshes Processed"),
-                "Ok");
-        }
+			string SerializedRegisterPath = $"{Application.dataPath}/StreamingAssets/{scene_directory}/{scene_filename}-Meshes.bin";
+			// Debug.Log(SerializedRegisterPath);
 
-        private static void PlayStateChange(PlayModeStateChange state)
+			using (var s = new FileStream(SerializedRegisterPath, FileMode.Create))
+            {
+				try
+				{
+					// THIS APPROACH WONT WORK (We don't have points for de-serialisation).
+					MeshData[] allData = meshRegister.PackMeshes();
+					int mdCount = allData.Length;
+
+					s.Write(System.BitConverter.GetBytes(mdCount), 0, sizeof(int));
+					
+					foreach (MeshData md in allData)
+					{
+						byte[] bytes = md.toByteArray();
+						s.Write(bytes, 0, bytes.Length);
+					}
+
+				}
+				catch (SerializationException e)
+				{
+					Debug.Log("Failed to serialize. Reason: " + e.Message);
+					throw;
+				}
+				
+            }			
+		}
+
+		[MenuItem("Voxon/Tools/Prebuild Textures")]
+		public static void PrebuildTextures()
+		{
+			// Prebuild 
+			string scene_path = UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene().path;
+			string scene_directory = Path.GetDirectoryName(scene_path).Replace("Assets/", "");
+			string scene_filename = Path.GetFileNameWithoutExtension(scene_path);
+
+			Debug.Log("Prebuilding Meshes for Scene");
+			string[] guids = AssetDatabase.FindAssets("t:Texture", null);
+
+			TextureRegister textureRegister = TextureRegister.Instance;
+			textureRegister.ClearRegister();
+			/* All Meshes in Scene */
+			MeshRenderer[] meshes = FindObjectsOfType<MeshRenderer>();
+
+			Debug.Log($"{meshes.Length} mesh renderers in scene");
+
+			for (uint idx = 0; idx < meshes.Length; idx++)
+			{
+				Material[] materials = meshes[idx].sharedMaterials;
+				Material mat = meshes[idx].sharedMaterial;
+
+				for (uint m_idx = 0; m_idx < materials.Length; m_idx++)
+				{
+					Texture2D tex = (Texture2D)materials[m_idx].mainTexture;
+
+					if (tex == null) continue;
+					
+
+					string path = UnityEditor.AssetDatabase.GetAssetPath(tex);
+					// Debug.Log($"{tex.name}, {path}");
+
+					// We don't rename default resources
+					if (!path.StartsWith("Library"))
+					{
+						// Debug.Log(tex.name);
+						tex.name = path;
+					}
+
+					textureRegister.get_tile(ref tex);
+				}
+			}
+
+			SkinnedMeshRenderer[] skinned_meshes = FindObjectsOfType<SkinnedMeshRenderer>();
+
+			Debug.Log($"{skinned_meshes.Length} skinned meshes in scene");
+
+			for (uint idx = 0; idx < skinned_meshes.Length; idx++)
+			{
+				Material[] materials = skinned_meshes[idx].sharedMaterials;
+
+				for (uint m_idx = 0; m_idx < materials.Length; m_idx++)
+				{
+					Texture2D tex = (Texture2D)materials[m_idx].mainTexture;
+
+					if (tex == null) continue;
+
+					// Debug.Log(tex.name);
+
+					string path = UnityEditor.AssetDatabase.GetAssetPath(tex);
+
+					// We don't rename default resources
+					if (!path.StartsWith("Library"))
+					{
+						tex.name = path;
+					}
+
+					textureRegister.get_tile(ref tex);
+				}
+			}
+
+			/* All Meshes in project 
+			foreach (string guid in guids)
+            {
+                string path = AssetDatabase.GUIDToAssetPath(guid);
+                if (path == "") continue;
+
+                var t = (Mesh)AssetDatabase.LoadAssetAtPath(path, typeof(Mesh));
+
+				// We don't rename default resources
+				if (!path.StartsWith("Library"))
+				{
+					t.name = path;
+				}
+
+                meshRegister.get_registed_mesh(ref t);
+            }
+			*/
+
+			// Create an instance of the type and serialize it.
+			IFormatter formatter = new BinaryFormatter();
+
+
+			if (!AssetDatabase.IsValidFolder($"{Application.dataPath}/StreamingAssets/{scene_directory}"))
+			{
+				Directory.CreateDirectory($"{Application.dataPath}/StreamingAssets/{scene_directory}");
+			}
+
+			string SerializedRegisterPath = $"{Application.dataPath}/StreamingAssets/{scene_directory}/{scene_filename}-Textures.bin";
+			// Debug.Log(SerializedRegisterPath);
+
+			using (var s = new FileStream(SerializedRegisterPath, FileMode.Create))
+			{
+				try
+				{
+					TextureData[] allData = textureRegister.PackMeshes();
+					int mdCount = allData.Length;
+
+					s.Write(System.BitConverter.GetBytes(mdCount), 0, sizeof(int));
+
+					foreach (TextureData md in allData)
+					{
+						byte[] bytes = md.toByteArray();
+						s.Write(bytes, 0, bytes.Length);
+					}
+
+				}
+				catch (SerializationException e)
+				{
+					Debug.Log("Failed to serialize. Reason: " + e.Message);
+					throw;
+				}
+
+			}
+
+
+		}
+
+
+
+		private static void PlayStateChange(PlayModeStateChange state)
         {
             // Handle Editor play states (block Play when Input disabled / close VX when Play stopped)
             if (state != PlayModeStateChange.ExitingPlayMode || VXProcess.Runtime == null) return;

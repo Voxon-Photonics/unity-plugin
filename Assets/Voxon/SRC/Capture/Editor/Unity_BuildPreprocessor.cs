@@ -25,7 +25,7 @@ namespace Voxon
                 throw new BuildFailedException("Input controller requires 'Quit' to be bound (and saved)");
             }
 
-            EditorHandler.PrebuildMesh();
+            // EditorHandler.PrebuildMesh();
         }
     }
 }

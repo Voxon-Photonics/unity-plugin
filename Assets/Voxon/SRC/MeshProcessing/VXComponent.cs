@@ -12,7 +12,8 @@ namespace Voxon
         private Renderer _rend;
         private SkinnedMeshRenderer _smRend;
 
-        // Mesh Structure Structure
+		// Mesh Structure Structure
+		private Mesh _baseMesh;
         private Mesh _umesh;         // Objects mesh
         private Material[] _umaterials; // Object's Materials
 
@@ -65,6 +66,7 @@ namespace Voxon
                 _smRend = GetComponent<SkinnedMeshRenderer>();
                 if (_smRend)
                 {
+					_baseMesh = _smRend.sharedMesh;
                     _umesh = new Mesh();
 
                     _smRend.BakeMesh(_umesh);
@@ -74,7 +76,9 @@ namespace Voxon
 				}
                 else
                 {
-                    _umesh = GetComponent<MeshFilter>().sharedMesh;
+					_baseMesh = GetComponent<MeshFilter>().sharedMesh;
+
+					_umesh = GetComponent<MeshFilter>().sharedMesh;
                     _umaterials = GetComponent<MeshRenderer>().materials;
                 }
 
@@ -100,7 +104,6 @@ namespace Voxon
             }
             catch (Exception e)
             {
-
                 ExceptionHandler.Except($"Error while building {gameObject.name}", e);
             }
 
@@ -237,7 +240,7 @@ namespace Voxon
 			Profiler.BeginSample("Load Meshes");
             try
             {
-                _mesh = MeshRegister.Instance.get_registed_mesh(ref _umesh);
+                _mesh = MeshRegister.Instance.get_registed_mesh(ref _baseMesh);
                 _vt = new poltex[_mesh.vertexCount];
 
                 BuildMesh();

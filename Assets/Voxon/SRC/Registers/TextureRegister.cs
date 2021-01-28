@@ -1,38 +1,154 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
+using System.Runtime.InteropServices;
+using UnityEngine.Serialization;
 
 namespace Voxon
 {
     public class TextureRegister : Singleton<TextureRegister> {
+		[SerializeField]
+        private Dictionary<String, RegisteredTexture> _register;
 
-        public struct RegisteredTile
-        {
-            public tiletype Texture;
-            public int Counter;
-        }
+		public static bool Active;
 
-        private Dictionary<String, RegisteredTile> _register;
+		public void Enable()
+		{
+			this.OnEnable();
+		}
 
-        // Use this for initialization
-        private void Start () {
-            _register = new Dictionary<string, RegisteredTile>();
-        }
+		private void OnEnable()
+		{
+			Init();
 
-        public tiletype get_tile(ref Texture2D in_texture)
-        {
-            if(_register == null)
+			IFormatter formatter = new BinaryFormatter();
+
+
+			string scene_path = UnityEngine.SceneManagement.SceneManager.GetActiveScene().path;
+			string scene_directory = Path.GetDirectoryName(scene_path).Replace("Assets/", "");
+			string scene_filename = Path.GetFileNameWithoutExtension(scene_path);
+
+			string textureRegisterPath = $"{Application.dataPath}/StreamingAssets/{scene_directory}/{scene_filename}-Textures.bin";
+
+			if (!File.Exists(textureRegisterPath))
+			{
+				Active = true;
+				Debug.Log("No pre-generated textures found");
+				return;
+			}
+
+			Debug.Log("Loading TextureRegistered");
+
+			using (var s = new FileStream(textureRegisterPath, FileMode.Open))
+			{
+				try
+				{
+					// Prep for all meshes;
+					byte[] total_textures_buf = new byte[sizeof(int)];
+					s.Read(total_textures_buf, 0, sizeof(int));
+					int td_count = BitConverter.ToInt32(total_textures_buf, 0);
+
+					TextureData loaded_texture;
+
+					byte[] td_size_buf, td_buffer;
+					int packet_size;
+
+					for (int i = 0; i < td_count; i++)
+					{
+						td_size_buf = new byte[sizeof(int)];
+						s.Read(td_size_buf, 0, sizeof(int));
+
+						/*
+						{ // Debug
+							int start = 0;
+							int end = sizeof(int);
+							System.Text.StringBuilder hex = new System.Text.StringBuilder(end - start);
+							for (int idx = start; idx < end; idx++)
+							{
+								hex.AppendFormat("{0:x2}", md_size_buf[idx]);
+							}
+							Debug.Log($"\tSizeBytes: \t{hex.ToString()}");
+						}
+						*/
+
+						packet_size = System.BitConverter.ToInt32(td_size_buf, 0);
+						// Debug.Log(packet_size);
+						td_buffer = new byte[packet_size];
+						s.Read(td_buffer, 0, packet_size);
+
+						/*
+						{ // Debug
+							int start = 0;
+							int end = packet_size;
+							System.Text.StringBuilder hex = new System.Text.StringBuilder(end - start);
+							for (int idx = start; idx < end; idx++)
+							{
+								hex.AppendFormat("{0:x2}", md_buffer[idx]);
+							}
+							Debug.Log($"Packet_bytes: \t{hex.ToString()}");
+						}
+						*/
+
+						loaded_texture = TextureData.fromByteArray(td_buffer);
+						_register.Add(loaded_texture.name, new RegisteredTexture(ref loaded_texture));
+					}
+				}
+				catch (SerializationException e)
+				{
+					Debug.Log("Failed to serialize. Reason: " + e.Message);
+					throw;
+				}
+			}
+
+			Active = true;
+
+		}
+
+		private void Init()
+		{
+			_register = new Dictionary<string, RegisteredTexture>();
+		}
+
+		public tiletype get_tile(string texture_name)
+		{
+			if (_register.ContainsKey(texture_name))
+			{
+				return _register[(texture_name)].Texture;
+			}
+
+			throw new KeyNotFoundException();
+		}
+
+
+		public tiletype get_tile( ref Texture2D in_texture)
+		{
+#if UNITY_EDITOR
+			if (!in_texture.name.StartsWith("Assets/"))
+			{
+				string path = UnityEditor.AssetDatabase.GetAssetPath(in_texture);
+				if (!path.StartsWith("Library"))
+				{
+					Debug.LogWarning($"({in_texture.name}){path} is not preprocessed!");
+					in_texture.name = path;
+				}
+
+			}
+#endif
+
+			if (_register == null)
             {
-                _register = new Dictionary<string, RegisteredTile>();
+                _register = new Dictionary<string, RegisteredTexture>();
             }
 
-
-            RegisteredTile rt;
+			RegisteredTexture rt;
             if (_register.ContainsKey(in_texture.name))
             {
-                rt = _register[in_texture.name];
+				Debug.Log($"Looking Up Texture: {in_texture.name}");
+				rt = _register[in_texture.name];
                 rt.Counter++;
                 _register[in_texture.name] = rt;
 
@@ -40,8 +156,9 @@ namespace Voxon
             }
             else
             {
-                rt = new RegisteredTile {Counter = 1, Texture = LoadTexture(ref in_texture)};
-                _register.Add(in_texture.name, rt);
+				Debug.Log($"Building Texture: {in_texture.name}");
+				rt = new RegisteredTexture(ref in_texture);
+				_register.Add(in_texture.name, rt);
                 return rt.Texture;
             }
         }
@@ -50,7 +167,7 @@ namespace Voxon
         {
             if (_register == null || !_register.ContainsKey(texture.name)) return false;
         
-            RegisteredTile rt = _register[texture.name];
+            RegisteredTexture rt = _register[texture.name];
             rt.Counter--;
 
             if(rt.Counter <= 0)
@@ -75,7 +192,7 @@ namespace Voxon
         {
             if (!_register.ContainsKey(textureName)) return;
         
-            RegisteredTile rt = _register[textureName];
+            RegisteredTexture rt = _register[textureName];
             _register.Remove(textureName);
             Marshal.FreeHGlobal(rt.Texture.first_pixel);
         }
@@ -90,36 +207,13 @@ namespace Voxon
                 RemoveRegister(_register.ElementAt(0).Key);
             }
         }
-
-        tiletype LoadTexture(ref Texture2D in_texture)
-        {
-            //TextureFormat.BGRA32
-            var reorderedTextures = new Texture2D(in_texture.width, in_texture.height, TextureFormat.BGRA32, false);
-
-            Color32[] tCol = in_texture.GetPixels32();
-            reorderedTextures.SetPixels32(tCol);
-
-            var out_texture = new tiletype
-            {
-                height = (IntPtr) reorderedTextures.height,
-                width = (IntPtr) reorderedTextures.width,
-                pitch = (IntPtr) (reorderedTextures.width * Marshal.SizeOf(typeof(Color32))),
-                first_pixel =
-                    Marshal.AllocHGlobal(Marshal.SizeOf(typeof(byte)) * reorderedTextures.GetRawTextureData().Length)
-            };
-
-            Marshal.Copy(reorderedTextures.GetRawTextureData(), 0, out_texture.first_pixel, reorderedTextures.GetRawTextureData().Length);
-
-            Destroy(reorderedTextures);
-            return out_texture;
-        }
         
         public tiletype refresh_tile(ref Texture2D tex)
         {
             if(_register == null)
             {
                 Debug.Log("New Dictionary");
-                _register = new Dictionary<string, RegisteredTile>();
+                _register = new Dictionary<string, RegisteredTexture>();
             }
 
             if (!_register.ContainsKey(tex.name))
@@ -139,7 +233,7 @@ namespace Voxon
             Color32[] tCol = texture.GetPixels32();
             reorderedTextures.SetPixels32(tCol);
 
-            RegisteredTile rt = _register[texture.name];
+            RegisteredTexture rt = _register[texture.name];
             Marshal.Copy(reorderedTextures.GetRawTextureData(), 0, rt.Texture.first_pixel, reorderedTextures.GetRawTextureData().Length);
             _register[texture.name] = rt;
 
@@ -147,5 +241,51 @@ namespace Voxon
             return rt.Texture;
         }
 
-    }
+		public int Length()
+		{
+			return _register.Count;
+		}
+
+		private void Clear()
+		{
+			if (_register == null)
+				return;
+
+			while (_register.Count > 0)
+			{
+				RemoveRegister(_register.ElementAt(0).Key);
+			}
+		}
+
+		public string[] Keys()
+		{
+			return _register.Keys.ToArray();
+		}
+
+		public new void OnApplicationQuit()
+		{
+			Active = false;
+			Clear();
+			base.OnApplicationQuit();
+		}
+
+#if UNITY_EDITOR
+		public TextureData[] PackMeshes()
+		{
+			if (_register == null) return new TextureData[0];
+
+			var rTs = new TextureData[_register.Count];
+			var idx = 0;
+			foreach (RegisteredTexture rt in _register.Values)
+			{
+				rTs[idx] = rt.GetTextureData();
+				idx++;
+			}
+
+			Debug.Log($"RT Count: {rTs.Length}");
+
+			return rTs;
+		}
+#endif
+	}
 }

@@ -29,7 +29,7 @@ namespace Voxon
         {
             try
             {
-                // Debug.Log("Processing Mesh Data");
+                // Debug.Log($"Processing Mesh Data: {mesh.name}");
                 name = mesh.name;
 
                 // Mesh Divisions
@@ -258,7 +258,29 @@ namespace Voxon
 
         }
 
-        public void Destroy()
+		~RegisteredMesh()
+		{
+			if (_cbufferIUvs.IsValid())
+			{
+				_cbufferIUvs.Release();
+				_cbufferIUvs.Dispose();
+				_cbufferIUvs = null;
+			}
+			if (_cbufferIVertices.IsValid())
+			{
+				_cbufferIVertices.Release();
+				_cbufferIVertices.Dispose();
+				_cbufferIVertices = null;
+			}
+			if (_cbufferOPoltex.IsValid())
+			{
+				_cbufferOPoltex.Release();
+				_cbufferOPoltex.Dispose();
+				_cbufferOPoltex = null;
+			}
+		}
+
+		public void Destroy()
         {
 #if UNITY_2017
 		if (cbufferI_uvs != null)
