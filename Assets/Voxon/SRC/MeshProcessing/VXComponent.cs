@@ -9,6 +9,8 @@ namespace Voxon
 {
     public class VXComponent : MonoBehaviour, IDrawable
     {
+		public string MeshPath = "";
+
         private Renderer _rend;
         private SkinnedMeshRenderer _smRend;
 
@@ -36,10 +38,10 @@ namespace Voxon
         // Clean up
         public bool CanExpire = false;
         public float TimeToLive = 2.0f;
-        private float TimeLeftAlive; 
+        private float TimeLeftAlive;
 
-        // Use this for initialization
-        void Start()
+		// Use this for initialization
+		void Start()
         {
             TimeLeftAlive = TimeToLive;
             
@@ -237,6 +239,10 @@ namespace Voxon
 
         private void load_meshes()
         {
+			if (MeshPath != "")
+			{
+				_baseMesh.name = MeshPath;
+			}
 			Profiler.BeginSample("Load Meshes");
             try
             {

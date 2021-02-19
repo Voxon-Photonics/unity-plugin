@@ -97,8 +97,9 @@ namespace Voxon
 			MeshFilter[] meshes = FindObjectsOfType<MeshFilter>();
 
 			Debug.Log($"{meshes.Length} mesh filters in scene");
+			VXComponent vXBuffer;
 
-			for(uint idx = 0; idx < meshes.Length; idx++)
+			for (uint idx = 0; idx < meshes.Length; idx++)
 			{
 				Mesh sharedmesh = meshes[idx].sharedMesh;
 
@@ -108,6 +109,12 @@ namespace Voxon
 				if (!path.StartsWith("Library"))
 				{
 					meshes[idx].name = path;
+
+					vXBuffer = meshes[idx].gameObject.GetComponent<VXComponent>();
+					if (vXBuffer)
+					{
+						vXBuffer.MeshPath = path;
+					}
 				}
 
 				meshRegister.get_registed_mesh(ref sharedmesh);
@@ -120,37 +127,29 @@ namespace Voxon
 			for (uint idx = 0; idx < skinned_meshes.Length; idx++)
 			{
 				Mesh mesh = skinned_meshes[idx].sharedMesh;
-				string path = UnityEditor.AssetDatabase.GetAssetPath(skinned_meshes[idx]);
+
+				string path = UnityEditor.AssetDatabase.GetAssetPath(skinned_meshes[idx].sharedMesh);
+
+				path += $":{mesh.name}";
+				Debug.Log($"Path: { path }");
+
 				// We don't rename default resources
 				if (!path.StartsWith("Library"))
 				{
-					meshes[idx].name = path;
+					// skinned_meshes[idx].name = path;
+
+					vXBuffer = skinned_meshes[idx].gameObject.GetComponent<VXComponent>();
+					if (vXBuffer)
+					{
+						vXBuffer.MeshPath = path;
+					}
 				}
 
 				meshRegister.get_registed_mesh(ref mesh);
 			}
 
-			/* All Meshes in project 
-			foreach (string guid in guids)
-            {
-                string path = AssetDatabase.GUIDToAssetPath(guid);
-                if (path == "") continue;
-
-                var t = (Mesh)AssetDatabase.LoadAssetAtPath(path, typeof(Mesh));
-
-				// We don't rename default resources
-				if (!path.StartsWith("Library"))
-				{
-					t.name = path;
-				}
-
-                meshRegister.get_registed_mesh(ref t);
-            }
-			*/
-
 			// Create an instance of the type and serialize it.
 			IFormatter formatter = new BinaryFormatter();
-
 
             if (!AssetDatabase.IsValidFolder($"{Application.dataPath}/StreamingAssets/{scene_directory}"))
             {
@@ -183,7 +182,9 @@ namespace Voxon
 					throw;
 				}
 				
-            }			
+            }
+
+			UnityEditor.SceneManagement.EditorSceneManager.MarkAllScenesDirty();
 		}
 
 		[MenuItem("Voxon/Tools/Prebuild Textures")]

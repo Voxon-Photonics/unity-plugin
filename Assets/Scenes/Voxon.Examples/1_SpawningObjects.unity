@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657907, g: 0.49641332, b: 0.5748179, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.49641317, b: 0.5748177, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -158,6 +158,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1786508256}
     m_Modifications:
+    - target: {fileID: 1594842116234880, guid: 302f45025bc27734bbd2bc0239d4aeed, type: 3}
+      propertyPath: m_Name
+      value: Assets/Scenes/Voxon.Examples/1_SpawningObjects_files/Meshes/Pyramid.fbx
+      objectReference: {fileID: 0}
     - target: {fileID: 4934122631524430, guid: 302f45025bc27734bbd2bc0239d4aeed, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -331,7 +335,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1594842116234880, guid: 302f45025bc27734bbd2bc0239d4aeed, type: 3}
       propertyPath: m_Name
-      value: Pyramid (3)
+      value: Assets/Scenes/Voxon.Examples/1_SpawningObjects_files/Meshes/Pyramid.fbx
       objectReference: {fileID: 0}
     - target: {fileID: 4934122631524430, guid: 302f45025bc27734bbd2bc0239d4aeed, type: 3}
       propertyPath: m_LocalPosition.x
@@ -434,6 +438,51 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3d6745943794b548af80428879f21e8, type: 3}
+--- !u!1 &739556973
+GameObject:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 739556975}
+  - component: {fileID: 739556974}
+  m_Layer: 0
+  m_Name: Voxon.MeshRegister
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &739556974
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 739556973}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5789fe2b8a376ad4f9359c0e1d1fc308, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cshaderMain: {fileID: 7200000, guid: c35f66d03be1bf948bd8e4b6cf72e413, type: 3}
+  kernelHandle: 0
+--- !u!4 &739556975
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 739556973}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &745909433
 GameObject:
   m_ObjectHideFlags: 0
@@ -617,7 +666,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1594842116234880, guid: 302f45025bc27734bbd2bc0239d4aeed, type: 3}
       propertyPath: m_Name
-      value: Pyramid (1)
+      value: Assets/Scenes/Voxon.Examples/1_SpawningObjects_files/Meshes/Pyramid.fbx
       objectReference: {fileID: 0}
     - target: {fileID: 4934122631524430, guid: 302f45025bc27734bbd2bc0239d4aeed, type: 3}
       propertyPath: m_LocalPosition.x
@@ -686,6 +735,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 187941253}
     m_Modifications:
+    - target: {fileID: 1594842116234880, guid: 302f45025bc27734bbd2bc0239d4aeed, type: 3}
+      propertyPath: m_Name
+      value: Assets/Scenes/Voxon.Examples/1_SpawningObjects_files/Meshes/Pyramid.fbx
+      objectReference: {fileID: 0}
     - target: {fileID: 4934122631524430, guid: 302f45025bc27734bbd2bc0239d4aeed, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.5
@@ -1034,11 +1087,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   guidelines: 0
+  show_vps: 1
   show_version: 1
   apply_vx_on_load: 1
   editorCamera: {fileID: 1141758294}
   active: 1
-  ErrorTexture: {fileID: 0}
+  _logger_max_lines: 10
 --- !u!4 &1474939058
 Transform:
   m_ObjectHideFlags: 1
@@ -1053,6 +1107,49 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1715326509
+GameObject:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1715326511}
+  - component: {fileID: 1715326510}
+  m_Layer: 0
+  m_Name: Voxon.TextureRegister
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1715326510
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1715326509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d89c6805443de64eb119c7cabeddcf4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1715326511
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1715326509}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1749257286
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1062,7 +1159,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1594842116234880, guid: 302f45025bc27734bbd2bc0239d4aeed, type: 3}
       propertyPath: m_Name
-      value: Pyramid (1)
+      value: Assets/Scenes/Voxon.Examples/1_SpawningObjects_files/Meshes/Pyramid.fbx
       objectReference: {fileID: 0}
     - target: {fileID: 4934122631524430, guid: 302f45025bc27734bbd2bc0239d4aeed, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1226,7 +1323,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1594842116234880, guid: 302f45025bc27734bbd2bc0239d4aeed, type: 3}
       propertyPath: m_Name
-      value: Pyramid (5)
+      value: Assets/Scenes/Voxon.Examples/1_SpawningObjects_files/Meshes/Pyramid.fbx
       objectReference: {fileID: 0}
     - target: {fileID: 4934122631524430, guid: 302f45025bc27734bbd2bc0239d4aeed, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1297,7 +1394,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1594842116234880, guid: 302f45025bc27734bbd2bc0239d4aeed, type: 3}
       propertyPath: m_Name
-      value: Pyramid (4)
+      value: Assets/Scenes/Voxon.Examples/1_SpawningObjects_files/Meshes/Pyramid.fbx
       objectReference: {fileID: 0}
     - target: {fileID: 4934122631524430, guid: 302f45025bc27734bbd2bc0239d4aeed, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1398,7 +1495,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1594842116234880, guid: 302f45025bc27734bbd2bc0239d4aeed, type: 3}
       propertyPath: m_Name
-      value: Pyramid (2)
+      value: Assets/Scenes/Voxon.Examples/1_SpawningObjects_files/Meshes/Pyramid.fbx
       objectReference: {fileID: 0}
     - target: {fileID: 4934122631524430, guid: 302f45025bc27734bbd2bc0239d4aeed, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1469,7 +1566,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1594842116234880, guid: 302f45025bc27734bbd2bc0239d4aeed, type: 3}
       propertyPath: m_Name
-      value: Pyramid (2)
+      value: Assets/Scenes/Voxon.Examples/1_SpawningObjects_files/Meshes/Pyramid.fbx
       objectReference: {fileID: 0}
     - target: {fileID: 4934122631524430, guid: 302f45025bc27734bbd2bc0239d4aeed, type: 3}
       propertyPath: m_LocalPosition.x

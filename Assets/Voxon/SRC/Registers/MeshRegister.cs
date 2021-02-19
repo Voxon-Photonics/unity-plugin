@@ -138,6 +138,8 @@ namespace Voxon
 			if(!mesh.name.StartsWith("Assets/"))
 			{
 				string path = UnityEditor.AssetDatabase.GetAssetPath(mesh);
+				path += $":{mesh.name}";
+
 				if (!path.StartsWith("Library"))
 				{
 					// Debug.LogWarning($"({mesh.name}){path} is not preprocessed!");
@@ -209,14 +211,14 @@ namespace Voxon
 			return register.Keys.ToArray();
 		}
 
-        public new void OnApplicationQuit()
+        new void OnApplicationQuit()
         {
             Active = false;
             Clear();
             base.OnApplicationQuit();
         }
 
-        private new void OnDestroy()
+        new void OnDestroy()
         {
             Active = false;
             Clear();

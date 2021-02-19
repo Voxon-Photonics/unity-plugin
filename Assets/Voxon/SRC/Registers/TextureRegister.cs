@@ -130,12 +130,11 @@ namespace Voxon
 			if (!in_texture.name.StartsWith("Assets/"))
 			{
 				string path = UnityEditor.AssetDatabase.GetAssetPath(in_texture);
-				if (!path.StartsWith("Library"))
+				if (!path.StartsWith("Library") && path != "")
 				{
 					Debug.LogWarning($"({in_texture.name}){path} is not preprocessed!");
 					in_texture.name = path;
 				}
-
 			}
 #endif
 
@@ -147,7 +146,7 @@ namespace Voxon
 			RegisteredTexture rt;
             if (_register.ContainsKey(in_texture.name))
             {
-				Debug.Log($"Looking Up Texture: {in_texture.name}");
+				// Debug.Log($"Looking Up Texture: {in_texture.name}");
 				rt = _register[in_texture.name];
                 rt.Counter++;
                 _register[in_texture.name] = rt;
@@ -156,7 +155,7 @@ namespace Voxon
             }
             else
             {
-				Debug.Log($"Building Texture: {in_texture.name}");
+				// Debug.Log($"Building Texture: {in_texture.name}");
 				rt = new RegisteredTexture(ref in_texture);
 				_register.Add(in_texture.name, rt);
                 return rt.Texture;

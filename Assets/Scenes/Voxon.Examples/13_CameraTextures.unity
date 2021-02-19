@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44405273, g: 0.4934626, b: 0.5729057, a: 1}
+  m_IndirectSpecularColor: {r: 0.44405264, g: 0.49346244, b: 0.57290554, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -192,6 +192,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1312756833513464, guid: 751c7d8a1aba2c845934297d32178896, type: 3}
+      propertyPath: m_Name
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1396818469739880, guid: 751c7d8a1aba2c845934297d32178896, type: 3}
+      propertyPath: m_Name
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1690989461059730, guid: 751c7d8a1aba2c845934297d32178896, type: 3}
+      propertyPath: m_Name
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1742359490916756, guid: 751c7d8a1aba2c845934297d32178896, type: 3}
+      propertyPath: m_Name
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 1848456548094120, guid: 751c7d8a1aba2c845934297d32178896, type: 3}
       propertyPath: m_Name
       value: animated_golfer
@@ -728,6 +744,49 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _camera: {fileID: 496161354}
+--- !u!1 &1983180954
+GameObject:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1983180956}
+  - component: {fileID: 1983180955}
+  m_Layer: 0
+  m_Name: Voxon.TextureRegister
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1983180955
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1983180954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d89c6805443de64eb119c7cabeddcf4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1983180956
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1983180954}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2044749749
 GameObject:
   m_ObjectHideFlags: 0
@@ -840,11 +899,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   guidelines: 0
+  show_vps: 1
   show_version: 1
   apply_vx_on_load: 1
   editorCamera: {fileID: 1236105256}
   active: 1
-  ErrorTexture: {fileID: 0}
+  _logger_max_lines: 10
 --- !u!4 &2045569035
 Transform:
   m_ObjectHideFlags: 1
