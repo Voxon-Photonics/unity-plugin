@@ -1,3 +1,15 @@
+# Version 1.1.0.3 (2021-03-05)
+
+## Minor Changes
+### Features
+* Mesh and Texture Cache: Moved from C# Serialization to Structs packed in Byte arrays stored per Scene now ([f933c2](https://bitbucket.org/voxon-photonics/unitypackage/commit/f933c24020bcab8645083518282734d8114092f3))
+* Animator using obj sequences ([f933c2](https://bitbucket.org/voxon-photonics/unitypackage/commit/f933c24020bcab8645083518282734d8114092f3))
+* Added Performance Examples ([d8b479](https://bitbucket.org/voxon-photonics/unitypackage/commit/d8b4792b85ef3e2949b923838279dc971f26af93))
+* Can now show VPS via front panel ([d8b479](https://bitbucket.org/voxon-photonics/unitypackage/commit/d8b4792b85ef3e2949b923838279dc971f26af93))
+
+### Bugs
+* Objects are now cached at the mesh level rather than the file level (was causing issues with FBX files) ([f2649f](https://bitbucket.org/voxon-photonics/unitypackage/commit/f2649f8ddb4443700699371801a1fc97bc50b5e4))
+
 # Version 0 - 1.0.0.2 (2020-07-07)
 
 ## Features
