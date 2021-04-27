@@ -7,7 +7,8 @@ using UnityEngine.Video;
 
 namespace Voxon
 {
-    public class VXComponent : MonoBehaviour, IDrawable
+	[ExecuteInEditMode]
+	public class VXComponent : MonoBehaviour, IDrawable
     {
 		public string MeshPath = "";
 
@@ -81,8 +82,12 @@ namespace Voxon
 					_baseMesh = GetComponent<MeshFilter>().sharedMesh;
 
 					_umesh = GetComponent<MeshFilter>().sharedMesh;
-                    _umaterials = GetComponent<MeshRenderer>().materials;
-                }
+#if UNITY_EDITOR
+					_umaterials = GetComponent<MeshRenderer>().sharedMaterials;
+#else
+					_umaterials = GetComponent<MeshRenderer>().materials;
+#endif
+				}
 
 
                 if (_umesh == null)
@@ -194,8 +199,12 @@ namespace Voxon
                     }
                     else
                     {
+#if UNITY_EDITOR
+						VXProcess.Runtime.DrawUntexturedMesh(_vt, _mesh.vertexCount, _mesh.indices[idx], _mesh.indexCounts[idx], _drawFlags, _rend.sharedMaterials[idx].color.ToInt());
+#else
 						VXProcess.Runtime.DrawUntexturedMesh(_vt, _mesh.vertexCount, _mesh.indices[idx], _mesh.indexCounts[idx], _drawFlags, _rend.materials[idx].color.ToInt());
-                    }
+#endif
+					}
                 }
                 
             }

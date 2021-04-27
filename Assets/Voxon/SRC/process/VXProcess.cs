@@ -6,7 +6,8 @@ using UnityEngine.Serialization;
 
 namespace Voxon
 {
-    public class VXProcess : Singleton<VXProcess> {
+	[ExecuteInEditMode]
+	public class VXProcess : Singleton<VXProcess> {
         
         #region constants
         public const string BuildDate = "2020/07/02";
@@ -143,8 +144,59 @@ namespace Voxon
                 
                 }
             }
-        }
 
+#if UNITY_EDITOR
+			Invoke("CoreLoop", 0f);
+#endif
+		}
+
+		void CoreLoop()
+		{
+			bool isBreathing = Runtime.FrameStart();
+
+			AudioListener.volume = Runtime.GetVolume();
+
+			if (guidelines)
+				Runtime.DrawGuidelines();
+
+			if (show_version)
+			{
+				Runtime.LogToScreen(20, 560, $"DLL Version: {_dll_version}");
+			}
+
+
+			// A camera must always be active while in process
+			if (_camera != null && _camera.Camera == null)
+			{
+				Camera = gameObject;
+			}
+			else if (_camera != null && _camera.HasChanged)
+			{
+				_camera?.ForceUpdate();
+			}
+
+			Draw();
+
+			_camera?.ClearUpdated();
+
+			// VX quit command; TODO this should be by choice
+			if (Runtime.GetKey(0x1) || !isBreathing)
+			{
+				Runtime.Shutdown();
+				Runtime.Unload();
+#if UNITY_EDITOR
+				UnityEditor.EditorApplication.isPlaying = false;
+#elif UNITY_WEBPLAYER
+            Application.OpenURL(webplayerQuitURL);
+#else
+            Application.Quit();
+#endif
+			}
+
+			Runtime.FrameEnd();
+
+			Invoke("CoreLoop", 0.01f);
+		}
         // Update is called once per frame
         void Update()
         {
@@ -153,51 +205,13 @@ namespace Voxon
                 return;
             }
 
-            bool isBreathing = Runtime.FrameStart();
-
-            AudioListener.volume = Runtime.GetVolume();
-
-            if (guidelines)
-                Runtime.DrawGuidelines();
-
-            if (show_version)
-            {
-                Runtime.LogToScreen(20, 560,$"DLL Version: {_dll_version}" );
-            }
-                
-
-            // A camera must always be active while in process
-            if (_camera != null && _camera.Camera == null)
-            {
-                Camera = gameObject;
-            }
-            else if (_camera != null && _camera.HasChanged)
-            {
-                _camera?.ForceUpdate();
-            }
-
-            Draw();
-            
-            _camera?.ClearUpdated();
-
-            // VX quit command; TODO this should be by choice
-            if (Runtime.GetKey(0x1) || !isBreathing)
-            {
-                Runtime.Shutdown();
-                Runtime.Unload();
 #if UNITY_EDITOR
-                UnityEditor.EditorApplication.isPlaying = false;
-#elif UNITY_WEBPLAYER
-            Application.OpenURL(webplayerQuitURL);
 #else
-            Application.Quit();
+			CoreLoop();
 #endif
-            }
-        
-            Runtime.FrameEnd();
-        }
+		}
 
-        private new void OnApplicationQuit()
+		private new void OnApplicationQuit()
         {
             if(Runtime != null) {
                 Runtime.Shutdown();
@@ -207,9 +221,9 @@ namespace Voxon
             base.OnApplicationQuit();
         }
 
-        #endregion
+#endregion
 
-        #region drawing
+#region drawing
         private void Draw()
         {
             foreach (IDrawable go in Drawables)
@@ -251,9 +265,9 @@ namespace Voxon
         {
             _logger.Add(str);
         }
-        #endregion
+#endregion
 
-        #region computing_transforms
+#region computing_transforms
         public static void ComputeTransform(ref Matrix4x4 targetWorld, ref Vector3[] vertices, ref point3d[] outPoltex)
         {
             if (vertices.Length != outPoltex.Length)
@@ -309,6 +323,6 @@ namespace Voxon
 
             ComputeTransform(ref target, ref vertices, ref uvs, ref outPoltex);
         }
-        #endregion
+#endregion
     }
 }

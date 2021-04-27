@@ -2,6 +2,7 @@
 
 namespace Voxon
 {
+	[ExecuteInEditMode]
     public class VXGameObject : MonoBehaviour
     {
 
