@@ -4,7 +4,7 @@ namespace Voxon.Examples.Camera
 {
     public class CameraSwap : MonoBehaviour {
         private int _cameraIndex;
-        public GameObject [] cameras;
+        public VXCamera [] cameras;
 
         // Update is called once per frame
         void Update () {

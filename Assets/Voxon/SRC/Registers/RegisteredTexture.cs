@@ -18,21 +18,30 @@ namespace Voxon
 		{
 			name = in_texture.name;
 			//TextureFormat.BGRA32
-			var reorderedTextures = new Texture2D(in_texture.width, in_texture.height, TextureFormat.BGRA32, false);
+			Texture2D orderedTexture;
 
-			Color32[] tCol = in_texture.GetPixels32();
-			reorderedTextures.SetPixels32(tCol);
+			if (in_texture.format != TextureFormat.BGRA32)
+			{
+				orderedTexture = new Texture2D(in_texture.width, in_texture.height, TextureFormat.BGRA32, false);
 
+				Color32[] tCol = in_texture.GetPixels32();
+				orderedTexture.SetPixels32(tCol);
+			}
+			else
+			{
+				orderedTexture = in_texture;
+			}
+			
 			var out_texture = new tiletype
 			{
-				height = (IntPtr)reorderedTextures.height,
-				width = (IntPtr)reorderedTextures.width,
-				pitch = (IntPtr)(reorderedTextures.width * Marshal.SizeOf(typeof(Color32))),
+				height = (IntPtr)orderedTexture.height,
+				width = (IntPtr)orderedTexture.width,
+				pitch = (IntPtr)(orderedTexture.width * Marshal.SizeOf(typeof(Color32))),
 				first_pixel =
-					Marshal.AllocHGlobal(Marshal.SizeOf(typeof(byte)) * reorderedTextures.GetRawTextureData().Length)
+					Marshal.AllocHGlobal(Marshal.SizeOf(typeof(byte)) * orderedTexture.GetRawTextureData().Length)
 			};
 
-			Marshal.Copy(reorderedTextures.GetRawTextureData(), 0, out_texture.first_pixel, reorderedTextures.GetRawTextureData().Length);
+			Marshal.Copy(orderedTexture.GetRawTextureData(), 0, out_texture.first_pixel, orderedTexture.GetRawTextureData().Length);
 
 			Texture = out_texture;
 		}

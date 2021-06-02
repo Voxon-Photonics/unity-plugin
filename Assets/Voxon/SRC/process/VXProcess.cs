@@ -31,7 +31,7 @@ namespace Voxon
         [FormerlySerializedAs("_editor_camera")]
         [Tooltip("Collision 'Camera'\nUtilises GameObject Scale, Rotation and Position")]
         [SerializeField]
-        private GameObject editorCamera;
+        private VXCamera editorCamera;
 
         [Tooltip("Disable to turn off VXProcess behaviour")]
         public bool active = true;
@@ -57,7 +57,7 @@ namespace Voxon
 
         #endregion
         #region getters_setters
-        public GameObject Camera
+        public VXCamera Camera
         {
             get => _camera?.Camera;
             set => _camera.Camera = value;
@@ -169,7 +169,12 @@ namespace Voxon
             // A camera must always be active while in process
             if (_camera != null && _camera.Camera == null)
             {
-                Camera = gameObject;
+				Debug.LogError("No Active VXCamera!");
+				active = false;
+				Runtime.Shutdown();
+				Runtime.Unload();
+				Runtime.FrameEnd();
+				return;
             }
             else if (_camera != null && _camera.HasChanged)
             {

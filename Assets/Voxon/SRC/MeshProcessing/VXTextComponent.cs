@@ -56,9 +56,10 @@ namespace Voxon
 
         public void UpdateLocation()
         {
-            Matrix4x4 matrix = Matrix4x4.Scale(new Vector3(2.0f, 0.8f, 2.0f)) * VXProcess.Instance.Camera.transform.worldToLocalMatrix * transform.localToWorldMatrix;
+            Matrix4x4 matrix = Matrix4x4.Scale(new Vector3(1.0f, 1, 1)) * VXProcess.Instance.Camera.transform.worldToLocalMatrix * transform.localToWorldMatrix;
+			// Matrix4x4 matrix = Matrix4x4.Scale(new Vector3(2.0f, 0.8f, 2.0f)) * VXProcess.Instance.Camera.transform.worldToLocalMatrix * transform.localToWorldMatrix;
 
-            Vector3 pos = matrix * transform.position;
+			Vector3 pos = matrix * transform.position;
 
             _pp = pos.ToPoint3d();
         }

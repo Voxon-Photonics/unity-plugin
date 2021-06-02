@@ -5,20 +5,21 @@ namespace Voxon
     public class VolumetricCamera
     {
         #region variables
-        private Matrix4x4 default_scale = Matrix4x4.Scale(new Vector3(2.0f, 0.8f, 2.0f));
-        private GameObject _camera;
+        private Matrix4x4 default_scale = Matrix4x4.Scale(new Vector3(2.0f, 2.0f, 2.0f));
+        private VXCamera _camera;
 
-        #endregion
+		#endregion
 
-        #region public_functions
-        public GameObject Camera
+		#region public_functions
+		public VXCamera Camera
         {
             get => _camera;
 
             set
             {
-                _camera = value;
-                UpdateTransform();
+				_camera = value;
+
+				UpdateTransform();
             }
         }
 
@@ -52,8 +53,9 @@ namespace Voxon
         private void UpdateTransform()
         {
             if (!_camera) return;
-            
-            _camera.transform.hasChanged = true;
+
+			_camera.transform.hasChanged = true;
+			
             Transform = default_scale * _camera.transform.worldToLocalMatrix;
         }
         #endregion
