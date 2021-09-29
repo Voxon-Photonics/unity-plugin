@@ -350,7 +350,7 @@ namespace Voxon.tests
 
             Matrix4x4 mat = Matrix4x4.identity;
 
-            testRm.compute_transform_gpu(mat, ref vt, ref mesh);
+            testRm.compute_transform_gpu(mat, mat, ref vt, ref mesh);
 
             /* Original Vertices before VX1 Swap
         Vector3[] expected_vertices = {
@@ -393,7 +393,7 @@ namespace Voxon.tests
 
             Matrix4x4 mat = Matrix4x4.Scale(new Vector3(2, 2, 2));
 
-            testRm.compute_transform_gpu(mat, ref vt, ref mesh);
+            testRm.compute_transform_gpu(mat, mat, ref vt, ref mesh);
 
             Vector3[] expectedVertices = {
                 new Vector3(2f, 2f, 2f),
@@ -425,7 +425,7 @@ namespace Voxon.tests
 
             Matrix4x4 mat = Matrix4x4.Translate(new Vector3(2, 2, 2));
 
-            testRm.compute_transform_gpu(mat, ref vt, ref mesh);
+            testRm.compute_transform_gpu(mat, mat, ref vt, ref mesh);
 
             Vector3[] expectedVertices = {
                 new Vector3(3f, -1f, -1f),
@@ -458,7 +458,7 @@ namespace Voxon.tests
 
             Matrix4x4 mat = Matrix4x4.Rotate(Quaternion.AngleAxis(-90, new Vector3(1, 0, 0)));
 
-            testRm.compute_transform_gpu(mat, ref vt, ref mesh);
+            testRm.compute_transform_gpu(mat, mat, ref vt, ref mesh);
 
             Vector3[] expectedVertices = {
                 new Vector3(1,-1,1),
@@ -491,7 +491,7 @@ namespace Voxon.tests
 
             Matrix4x4 mat = Matrix4x4.TRS(new Vector3(2, 2, 2), Quaternion.AngleAxis(90, new Vector3(1, 0, 0)), new Vector3(2, 2, 2));
 
-            testRm.compute_transform_gpu(mat, ref vt, ref mesh);
+            testRm.compute_transform_gpu(mat, mat, ref vt, ref mesh);
 
             // Unity Rotation is done Right Handed
             Vector3[] expectedVertices = {

@@ -8,7 +8,10 @@ namespace Voxon.Editor
         public static Vector2 ScrollPosition;
         public override void OnInspectorGUI()
         {
-            ScrollPosition = GUILayout.BeginScrollView(ScrollPosition, GUILayout.Width(Screen.width), GUILayout.Height(Screen.height-20));
+			GUILayout.MaxHeight(600); GUILayout.MinHeight(600);
+			GUILayout.MaxWidth(800); GUILayout.MinWidth(800);
+
+			ScrollPosition = GUILayout.BeginScrollView(ScrollPosition, GUILayout.Width(800), GUILayout.Height(600));
 
             base.OnInspectorGUI();
         

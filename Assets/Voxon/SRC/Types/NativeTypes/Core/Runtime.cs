@@ -191,6 +191,12 @@ namespace Voxon
 			_features["DrawTexturedMesh"].Invoke(_runtime, paras);
 		}
 
+		public void DrawLitTexturedMesh(ref tiletype texture, poltex[] vertices, int verticeCount, int[] indices, int indiceCount, int flags, int ambient_color = 0x040404)
+		{
+			var paras = new object[] { texture, vertices, verticeCount, indices, indiceCount, flags, ambient_color };
+			_features["DrawLitTexturedMesh"].Invoke(_runtime, paras);
+		}
+
 		public void DrawUntexturedMesh(poltex[] vertices, int verticeCount, int[] indices, int indiceCount, int flags, int colour)
 		{
 			var paras = new object[] { vertices, verticeCount, indices, indiceCount, flags, colour };
@@ -542,6 +548,25 @@ namespace Voxon
 		public float GetEmulatorDistance()
 		{
 			return (float)_features["GetEmulatorDistance"].Invoke(_runtime, null);
+		}
+
+		public void StartRecording(string filename, int vps)
+		{
+			Debug.Log($"StartRecording: {filename}");
+			var paras = new object[] { filename, vps };
+			_features["StartRecording"].Invoke(_runtime, paras);
+		}
+
+		public void EndRecording()
+		{
+			Debug.Log("EndRecording");
+			_features["EndRecording"].Invoke(_runtime, null);
+		}
+
+		public void GetVCB(string filename, int vps)
+		{
+			var paras = new object[] { filename, vps };
+			_features["GetVCB"].Invoke(_runtime, paras);
 		}
 
 		#endregion

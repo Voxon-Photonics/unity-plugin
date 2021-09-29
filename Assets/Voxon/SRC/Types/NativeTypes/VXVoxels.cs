@@ -44,7 +44,13 @@ namespace Voxon
             }
         }
 
-        public void set_points(ref Vector3[] points)
+		public void set_posz(int idx, float y)
+		{
+			// Debug.Log(value);
+			_voxelPositions[idx].z = y;
+		}
+
+		public void set_points(ref Vector3[] points)
         {
             this._voxelCount = points.Length;
             this._points = points;

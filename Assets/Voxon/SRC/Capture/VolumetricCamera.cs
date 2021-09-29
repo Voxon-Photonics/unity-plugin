@@ -47,6 +47,17 @@ namespace Voxon
         {
             UpdateTransform();
         }
+
+		public void LoadCameraAnim()
+		{
+			Camera.LoadTransform();
+		}
+
+		public void SaveCameraAnim()
+		{
+			Camera.SaveTransform(_camera.transform.hasChanged);
+		}
+
         #endregion
 
         #region private_functions

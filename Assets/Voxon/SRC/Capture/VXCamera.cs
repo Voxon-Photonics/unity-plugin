@@ -7,13 +7,31 @@ using UnityEditor;
 public class VXCamera : MonoBehaviour
 {
 	public bool uniformScale = true;
-	public int baseScale = 1;
+	[SerializeField]
+	float baseScale = 1; // Need to adjust controls for this
 	public Vector3 vectorScale = Vector3.one;
 
 	public bool loadViewFinder = false;
 	public Vector3 ViewFinderDimensions = new Vector3(1, 0.4f, 1);
 
 	VxViewFinder view_finder;
+	Renderer vf_renderer;
+
+	public CameraAnimation CameraAnimator;
+
+	public float BaseScale
+	{
+		get
+		{
+			return baseScale;
+		}
+
+		set
+		{
+			baseScale = value;
+			this.transform.hasChanged = true;
+		}
+	}
 
 	void UpdatePerspective()
 	{
@@ -45,8 +63,11 @@ public class VXCamera : MonoBehaviour
 				// Add a view finder
 				go.name = "view_finder";
 				go.AddComponent<VxViewFinder>();
+
 			}
 		}
+
+		vf_renderer = view_finder.GetComponent<Renderer>();
 	}
 
 	void UpdateViewFinder()
@@ -56,9 +77,28 @@ public class VXCamera : MonoBehaviour
 		view_finder.SetAspectRatio(ViewFinderDimensions);
 	}
 
+	private void OnEnable()
+	{
+		if (CameraAnimator == null)
+		{
+			CameraAnimator = gameObject.GetComponent<CameraAnimation>();
+			if (CameraAnimator == null)
+			{
+				CameraAnimator = gameObject.AddComponent<CameraAnimation>();
+			}
+		}
+	}
+
 	private void Awake()
 	{
-
+		if (CameraAnimator == null)
+		{
+			CameraAnimator = gameObject.GetComponent<CameraAnimation>();
+			if (CameraAnimator == null)
+			{
+				CameraAnimator = gameObject.AddComponent<CameraAnimation>();
+			}
+		}
 #if UNITY_EDITOR
 		// Load AspectRatio for ViewFinder
 		UpdateViewFinder();
@@ -74,16 +114,57 @@ public class VXCamera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+		if (CameraAnimator == null)
+		{
+			CameraAnimator = gameObject.GetComponent<CameraAnimation>();
+			if (CameraAnimator == null)
+			{
+				CameraAnimator = gameObject.AddComponent<CameraAnimation>();
+			}
+		}
 #if UNITY_EDITOR
 		UpdateViewFinder();
 		UpdatePerspective();
 #endif
 	}
 
-	Matrix4x4 GetMatrix()
+	public void LoadTransform()
+	{
+		CameraAnimator?.LoadTransform(this);
+	}
+
+	public void SaveTransform(bool hasChanged)
+	{
+		// TODO : Should handle non-uniform scales
+		if (hasChanged)
+		{
+			CameraAnimator?.SaveTransform(transform, baseScale, ViewFinderDimensions);
+		} else
+		{
+			CameraAnimator?.IncrementFrame();
+		}
+		
+	}
+
+
+	public void CloseAnimator()
+	{
+		CameraAnimator.StopPlayback();
+
+		CameraAnimator.StopRecording();
+		CameraAnimator.SaveRecording();
+		
+	}
+
+	public Matrix4x4 GetMatrix()
 	{
 		ViewFinderCheck();
 
 		return view_finder.transform.worldToLocalMatrix;
+	}
+
+	public Bounds GetBounds()
+	{
+		return vf_renderer.bounds;
 	}
 }

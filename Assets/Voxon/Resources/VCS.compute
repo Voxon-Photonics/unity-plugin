@@ -16,16 +16,18 @@ RWStructuredBuffer<poltex> output;
 StructuredBuffer<float3> in_vertices;
 StructuredBuffer<float2> in_uvs;
 
-uniform float4x4 _transform;
+uniform float4x4 _localToWorld;
+uniform float4x4 _activeCamera;
 
 static const uint numthreads = 256;
 
 [numthreads(numthreads,1,1)]
 void CSMain (in uint3 id : SV_DispatchThreadID)
 {
-	poltex v = output[id.x];
+	poltex v;
 	float4 in_v = float4(in_vertices[id.x], 1.0);
-	v.pos = mul(_transform, in_v).xyz;
+	v.pos = mul(_activeCamera, mul(_localToWorld, in_v)).xyz;
+	// v.pos = mul(_transform, in_v).xyz;
 	float t = v.pos.y;
 	v.pos.y = -v.pos.z;
 	v.pos.z = -t;

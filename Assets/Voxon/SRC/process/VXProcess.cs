@@ -1,20 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
 
 namespace Voxon
 {
     public class VXProcess : Singleton<VXProcess> {
-        
-        #region constants
-        public const string BuildDate = "2020/07/02";
+
+		#region types
+		public enum RecordingType { FRAME, SERIES };
+		#endregion
+
+
+		#region constants
+		public const string BuildDate = "2021/07/28";
         #endregion
 
         public static Runtime Runtime;
 
         #region inspector
+		[Header("Debug")]
         [FormerlySerializedAs("_guidelines")] [Tooltip("Will show capture volume of VX1 while emulating")]
         public bool guidelines;
         
@@ -25,35 +33,55 @@ namespace Voxon
         [Tooltip("Disable to turn hide version information on front panel")]
         public bool show_version = true;
 
-        [Tooltip("Enable runtime applying VXGameobjects to all objects on load")]
+		[Header("Camera")]
+		[Tooltip("Disable to turn off VXProcess behaviour")]
+		public bool active = true;
+
+		[Tooltip("Enable runtime applying VXGameobjects to all objects on load")]
         public bool apply_vx_on_load = true;
 
-        [FormerlySerializedAs("_editor_camera")]
+		[FormerlySerializedAs("_editor_camera")]
         [Tooltip("Collision 'Camera'\nUtilises GameObject Scale, Rotation and Position")]
         [SerializeField]
         private VXCamera editorCamera;
 
-        [Tooltip("Disable to turn off VXProcess behaviour")]
-        public bool active = true;
+		[Header("Performance")]
+		[Tooltip("Apply a fixed framerate for a consistent performance")]
+		public bool fixedFrameRate = false;
 
-        #endregion
+		[Tooltip("Target framerate when rendering and recording")]
+		public int TargetFrameRate = 15;
 
-        #region drawables
-        public static List<IDrawable> Drawables = new List<IDrawable>(); 
+		[Header("Recording")]
+		[Tooltip("Path of recorded frame data. Use for static playback")]
+		public string recordingPath = "C:\\Voxon\\Media\\MyCaptures\\framedata";
+
+		[Tooltip("Activate recording on project load")]
+		public bool recordOnLoad = false;
+
+		[Tooltip("Capture all vcb into single zip, or as individual frames")]
+		public RecordingType recordingStyle = RecordingType.SERIES;
+		#endregion
+
+		#region drawables
+		public static List<IDrawable> Drawables = new List<IDrawable>(); 
         public static List<VXGameObject> Gameobjects = new List<VXGameObject>();
-        #endregion
+		#endregion
 
-        #region internal_vars
-
+		#region internal_vars
+		private Int64 current_frame = 0;
         private string _dll_version = "";
         private VolumetricCamera _camera = new VolumetricCamera();
         static List<string> _logger = new List<string>();
         private List<float> frame_delta = new List<float>();
-        #endregion
 
-        #region public_vars
+		bool is_recording = false;
 
-        public int _logger_max_lines = 10;
+		#endregion
+
+		#region public_vars
+		[Header("Logging")]
+		public int _logger_max_lines = 10;
 
         #endregion
         #region getters_setters
@@ -78,7 +106,15 @@ namespace Voxon
         #region unity_functions
         private void Awake()
         {
-            Drawables.Clear();
+			if (fixedFrameRate)
+			{
+				QualitySettings.vSyncCount = 0;  // VSync must be disabled
+				Application.targetFrameRate = TargetFrameRate;
+				Time.captureFramerate = TargetFrameRate;
+			}
+
+			current_frame = -1; // We haven't started our first frame yet
+			Drawables.Clear();
             Gameobjects.Clear();
         }
 
@@ -143,12 +179,23 @@ namespace Voxon
                 
                 }
             }
+
+			if (recordOnLoad)
+			{
+				is_recording = true;
+				if(recordingStyle == RecordingType.SERIES)
+				{
+					Voxon.VXProcess.Runtime.StartRecording(recordingPath, TargetFrameRate);
+				}
+			}
         }
 
         // Update is called once per frame
         void Update()
         {
-            if(!active || Runtime == null)
+			current_frame++;
+
+			if (!active || Runtime == null)
             {
                 return;
             }
@@ -171,43 +218,69 @@ namespace Voxon
             {
 				Debug.LogError("No Active VXCamera!");
 				active = false;
-				Runtime.Shutdown();
-				Runtime.Unload();
+				CloseRuntime();
 				Runtime.FrameEnd();
 				return;
             }
-            else if (_camera != null && _camera.HasChanged)
+
+			// TODO if Loaded Camera Animation - > Set Camera Transform
+			_camera?.LoadCameraAnim();
+
+			if (_camera != null && _camera.HasChanged)
             {
+
                 _camera?.ForceUpdate();
             }
 
-            Draw();
-            
-            _camera?.ClearUpdated();
+
+			// TODO If Loaded Capture Playback -> Set Capture Frame Else Draw
+
+			Draw();
+
+			// TODO Save Camera Pos
+			_camera?.SaveCameraAnim();
+			// TODO Save Frame
+			if (is_recording && recordingStyle == RecordingType.FRAME)
+			{
+				Runtime.GetVCB(recordingPath, TargetFrameRate);
+			}
+
+			_camera?.ClearUpdated();
 
             // VX quit command; TODO this should be by choice
             if (Runtime.GetKey(0x1) || !isBreathing)
             {
-                Runtime.Shutdown();
-                Runtime.Unload();
+				CloseRuntime();
+
+				_camera?.Camera.CloseAnimator();
 #if UNITY_EDITOR
                 UnityEditor.EditorApplication.isPlaying = false;
 #elif UNITY_WEBPLAYER
-            Application.OpenURL(webplayerQuitURL);
+				Application.OpenURL(webplayerQuitURL);
 #else
-            Application.Quit();
+				Application.Quit();
 #endif
             }
         
             Runtime.FrameEnd();
         }
 
+		private void CloseRuntime()
+		{
+			if (is_recording && recordingStyle == RecordingType.SERIES)
+			{
+				is_recording = false;
+				Runtime.EndRecording();
+			}
+			Runtime.Shutdown();
+			Runtime.Unload();
+		}
+
         private new void OnApplicationQuit()
         {
             if(Runtime != null) {
-                Runtime.Shutdown();
-                Runtime.Unload();
-            }
+				CloseRuntime();
+			}
         
             base.OnApplicationQuit();
         }

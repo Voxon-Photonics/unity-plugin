@@ -211,15 +211,15 @@ namespace Voxon
         ///  Compute Shader call. Set up Kernel, define tranform values and dispatches GPU threads
         ///  Currently only sends thin batches; should see to increase this in future.
         ///  </summary>
-        public void compute_transform_gpu(Matrix4x4 transform, ref poltex[] vt, ref Mesh mesh)
+        public void compute_transform_gpu(Matrix4x4 _localToWorld, Matrix4x4 _activeCamera, ref poltex[] vt, ref Mesh mesh)
         {
-        
             try
             {
                 // Need to be set for each draw update
-                MeshRegister.Instance.cshaderMain.SetMatrix("_transform", transform);
+                MeshRegister.Instance.cshaderMain.SetMatrix("_localToWorld", _localToWorld);
+				MeshRegister.Instance.cshaderMain.SetMatrix("_activeCamera", _activeCamera);
 
-                _cbufferIVertices.SetData(mesh.vertices);
+				_cbufferIVertices.SetData(mesh.vertices);
 
                 MeshRegister.Instance.cshaderMain.SetBuffer(MeshRegister.Instance.kernelHandle, "in_vertices", _cbufferIVertices);
                 MeshRegister.Instance.cshaderMain.SetBuffer(MeshRegister.Instance.kernelHandle, "in_uvs", _cbufferIUvs);

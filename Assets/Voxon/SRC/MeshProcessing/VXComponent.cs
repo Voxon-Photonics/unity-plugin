@@ -40,6 +40,8 @@ namespace Voxon
         public float TimeToLive = 2.0f;
         private float TimeLeftAlive;
 
+		public bool lit = false;
+
 		// Use this for initialization
 		void Start()
         {
@@ -170,13 +172,14 @@ namespace Voxon
         {
             try
             {
-                if (!gameObject.activeInHierarchy || CompareTag("VoxieHide"))
+                if (!gameObject.activeInHierarchy || CompareTag("VoxieHide") || !enabled)
                 {
                     // Debug.Log($"{gameObject.name}: Skipping");
                     return;
                 }
-                
-                if (_smRend)
+
+
+				if (_smRend)
                 {
                     RegisteredMesh.update_baked_mesh(_smRend, ref _umesh);
                 }
@@ -188,13 +191,29 @@ namespace Voxon
                 
                 for (var idx = 0; idx < _mesh.submeshCount; idx++)
                 {
+
                     if (_umaterials[idx].HasProperty("_MainTex") && _umaterials[idx].mainTexture != null)
                     {
-                        VXProcess.Runtime.DrawTexturedMesh(ref _textures[idx], _vt, _mesh.vertexCount, _mesh.indices[idx], _mesh.indexCounts[idx], _drawFlags);
+						if (lit)
+						{
+							VXProcess.Runtime.DrawLitTexturedMesh(ref _textures[idx], _vt, _mesh.vertexCount, _mesh.indices[idx], _mesh.indexCounts[idx], _drawFlags);
+						} else
+						{
+							VXProcess.Runtime.DrawTexturedMesh(ref _textures[idx], _vt, _mesh.vertexCount, _mesh.indices[idx], _mesh.indexCounts[idx], _drawFlags);
+						}
+                        
                     }
                     else
                     {
-						VXProcess.Runtime.DrawUntexturedMesh(_vt, _mesh.vertexCount, _mesh.indices[idx], _mesh.indexCounts[idx], _drawFlags, _rend.materials[idx].color.ToInt());
+						if (lit)
+						{
+							Color32 unlit = _rend.materials[idx].color * 0.1f;
+							VXProcess.Runtime.DrawUntexturedMesh(_vt, _mesh.vertexCount, _mesh.indices[idx], _mesh.indexCounts[idx], _drawFlags, unlit.ToInt());
+							
+						} else
+						{
+							VXProcess.Runtime.DrawUntexturedMesh(_vt, _mesh.vertexCount, _mesh.indices[idx], _mesh.indexCounts[idx], _drawFlags, _rend.materials[idx].color.ToInt());
+						}
                     }
                 }
                 
@@ -222,7 +241,8 @@ namespace Voxon
 
                 if (_smRend)
                 {
-                    _mesh.compute_transform_gpu(matrix, ref _vt, ref _umesh);
+					//_smRend.
+                    _mesh.compute_transform_gpu(transform.localToWorldMatrix, VXProcess.Instance.Transform, ref _vt, ref _umesh);
                 }
                 else
                 {

@@ -13,13 +13,15 @@ namespace Voxon
         private static void Init()
         {
             _inputManager = (InputManager)GetWindow(typeof(InputManager));
-            // Annoying but it shuts up Unity's warnings
-            _inputManager.Show();
+			// Annoying but it shuts up Unity's warnings
+			_inputManager.maxSize = new Vector2(800, 600);
+			_inputManager.minSize = new Vector2(800, 600);
+			_inputManager.Show();
+			
         }
 
         private void OnGUI()
         {
-        
             Editor editor = Editor.CreateEditor(InputController.Instance);
         
             editor.OnInspectorGUI();

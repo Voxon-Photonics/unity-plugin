@@ -53,4 +53,25 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Voxon.Examples/8_Ragdoll.unity
     guid: a3d985c5873c64c4b8322900ffa6a065
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: Assets/Scenes/Voxon.Examples/19_LightingCats.unity
+    guid: 2434563b6f74dc24289023898632ec9a
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: Assets/Scenes/Voxon.Examples/19_LightingFace.unity
+    guid: 992c3df7819214f448dbc686f9e5efb3
+  - enabled: 0
+    path: Assets/Voxon/SRC/Utility/CameraAnimation/SplineSystem/Scene.unity
+    guid: 7b93a2d9b81e649628ad521829ac941a
+  - enabled: 0
+    path: Assets/Scenes/Voxon.Examples/21_VCBRecording.unity
+    guid: eeb36005893b38b48bc173da17f36c16
+  - enabled: 0
+    path: Assets/Scenes/Voxon.Examples/20_CameraRecording.unity
+    guid: 463a90c7b975a4d44aa6de05cb24bda6
   m_configObjects: {}

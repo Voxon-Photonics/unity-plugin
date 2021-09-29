@@ -43,8 +43,8 @@ namespace Voxon.Examples.Input
             {
                 worldRot.y -= 1f;
             }
-        
-            if(Voxon.Input.GetKeyDown("Hide") && !_hidden)
+
+			if (Voxon.Input.GetKeyDown("Hide") && !_hidden)
             {
                 VXProcess.add_log_line("Hiding: " + _hidden.ToString());
                 tag = "VoxieHide";
