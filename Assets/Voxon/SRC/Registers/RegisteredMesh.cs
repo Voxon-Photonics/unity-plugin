@@ -150,7 +150,7 @@ namespace Voxon
 
         public static void update_baked_mesh(SkinnedMeshRenderer smRend, ref Mesh mesh)
         {
-            smRend.BakeMesh(mesh);
+            smRend.BakeMesh(mesh, true);
         }
 
         /** Privates **/
@@ -211,13 +211,13 @@ namespace Voxon
         ///  Compute Shader call. Set up Kernel, define tranform values and dispatches GPU threads
         ///  Currently only sends thin batches; should see to increase this in future.
         ///  </summary>
-        public void compute_transform_gpu(Matrix4x4 _localToWorld, Matrix4x4 _activeCamera, ref poltex[] vt, ref Mesh mesh)
+        public void compute_transform_gpu(Matrix4x4 _combinedMatrix, ref poltex[] vt, ref Mesh mesh)
         {
             try
             {
-                // Need to be set for each draw update
-                MeshRegister.Instance.cshaderMain.SetMatrix("_localToWorld", _localToWorld);
-				MeshRegister.Instance.cshaderMain.SetMatrix("_activeCamera", _activeCamera);
+				MeshRegister.Instance.cshaderMain.SetMatrix("_combinedMatrix", _combinedMatrix);
+				// MeshRegister.Instance.cshaderMain.SetMatrix("_localToWorld", _localToWorld);
+				// MeshRegister.Instance.cshaderMain.SetMatrix("_activeCamera", _activeCamera);
 
 				_cbufferIVertices.SetData(mesh.vertices);
 
@@ -282,20 +282,6 @@ namespace Voxon
 
 		public void Destroy()
         {
-#if UNITY_2017
-		if (cbufferI_uvs != null)
-		{
-			cbufferI_uvs.Release();
-		}
-		if (cbufferI_vertices != null)
-		{
-			cbufferI_vertices.Release();
-		}
-		if (cbufferO_poltex != null)
-		{
-			cbufferO_poltex.Release();
-		}
-#else
             if (_cbufferIUvs.IsValid())
             {
                 _cbufferIUvs.Release();
@@ -314,7 +300,6 @@ namespace Voxon
                 _cbufferOPoltex.Dispose();
                 _cbufferOPoltex = null;
             }
-#endif
         }
 
 #if UNITY_EDITOR

@@ -21,7 +21,9 @@ namespace Voxon
 
         public string text = "";
 
-        private byte[] _ts;
+		public bool forceUpdatePerFrame = false;
+
+		private byte[] _ts;
         // Use this for initialization
         public void Start()
         {
@@ -54,7 +56,18 @@ namespace Voxon
             _ts[tmp.Length] = 0;
         }
 
-        public void UpdateLocation()
+		void UpdateString()
+		{
+			// Get Char Values for String
+			byte[] tmp = Enc.GetBytes(text);
+			_ts = new byte[tmp.Length + 1];
+			tmp.CopyTo(_ts, 0);
+			// Append 0 to end string
+			_ts[tmp.Length] = 0;
+		}
+
+
+		public void UpdateLocation()
         {
 
 			if (VXProcess.Instance.Camera)
@@ -100,6 +113,11 @@ namespace Voxon
                 Debug.Log($"{gameObject.name}: Skipping");
                 return;
             }
+
+			if (forceUpdatePerFrame)
+			{
+				UpdateString();
+			}
 
 			VXProcess.Runtime.DrawLetters(ref _pp, ref _pr, ref _pd, color, _ts);
         }

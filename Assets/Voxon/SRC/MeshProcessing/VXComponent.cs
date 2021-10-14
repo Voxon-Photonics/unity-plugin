@@ -73,7 +73,7 @@ namespace Voxon
 					_baseMesh = _smRend.sharedMesh;
                     _umesh = new Mesh();
 
-                    _smRend.BakeMesh(_umesh);
+                    _smRend.BakeMesh(_umesh, true);
                     _umaterials = _smRend.materials;
 
                     _smRend.updateWhenOffscreen = true;
@@ -242,7 +242,7 @@ namespace Voxon
                 if (_smRend)
                 {
 					//_smRend.
-                    _mesh.compute_transform_gpu(transform.localToWorldMatrix, VXProcess.Instance.Transform, ref _vt, ref _umesh);
+                    _mesh.compute_transform_gpu(matrix, ref _vt, ref _umesh);
                 }
                 else
                 {

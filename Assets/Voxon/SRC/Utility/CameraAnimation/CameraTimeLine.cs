@@ -92,6 +92,11 @@ public class CameraTimeLine : ScriptableObject
 			new CameraInstant(0, Vector3.zero, Quaternion.identity, 1, new Vector3(1, 0.4f, 1));
 		}
 
+		if(frameNo == 0 && current_index > 0)
+		{
+			current_index = 0;
+			return instants[current_index];
+		}
 
 		while(current_index < instants.Count)
 		{

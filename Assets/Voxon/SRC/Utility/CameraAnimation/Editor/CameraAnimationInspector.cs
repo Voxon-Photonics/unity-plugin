@@ -37,11 +37,8 @@ public class CameraAnimationInspector : Editor
 
 		CameraAnimation CA = target as CameraAnimation;
 
-#if UNITY_2019_4_OR_NEWER
 		showRecording = EditorGUILayout.BeginFoldoutHeaderGroup(showRecording, "Recording");
-#else
-		EditorGUILayout.LabelField("Recording", EditorStyles.boldLabel);
-#endif
+
 		if (showRecording)
 		{
 			EditorGUILayout.PropertyField(record_on_load);
@@ -55,12 +52,10 @@ public class CameraAnimationInspector : Editor
 			}
 			EditorGUILayout.EndHorizontal();
 		}
-#if UNITY_2019_4_OR_NEWER
+
 		EditorGUILayout.EndFoldoutHeaderGroup();
 		showPlayback = EditorGUILayout.BeginFoldoutHeaderGroup(showPlayback, "Playback");
-#else
-		EditorGUILayout.LabelField("Playback", EditorStyles.boldLabel);
-#endif
+
 		if (showPlayback)
 		{
 			EditorGUILayout.PropertyField(play_on_load);
@@ -74,9 +69,9 @@ public class CameraAnimationInspector : Editor
 			}
 			EditorGUILayout.EndHorizontal();
 		}
-#if UNITY_2019_4_OR_NEWER
+
 		EditorGUILayout.EndFoldoutHeaderGroup();
-#endif
+
 		EditorGUILayout.LabelField($"Frame: {CA.GetFrame()}", EditorStyles.boldLabel);
 		EditorGUILayout.LabelField($"Length: {CA.GetAnimationLength()}", EditorStyles.boldLabel);
 		if (CA.GetAnimationLength() > 0)
@@ -258,7 +253,7 @@ public class CameraAnimationInspector : Editor
 				}
 				
 
-				if (Handles.Button(point, CA.playback_frames.instants[index]._Rotation, 0.02f, 0.02f, Handles.DotCap)) {
+				if (Handles.Button(point, CA.playback_frames.instants[index]._Rotation, 0.02f, 0.02f, Handles.DotHandleCap)) {
 					selectedIndex = index;
 					EditorUtility.SetDirty(CA);
 					Repaint();

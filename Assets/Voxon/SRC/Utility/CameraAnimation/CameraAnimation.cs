@@ -215,7 +215,7 @@ public class CameraAnimation : MonoBehaviour
 
 	public int GetFrame()
 	{
-		if(playback_frames.AnimationLength < 1)
+		if(playback_frames == null || playback_frames.AnimationLength < 1)
 		{
 			return 0;
 		} else

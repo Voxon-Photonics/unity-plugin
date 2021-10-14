@@ -12,8 +12,8 @@ namespace Voxon
 
         static EditorHandler()
         {
-            #if !UNITY_2018_4
-                Debug.LogWarning("Voxon Plugin may not be compatible with this version of Unity. Please use 2018.4.X (LTS)");
+            #if !UNITY_2020_3
+                Debug.LogWarning("Voxon Plugin may not be compatible with this version of Unity. Please use 2020.3.X (LTS)");
             #endif
             
             EditorApplication.playModeStateChanged += PlayStateChange;
@@ -329,13 +329,7 @@ namespace Voxon
 
         private static void DefaultPlayerSettings()
         {
-#if UNITY_2017
-		PlayerSettings.displayResolutionDialog = UnityEditor.ResolutionDialogSetting.Disabled;
-		PlayerSettings.defaultIsFullScreen = true;
-#else
             PlayerSettings.fullScreenMode = FullScreenMode.ExclusiveFullScreen;
-#endif
-
             PlayerSettings.SetApiCompatibilityLevel(BuildTargetGroup.Standalone, ApiCompatibilityLevel.NET_4_6);
             PlayerSettings.allowFullscreenSwitch = false;        
             PlayerSettings.defaultScreenHeight = 480;

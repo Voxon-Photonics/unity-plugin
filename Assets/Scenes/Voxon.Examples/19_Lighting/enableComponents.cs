@@ -19,8 +19,8 @@ public class enableComponents : MonoBehaviour
 
 	void Toggle()
 	{
-		UnlitObject.active = enabled;
-		LitObject.active = !enabled;
+		UnlitObject.SetActive(enabled);
+		LitObject.SetActive(!enabled);
 		light.enabled = !enabled;
 	}
 

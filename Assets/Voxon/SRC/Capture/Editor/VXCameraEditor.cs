@@ -32,11 +32,9 @@ public class VXCameraEditor : Editor
 	{
 		serializedObject.Update();
 
-#if UNITY_2019_4_OR_NEWER
+
 		showScalars = EditorGUILayout.BeginFoldoutHeaderGroup(showScalars, "Camera Scale");
-#else
-		EditorGUILayout.LabelField("Camera Scale", EditorStyles.boldLabel);
-#endif
+
 		if (showScalars) { 
 			EditorGUILayout.PropertyField(uniformScale);
 			if (uniformScale.boolValue)
@@ -47,12 +45,10 @@ public class VXCameraEditor : Editor
 				EditorGUILayout.PropertyField(vectorScale);
 			}
 		}
-#if UNITY_2019_4_OR_NEWER
+
 		EditorGUILayout.EndFoldoutHeaderGroup();
 		showViewFinder = EditorGUILayout.BeginFoldoutHeaderGroup(showViewFinder, "ViewFinder");
-#else
-		EditorGUILayout.LabelField("ViewFinder", EditorStyles.boldLabel);
-#endif
+
 		if (showViewFinder) { 
 			EditorGUILayout.PropertyField(loadViewFinder);
 			if (!loadViewFinder.boolValue)
@@ -60,9 +56,8 @@ public class VXCameraEditor : Editor
 				EditorGUILayout.PropertyField(ViewFinderDimensions);
 			}
 		}
-#if UNITY_2019_4_OR_NEWER
+
 		EditorGUILayout.EndFoldoutHeaderGroup();
-#endif
 		
 		serializedObject.ApplyModifiedProperties();
 	}

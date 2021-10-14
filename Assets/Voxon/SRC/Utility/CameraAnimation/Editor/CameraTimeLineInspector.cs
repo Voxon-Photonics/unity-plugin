@@ -12,7 +12,7 @@ public class CameraTimeLineInspector : Editor
 
 		for(int i = 0; i < CTL.instants.Count; i++)
 		{
-			Handles.Button(CTL.instants[i]._Position, CTL.instants[i]._Rotation, 1, 2, Handles.DotCap);
+			Handles.Button(CTL.instants[i]._Position, CTL.instants[i]._Rotation, 1, 2, Handles.DotHandleCap);
 		}
 	}
 
