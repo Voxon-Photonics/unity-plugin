@@ -64,15 +64,20 @@ namespace Voxon
                 // Triangles
                 rearrange_indices(ref mesh);
 
-                // Set up output buffer; the assigned data array will change per instance
-                _cbufferOPoltex = new ComputeBuffer(vertexCount, sizeof(float) * 5 + sizeof(int), ComputeBufferType.Default);
+				if(vertexCount > 0) { 
+					// Set up output buffer; the assigned data array will change per instance
+					_cbufferOPoltex = new ComputeBuffer(vertexCount, sizeof(float) * 5 + sizeof(int), ComputeBufferType.Default);
 
-                _cbufferIUvs = new ComputeBuffer(vertexCount, sizeof(float) * 2, ComputeBufferType.Default);
-                _cbufferIUvs.SetData(tmpUvs.ToArray());
-                _cbufferIVertices = new ComputeBuffer(vertexCount, sizeof(float) * 3, ComputeBufferType.Default);
-                _cbufferIVertices.SetData(mesh.vertices);
+					_cbufferIUvs = new ComputeBuffer(vertexCount, sizeof(float) * 2, ComputeBufferType.Default);
+					_cbufferIUvs.SetData(tmpUvs.ToArray());
+					_cbufferIVertices = new ComputeBuffer(vertexCount, sizeof(float) * 3, ComputeBufferType.Default);
+					_cbufferIVertices.SetData(mesh.vertices);
+				} else
+				{
+					Debug.LogWarning($"{mesh.name} has 0 vertices and is likely dynamic. Compute buffers will not be initialised");
+				}
 
-            }
+			}
             catch (Exception e)
             {
                 ExceptionHandler.Except($"Error building Mesh {name}", e);

@@ -171,6 +171,9 @@ namespace Voxon
 				if (_smRend)
 				{
 					RegisteredMesh.update_baked_mesh(_smRend, ref _umesh);
+				} else
+				{
+					_umesh = GetComponent<MeshFilter>().mesh;
 				}
 
 				// Build internal representation using this mesh
