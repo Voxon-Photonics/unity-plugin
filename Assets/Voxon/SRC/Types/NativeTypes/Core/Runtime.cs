@@ -408,7 +408,51 @@ namespace Voxon
 		{
 			return (string) _features["GetSDKVersion"].Invoke(_runtime, null);
 		}
-		
+
+		public void SetDotSize(int dotSize)
+		{
+			var paras = new object[] { dotSize };
+			_features["SetDotSize"].Invoke(_runtime, paras);
+		}
+
+		public int GetDotSize()
+		{
+			return (int)_features["GetDotSize"].Invoke(_runtime, null);
+		}
+
+		public void SetGamma(float gamma)
+		{
+			var paras = new object[] { gamma };
+			_features["SetGamma"].Invoke(_runtime, paras);
+		}
+
+		public float GetGamma()
+		{
+			return (float)_features["GetGamma"].Invoke(_runtime, null);
+		}
+
+		public void SetDensity(float density)
+		{
+			var paras = new object[] { density };
+			_features["SetDensity"].Invoke(_runtime, paras);
+		}
+
+		public float GetDensity()
+		{
+			return (float)_features["GetDensity"].Invoke(_runtime, null);
+		}
+
+		public void DisableNormalLighting()
+		{
+			_features["DisableNormalLighting"].Invoke(_runtime, null);
+		}
+
+		public void SetNormalLighting(float x, float y, float z)
+		{
+			var paras = new object[] { x, y, z };
+			_features["SetNormalLighting"].Invoke(_runtime, paras);
+		}
+
 		#region Helix Controls
 		public bool GetHelixMode()
 		{
@@ -462,7 +506,7 @@ namespace Voxon
 			}
 		}
 		
-		#endregion
+		#endregion 
 
 		#region Menu Controls
 		public void MenuReset(MenuUpdateHandler menuUpdate, IntPtr userdata)

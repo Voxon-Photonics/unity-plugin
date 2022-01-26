@@ -196,7 +196,8 @@ namespace Voxon
                     {
 						if (lit)
 						{
-							VXProcess.Runtime.DrawLitTexturedMesh(ref _textures[idx], _vt, _mesh.vertexCount, _mesh.indices[idx], _mesh.indexCounts[idx], _drawFlags);
+                            int blendColor = _rend.materials[idx].color.ToInt();
+                            VXProcess.Runtime.DrawLitTexturedMesh(ref _textures[idx], _vt, _mesh.vertexCount, _mesh.indices[idx], _mesh.indexCounts[idx], _drawFlags, blendColor);
 						} else
 						{
 							VXProcess.Runtime.DrawTexturedMesh(ref _textures[idx], _vt, _mesh.vertexCount, _mesh.indices[idx], _mesh.indexCounts[idx], _drawFlags);
@@ -207,7 +208,7 @@ namespace Voxon
                     {
 						if (lit)
 						{
-							Color32 unlit = _rend.materials[idx].color * 0.1f;
+							Color32 unlit = _rend.materials[idx].color;
 							VXProcess.Runtime.DrawUntexturedMesh(_vt, _mesh.vertexCount, _mesh.indices[idx], _mesh.indexCounts[idx], _drawFlags, unlit.ToInt());
 							
 						} else

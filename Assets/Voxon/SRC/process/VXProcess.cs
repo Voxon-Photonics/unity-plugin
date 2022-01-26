@@ -61,11 +61,14 @@ namespace Voxon
 
 		[Tooltip("Capture all vcb into single zip, or as individual frames")]
 		public RecordingType recordingStyle = RecordingType.SERIES;
-		#endregion
+        #endregion
+
+        private Vector3 normalLighting = new Vector3();
+        private bool lightingUpdated = false;
 
 		#region drawables
-		public static List<IDrawable> Drawables = new List<IDrawable>(); 
-        public static List<VXGameObject> Gameobjects = new List<VXGameObject>();
+		public static List<IDrawable> Drawables = new List<IDrawable>();
+		public static List<VXGameObject> Gameobjects = new List<VXGameObject>();
 		#endregion
 
 		#region internal_vars
@@ -101,6 +104,14 @@ namespace Voxon
 
         public bool HasChanged => _camera.HasChanged;
 
+        public Vector3 NormalLight
+        {
+            get => normalLighting;
+            set {
+                lightingUpdated = true;
+                normalLighting = value;
+            }
+        }
         #endregion
 
         #region unity_functions
@@ -290,6 +301,14 @@ namespace Voxon
         #region drawing
         private void Draw()
         {
+            if(lightingUpdated)
+			{
+                Debug.Log(normalLighting);
+                Runtime.SetNormalLighting(normalLighting.x, normalLighting.y, normalLighting.z);
+                lightingUpdated = false;
+
+            }
+
             foreach (IDrawable go in Drawables)
             {
                 go.Draw();
