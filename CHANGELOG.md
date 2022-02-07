@@ -1,3 +1,9 @@
+# Version 1.1.1.4 (2022-02-07)
+
+## Minor Changes
+### Bugs
+* Fixed SkinnedMesh scaling. Required move to 2020.3 ([20947a](https://bitbucket.org/voxon-photonics/unitypackage/commit/20947ab3d1365fa4d60224685a2eabc62e16dc7e))
+
 # Version 1.1.0.3 (2021-03-05)
 
 ## Minor Changes
