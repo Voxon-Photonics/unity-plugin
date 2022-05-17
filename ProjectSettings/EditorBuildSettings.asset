@@ -26,10 +26,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Voxon.Examples/6_InternalTypes.unity
     guid: 886b01d729f86ed4680028580bb75dd0
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Voxon.Examples/7_LevelLoading_1.unity
     guid: b6d5a2516e905944a9e51323a57bb685
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Voxon.Examples/7_LevelLoading_2.unity
     guid: 16096674f793ffe43a40f4f2c05271e9
   - enabled: 0

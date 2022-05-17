@@ -15,7 +15,7 @@ public class enableComponents : MonoBehaviour
     void Start()
     {
 		Toggle();
-    }
+	}
 
 	void Toggle()
 	{

@@ -47,7 +47,7 @@ public class VXVideoPlayer : MonoBehaviour
             if (_textureBuffer.width != _renderTexture.width || _textureBuffer.height != _renderTexture.height)
             {
                 Debug.Log("Resize Texture");
-                _textureBuffer.Resize(_renderTexture.width, _renderTexture.height);
+                _textureBuffer.Reinitialize(_renderTexture.width, _renderTexture.height);
             }
             
             RenderTexture.active = _renderTexture;
