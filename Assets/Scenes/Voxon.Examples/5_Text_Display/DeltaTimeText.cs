@@ -2,27 +2,45 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DeltaTimeText : MonoBehaviour
+namespace Voxon.Examples._5_DeltaTimeText
 {
-	Voxon.VXTextComponent text;
-    // Start is called before the first frame update
-    void Start()
-    {
-		text = GetComponent<Voxon.VXTextComponent>();
-
-		// text.forceUpdatePerFrame = false;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-		if (text.forceUpdatePerFrame)
+	/// <summary>
+	/// Report the current Frame Delta Time
+	/// to a Voxon Text component on screen
+	/// </summary>
+	public class DeltaTimeText : MonoBehaviour
+	{
+		/// <summary>
+		/// Voxon Text Component
+		/// </summary>
+		Voxon.VXTextComponent text;
+		
+		/// <summary>
+		/// Called on Start.
+		/// Get TextComponent
+		/// </summary>
+		void Start()
 		{
-			text.text = Time.deltaTime.ToString();
+			text = GetComponent<Voxon.VXTextComponent>();
+
+			// text.forceUpdatePerFrame = false;
 		}
-		else
+
+		/// <summary>
+		/// Called per Frame.
+		/// Updates the displayed text to current Time Delta
+		/// </summary>
+		void Update()
 		{
-			text.SetString(Time.deltaTime.ToString());
+			// If text component is rebuilding string per frame; we just set the value
+			if (text.forceUpdatePerFrame)
+			{
+				text.text = Time.deltaTime.ToString();
+			}
+			else // Otherwise; we should call setString to make sure it's constructed properly
+			{
+				text.SetString(Time.deltaTime.ToString());
+			}
 		}
-    }
+	}
 }

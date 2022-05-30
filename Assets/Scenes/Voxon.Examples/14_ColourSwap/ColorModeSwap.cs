@@ -3,26 +3,38 @@ using System.Collections.Generic;
 using UnityEngine;
 using Voxon;
 
-public class ColorModeSwap : MonoBehaviour
+namespace Voxon.Examples._14_ColourSwap
 {
-    // Start is called before the first frame update
-    public ColorMode currentColor = ColorMode.RGB;
-    void Start()
-    {
-    }
 
-    // Update is called once per frame
-    void Update()
+    /// <summary>
+    /// Swaps Voxon device Color Palette
+    /// </summary>
+    public class ColorModeSwap : MonoBehaviour
     {
-        if (Voxon.Input.GetKeyDown("ColorSwap"))
+        // Start is called before the first frame update
+        /// <summary>
+        /// Default color mode is RGB.
+        /// </summary>
+        public ColorMode currentColor = ColorMode.RGB;
+
+
+        /// <summary>
+        /// Called per frame.
+        /// Will iterate through available color modes when "ColorSwap" key
+        /// is pressed.
+        /// </summary>
+        void Update()
         {
-            currentColor--;
-            if (currentColor < ColorMode.CYAN)
+            if (Voxon.Input.GetKeyDown("ColorSwap"))
             {
-                currentColor = ColorMode.BG;
+                currentColor--;
+                if (currentColor < ColorMode.CYAN)
+                {
+                    currentColor = ColorMode.BG;
+                }
+                Debug.Log((currentColor.ToString()) + " : " + (int)currentColor);
+                VXProcess.Runtime.SetDisplayColor(currentColor);
             }
-            Debug.Log((currentColor.ToString()) + " : " + (int)currentColor);
-            VXProcess.Runtime.SetDisplayColor(currentColor);
         }
     }
 }

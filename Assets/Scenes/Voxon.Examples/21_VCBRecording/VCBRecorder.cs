@@ -2,31 +2,47 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VCBRecorder : MonoBehaviour
+namespace Voxon.Examples._21_VCBRecording
 {
-	public string filename;
-	bool is_recording = false;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+	/// <summary>
+	/// Class to call Runtime VCB (Volume Recording) behaviours.
+	/// Recording will be performed with each frame having a frametime
+	/// of 66.67~ milliseconds (fixed playback at 15 vps).
+	/// </summary>
+	public class VCBRecorder : MonoBehaviour
+	{
+		/// <summary>
+		/// Destination VCB filename / path
+		/// </summary>
+		public string filename;
+		/// <summary>
+		/// Current recording status
+		/// </summary>
+		bool is_recording = false;
 
-    // Update is called once per frame
-    void Update()
-    {
-		if (Voxon.Input.GetKeyDown("VCBRecord"))
+
+		/// <summary>
+		/// Called per Frame
+		/// Tests Input - 
+		/// "VCBRecord":
+		///		- If Recording, Stops recording
+		///		- If not Records, Starts recording at fixed frame time (15 frame / second).
+		/// </summary>
+		void Update()
 		{
-			if (!is_recording)
+			if (Voxon.Input.GetKeyDown("VCBRecord"))
 			{
-				Debug.Log($"Recorder: {filename}");
-				Voxon.VXProcess.Runtime.StartRecording(filename, 15);
+				if (!is_recording)
+				{
+					Debug.Log($"Recorder: {filename}");
+					Voxon.VXProcess.Runtime.StartRecording(filename, 15);
+				}
+				else
+				{
+					Voxon.VXProcess.Runtime.EndRecording();
+				}
+				is_recording = !is_recording;
 			}
-			else
-			{
-				Voxon.VXProcess.Runtime.EndRecording();
-			}
-			is_recording = !is_recording;
 		}
-    }
+	}
 }

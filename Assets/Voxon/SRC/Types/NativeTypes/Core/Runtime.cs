@@ -8,6 +8,9 @@ using UnityEngine;
 
 namespace Voxon
 {
+	/// <summary>
+	/// Voxon hardware color modes / palettes.
+	/// </summary>	
 	public enum ColorMode
 	{
 		// Dual Color - Currently Disabled
@@ -177,6 +180,12 @@ namespace Voxon
 		{
 			var paras = new object[] { pt, ptCount, col };
 			_features["DrawPolygon"].Invoke(_runtime, paras);
+		}
+
+		public void DrawSphereBulk(poltex[] vertices, float radius)
+		{
+			var paras = new object[] { vertices, radius };
+			_features["DrawSphereBulk"].Invoke(_runtime, paras);
 		}
 
 		public void DrawSphere(ref point3d position, float radius, int issol, int colour)

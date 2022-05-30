@@ -2,35 +2,65 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class enableComponents : MonoBehaviour
+namespace Voxon.Examples._19_Lighting
 {
-	Voxon.VXComponent[] components;
-
-	public GameObject LitObject;
-	public GameObject UnlitObject;
-	public new Voxon.lightbuffer light;
-
-	new public bool enabled = false;
-    // Start is called before the first frame update
-    void Start()
-    {
-		Toggle();
-	}
-
-	void Toggle()
+	/// <summary>
+	/// Toggle Between two game Objects. 
+	/// Lit and Unlight, and turn light on or off
+	/// depending on which is active
+	/// </summary>
+	public class enableComponents : MonoBehaviour
 	{
-		UnlitObject.SetActive(enabled);
-		LitObject.SetActive(!enabled);
-		light.enabled = !enabled;
-	}
+		/// <summary>
+		/// Object which can receive light
+		/// </summary>
+		public GameObject LitObject;
+		/// <summary>
+		/// Object which cannot receive light
+		/// </summary>
+		public GameObject UnlitObject;
+		/// <summary>
+		/// Where light information is stored
+		/// </summary>
+		public new lightbuffer light;
 
-    // Update is called once per frame
-    void Update()
-    {
-		if (Voxon.Input.GetKeyDown("ToggleComponent"))
+		/// <summary>
+		/// Is the light currently enabled?
+		/// </summary>
+		new public bool enabled = false;
+		
+		/// <summary>
+		/// Call on Start.
+		/// Sets each component enabled or not based
+		/// on <see cref="enabled"/>
+		/// </summary>
+		void Start()
 		{
-			enabled = !enabled;
 			Toggle();
 		}
-    }
+
+		/// <summary>
+		/// Toggle <see cref="enabled"/> state and apply to objects
+		/// </summary>
+		void Toggle()
+		{
+			UnlitObject.SetActive(enabled);
+			LitObject.SetActive(!enabled);
+			light.enabled = !enabled;
+		}
+
+		/// <summary>
+		/// Call per frame
+		/// Add input for:
+		/// "ToggleComponent" : Swaps enabled and applies
+		/// </summary>
+		void Update()
+		{
+			if (Voxon.Input.GetKeyDown("ToggleComponent"))
+			{
+				enabled = !enabled;
+				Toggle();
+			}
+		}
+	}
 }

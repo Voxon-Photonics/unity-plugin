@@ -2,25 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Rotating : MonoBehaviour
+namespace Voxon.Examples._24_NormalLighting
 {
-    float totalTime = 0;
-    // Start is called before the first frame update
-    void Start()
+    /// <summary>
+    /// Rotates gameObject in circle around z axis
+    /// World positions range is x: [-1,1], y: [-1,1]
+    /// </summary>
+    public class Rotating : MonoBehaviour
     {
-        
-    }
+        /// <summary>
+        /// Total Time passed
+        /// </summary>
+        float totalTime = 0;
 
-    // Update is called once per frame
-    void Update()
-    {
-        totalTime += Time.deltaTime;
+        /// <summary>
+        /// Called Per Frame
+        /// Update Object position in x/y based on
+        /// total time passed
+        /// </summary>
+        void Update()
+        {
+            totalTime += Time.deltaTime;
 
-        Vector3 pos = gameObject.transform.position;
+            Vector3 pos = gameObject.transform.position;
 
-        pos.x = Mathf.Cos(totalTime);
-        pos.y = Mathf.Sin(totalTime);
+            pos.x = Mathf.Cos(totalTime);
+            pos.y = Mathf.Sin(totalTime);
 
-        gameObject.transform.position = pos;
+            gameObject.transform.position = pos;
+        }
     }
 }

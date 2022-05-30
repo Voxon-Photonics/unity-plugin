@@ -2,42 +2,78 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Material))]
-public class AdjustingColours : MonoBehaviour
+namespace Voxon.Examples._25_TintingTextures
 {
-    Material mat;
-
-    public Color[] colors;
-
-    public int currentIndex = 0;
-    private int nextIndex;
-
-    public float changeColourTime = 2.0f;
-
-    private float lastChange = 0.0f;
-    private float timer = 0.0f;
-
-    void Start()
+    /// <summary>
+    /// Iterates between multiple colors and applies 
+    /// then to the attached meshes material
+    /// </summary>
+    [RequireComponent(typeof(Material))]
+    public class AdjustingColours : MonoBehaviour
     {
-        mat = GetComponent<Renderer>().material;
-        if (colors == null || colors.Length < 2)
-            Debug.Log("Need to setup colors array in inspector");
+        /// <summary>
+        /// Material of Attached Mesh
+        /// </summary>
+        Material mat;
 
-        nextIndex = (currentIndex + 1) % colors.Length;
-    }
+        /// <summary>
+        /// Array of possible colors for material
+        /// </summary>
+        public Color[] colors;
 
-    void Update()
-    {
+        /// <summary>
+        /// Index of active color
+        /// </summary>
+        public int currentIndex = 0;
+        /// <summary>
+        /// Next index to move to (looping)
+        /// </summary>
+        private int nextIndex;
 
-        timer += Time.deltaTime;
+        /// <summary>
+        /// How many seconds a color will stay 
+        /// active for
+        /// </summary>
+        public float changeColourTime = 2.0f;
 
-        if (timer > changeColourTime)
+        /// <summary>
+        /// Current running timer for color change
+        /// </summary>
+        private float timer = 0.0f;
+
+        /// <summary>
+        /// Called on Start
+        /// Gets attached material
+        /// Tests Colors array for a minimum of 2 colors
+        /// </summary>
+        void Start()
         {
-            currentIndex = (currentIndex + 1) % colors.Length;
-            nextIndex = (currentIndex + 1) % colors.Length;
-            timer = 0.0f;
+            mat = GetComponent<Renderer>().material;
+            if (colors == null || colors.Length < 2)
+                Debug.Log("Need to setup colors array in inspector");
 
+            nextIndex = (currentIndex + 1) % colors.Length;
         }
-        mat.color = Color.Lerp(colors[currentIndex], colors[nextIndex], timer / changeColourTime);
+
+        /// <summary>
+        /// Called Per Frame
+        /// Every <see cref="changeColourTime"/> seconds, will move to the 
+        /// next color in <see cref="colors"/>. Updates the material with
+        /// this new color.
+        /// </summary>
+        void Update()
+        {
+
+            timer += Time.deltaTime;
+
+            if (timer > changeColourTime)
+            {
+                currentIndex = (currentIndex + 1) % colors.Length;
+                nextIndex = (currentIndex + 1) % colors.Length;
+                timer = 0.0f;
+
+            }
+            mat.color = Color.Lerp(colors[currentIndex], colors[nextIndex], timer / changeColourTime);
+        }
     }
 }

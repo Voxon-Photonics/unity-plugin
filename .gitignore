@@ -76,3 +76,4 @@ crashlytics-build.properties
 exception.log
 UpgradeLog*.htm
 Assets/StreamingAssets/Assets*
+/.vscode

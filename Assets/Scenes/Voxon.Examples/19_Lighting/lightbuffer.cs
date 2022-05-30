@@ -4,53 +4,126 @@
 
 using UnityEngine;
 
-public struct depth
-{
-	public float value;         // Depth value at this point
-	public int data_index;      // Data index where depth related value is stored
-};
 
-namespace Voxon
+namespace Voxon.Examples._19_Lighting
 {
-	/* 
-	 * The light buffer class operates on 2 primary buffers.
-	 * A data buffer that can contain up to a full volumes worth of voxels (it never should, but that's our max). 
-	 *	This data is organised in an array of running indices and is drawn
-	 * A depth buffer that stores the depth value for each pixel in the render texture.
-	 *	Each new fragment tests itself against the depth buffer using it's x, y and if depth is less than active depth, it will use the existing x,y,z (if they exist), 
-	 *	and update the data buffer with the fragments issue, before updating the depth buffer to the new values. Deeper values will be discarded.
-	 */
+	/// <summary>
+	/// Structure tracking Depth values and associated
+	/// index value applies to
+	/// </summary>
+	public struct depth
+	{
+		public float value;         // Depth value at this point
+		public int data_index;      // Data index where depth related value is stored
+	};
+
+	/// <summary>
+	/// The light buffer class operates on 2 primary buffers.
+	/// A data buffer that can contain up to a full volumes worth of voxels (it never should, but that's our max). 
+	///	This data is organised in an array of running indices and is drawn
+	/// A depth buffer that stores the depth value for each pixel in the render texture.
+	///	Each new fragment tests itself against the depth buffer using it's x, y and if depth is less than active depth, it will use the existing x,y,z (if they exist), 
+	///	and update the data buffer with the fragments issue, before updating the depth buffer to the new values. Deeper values will be discarded.
+	/// </summary>
 	public class lightbuffer : MonoBehaviour, IDrawable
 	{
-
-
+		/// <summary>
+		/// Stores pixel color data
+		/// </summary>
 		ComputeBuffer light_buffer;
+		/// <summary>
+		/// Stores pixel depth data (convert plane to volume)
+		/// </summary>
 		ComputeBuffer depth_buffer;
+		/// <summary>
+		/// Stores pixel index
+		/// </summary>
 		ComputeBuffer index_buffer;
 
+		/// <summary>
+		/// Shader to clear pixel data
+		/// </summary>
 		ComputeShader clearShader;
 
+		/// <summary>
+		/// Light Shader; not currently used.
+		/// Initially Intended to add to objects in scene, but 
+		/// requires deeper consideration as that will involve 
+		/// a full material construction
+		/// </summary>
 		Shader lightShader;
 
+		/// <summary>
+		/// Active Voxon Camera
+		/// </summary>
 		VXCamera activeCamera;
-		Camera cam;
+		/// <summary>
+		/// Unity Camera used to capture light in scene
+		/// </summary>
+		UnityEngine.Camera cam;
+		/// <summary>
+		/// Render Target of Unity Camera
+		/// </summary>
 		RenderTexture rb;
+		/// <summary>
+		/// Total number of voxels to draw
+		/// </summary>
 		int voxels = 0;
+		/// <summary>
+		/// Total number of pixels in texture
+		/// </summary>
 		int pixels = 0;
+		/// <summary>
+		/// X / Y resolution of capture
+		/// </summary>
 		public int resolution = 512;
 
+		/// <summary>
+		/// Read Voxel position & color data from
+		/// compute buffer stored here
+		/// </summary>
 		poltex[] poltex_data;
+		/// <summary>
+		/// Depth data.
+		/// Currently not used
+		/// </summary>
 		depth[] depth_data;
+		/// <summary>
+		/// Default index values. Use to restore indexes
+		/// </summary>
 		int[] default_index = new int[] { 0 };
+		/// <summary>
+		/// Current index values. Updated based on which
+		/// indices will be drawn
+		/// </summary>
 		int[] current_index = new int[] { 0 };
 
+		/// <summary>
+		/// Light distance from target (camera)
+		/// </summary>
 		public float LightDistance = 5;
+		/// <summary>
+		/// Rounding error value for floats
+		/// </summary>
 		public float sigma = 0.001f;
 
+		/// <summary>
+		/// Buffer used by draw calls
+		/// </summary>
 		poltex[] poltex_buffer;
+		/// <summary>
+		/// Total number of compute groups to ensure
+		/// 1 megabyte is processed per group
+		/// </summary>
 		int group_size = (1024 * 1024) / 24; // How many poltex per Megabyte
+		/// <summary>
+		/// Total number of groups (division of pixels by group size)
+		/// </summary>
 		int group_count = 0;
 
+		/// <summary>
+		/// ID for each shader parameter
+		/// </summary>
 		static readonly int
 			resolutionId = Shader.PropertyToID("_Resolution"),
 			indexId = Shader.PropertyToID("_Index"),
@@ -58,14 +131,17 @@ namespace Voxon
 			dataId = Shader.PropertyToID("_Data"),
 			depthId = Shader.PropertyToID("_Depth");
 
-		void OnEnable()
-		{
 
-		}
-
+		/// <summary>
+		/// Called on Start.
+		/// Gets attached unity Camera
+		/// Ensures depth mode is accurate
+		/// determines light layer resolution
+		/// Configures Shaders, Buffers, groups, and Drawable action
+		/// </summary>
 		void Start()
 		{
-			cam = GetComponent<Camera>();
+			cam = GetComponent<UnityEngine.Camera>();
 			cam.depthTextureMode = cam.depthTextureMode | DepthTextureMode.Depth;
 			rb = cam.targetTexture;
 
@@ -121,13 +197,18 @@ namespace Voxon
 			Graphics.SetRandomWriteTarget(2, depth_buffer, false);
 			Graphics.SetRandomWriteTarget(3, index_buffer, false);
 
-
-			VXProcess.Drawables.Add(this);
+			// Should IDrawable call this? Probably not since it's an interface but worth considering
+			VXProcess.Drawables.Add(this); 
 
 			int groups = Mathf.CeilToInt(resolution / 64);
 			clearShader.Dispatch(0, groups, groups, 1);
 		}
 
+		/// <summary>
+		/// Called per Frame
+		/// Ensures activeCamera is valid
+		/// updates light camera position, direction, and updates shaders to current values
+		/// </summary>
 		void Update()
 		{
 			activeCamera = VXProcess.Instance.Camera;
@@ -168,6 +249,11 @@ namespace Voxon
 		}
 		*/
 
+		/// <summary>
+		/// Called on Application Quit.
+		/// Releases all compute buffers
+		/// </summary>
+
 		void OnApplicationQuit()
 		{
 			if (light_buffer != null)
@@ -189,6 +275,11 @@ namespace Voxon
 			}
 		}
 
+		/// <summary>
+		/// Called at end of Frame
+		/// Dispatches clear action for pixels
+		/// Forces light camera to render (no graphics pipeline)
+		/// </summary>
 		void LateUpdate()
 		{
 			// Last Actions before Graphics calls
@@ -198,9 +289,15 @@ namespace Voxon
 			cam.Render(); 
 		}
 
+		/// <summary>
+		/// Called by VXProcess per frame
+		/// Collects voxel data
+		/// tracks depth of each captured voxel 
+		/// (only grab the voxel closest to the light per line)
+		/// Draws all voxels
+		/// </summary>
 		public void Draw()
 		{
-
 			if (!gameObject.activeInHierarchy || !enabled)
 			{
 				// Debug.Log($"{gameObject.name}: Skipping");
@@ -235,7 +332,8 @@ namespace Voxon
 
 				System.Array.Copy(poltex_data, idx * group_size, poltex_buffer, 0, voxel_count);
 
-				VXProcess.Runtime.DrawUntexturedMesh(poltex_buffer, voxel_count, null, 0, 0, 0xffffff);
+				VXProcess.Runtime.DrawSphereBulk(poltex_buffer, 0.002f);
+				// VXProcess.Runtime.DrawUntexturedMesh(poltex_buffer, voxel_count, null, 0, 0, 0xffffff);
 			}
 		}
 	}

@@ -2,18 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class forward_kitty : MonoBehaviour
+namespace Voxon.Examples._19_Lighting
 {
-	public float speed = 1;
-    // Start is called before the first frame update
-    void Start()
+    /// <summary>
+    /// Cat (object) mover.
+    /// Has an object for to it's right per frame
+    /// ~~~ Reasoning: Cat mesh is turned 90 degrees
+    /// </summary>
+    public class forward_kitty : MonoBehaviour
     {
-		Mesh m = gameObject.GetComponent<Mesh>();
-	}
+        /// <summary>
+        /// Distance cat will move per second (meters)
+        /// </summary>
+        public float speed = 1;
 
-    // Update is called once per frame
-    void Update()
-    {
-		transform.position = transform.position + (transform.right * Time.deltaTime * speed);
-	}
+        /// <summary>
+        /// Called per Frame
+        /// Updates position of cat based on delta time and speed
+        /// </summary>
+        void Update()
+        {
+            transform.position = transform.position + (transform.right * Time.deltaTime * speed);
+        }
+    }
 }

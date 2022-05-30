@@ -2,34 +2,63 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public class MeshGenerator : MonoBehaviour
+namespace Voxon.Examples._22_DynamicMeshDeformation
 {
-    Mesh mesh;
-	MeshFilter mf;
-	MeshRenderer mr;
-
-    Vector3[] vertices;
-    int[] triangles;
-
-    void Start()
+    /// <summary>
+    /// Creates a mesh from scratch, and then allows the mesh
+    /// to be changed and updated by external scripts
+    /// </summary>
+    public class MeshGenerator : MonoBehaviour
     {
-		mf = gameObject.AddComponent<MeshFilter>();
-        mesh = new Mesh();
-        mf.mesh = mesh;
+        /// <summary>
+        /// Generated Mesh
+        /// </summary>
+        Mesh mesh;
+        /// <summary>
+        /// Generated MeshFilter
+        /// </summary>
+        MeshFilter mf;
 
-		mr = gameObject.AddComponent<MeshRenderer>();
+        /// <summary>
+        /// Generated MeshRenderer
+        /// </summary>
+        MeshRenderer mr;
 
-        CreateShape();
-        UpdateMesh();
+        /// <summary>
+        /// Vertices of Mesh
+        /// </summary>
+        Vector3[] vertices;
+        /// <summary>
+        /// Indices of Mesh
+        /// </summary>
+        int[] triangles;
 
-		gameObject.AddComponent<Voxon.VXDynamicComponent>();
-	}
-
-	void CreateShape()
-    {
-        vertices = new Vector3[]
+        /// <summary>
+        /// Called on Start.
+        /// Generates Mesh, MeshFilter, MeshRenderer and attaches a
+        /// VXDynaminComponent
+        /// </summary>
+        void Start()
         {
+            mf = gameObject.AddComponent<MeshFilter>();
+            mesh = new Mesh();
+            mf.mesh = mesh;
+
+            mr = gameObject.AddComponent<MeshRenderer>();
+
+            CreateShape();
+            UpdateMesh();
+
+            gameObject.AddComponent<Voxon.VXDynamicComponent>();
+        }
+
+        /// <summary>
+        /// Generates a quad's vertices, indices
+        /// </summary>
+        void CreateShape()
+        {
+            vertices = new Vector3[]
+            {
 
             new Vector3 (0,0,0),
             new Vector3 (0,0,1),
@@ -37,20 +66,24 @@ public class MeshGenerator : MonoBehaviour
             new Vector3 (1,0,1)
 
 
-        };
+            };
 
-        triangles = new int[]
-        {
+            triangles = new int[]
+            {
             0,1,2,
             1,3,2
-        };
+            };
 
-    }
+        }
 
-    void UpdateMesh()
-    {
-        mesh.Clear();
-        mesh.vertices = vertices;
-        mesh.triangles = triangles;
+        /// <summary>
+        /// Update Mesh based on current Vertices and Indices (triangles)
+        /// </summary>
+        void UpdateMesh()
+        {
+            mesh.Clear();
+            mesh.vertices = vertices;
+            mesh.triangles = triangles;
+        }
     }
 }

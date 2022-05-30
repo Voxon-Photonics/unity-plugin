@@ -3,35 +3,76 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Voxon.Examples
+namespace Voxon.Examples._2_ComplexMesh
 {
+    /// <summary>
+    /// Reports average framerate to Voxon touch screen
+    /// </summary>
     public class FrameRateReporter : MonoBehaviour {
+        /// <summary>
+        /// Fixed percentage of standard deviation that framerate 
+        /// must operate in to be reported (do not report if extremely unstable frame rate)
+        /// </summary>
         private const float StdDevPercent = 0.05f;
 
-        //Declare these in your class
+        /// <summary>
+        /// Total Frames
+        /// </summary>
         private int _mFrameCounter;
+        /// <summary>
+        /// Total Time
+        /// </summary>
         private float _mTimeCounter;
+        /// <summary>
+        /// Most recent framerate
+        /// </summary>
         private float _mLastFramerate;
+        /// <summary>
+        /// How often to refresh time
+        /// </summary>
         [FormerlySerializedAs("m_refreshTime")] public float mRefreshTime = 0.5f;
 
+        /// <summary>
+        /// Time of the last X frames
+        /// </summary>
         private List<float> _frames;
 
+        /// <summary>
+        /// Mean of last X Frames
+        /// </summary>
         private float _average;
+        /// <summary>
+        /// Standard Deviation of last X Frames
+        /// </summary>
         private float _standardDeviation;
 
+        /// <summary>
+        /// Is the framerate stable?
+        /// </summary>
         private bool _stabalised;
 
+        /// <summary>
+        /// Called on Start.
+        /// Intialises Frames and Sets as unstable
+        /// </summary>
         private void Start()
         {
             Reset();
         }
 
+        /// <summary>
+        /// Clears frames and sets as unstable
+        /// </summary>
         public void Reset()
         {
             _frames = new List<float>();
             _stabalised = false;
         }
 
+        /// <summary>
+        /// Determine the Standard Deviation of the
+        /// currently stored frame rates
+        /// </summary>
         private void GetStandardDeviation()
         {
             _average = _frames.Average();
@@ -58,6 +99,14 @@ namespace Voxon.Examples
             _standardDeviation = newStandardDeviation;
         }
 
+        /// <summary>
+        /// Called per Frame.
+        /// Determines if an update to framerate is required
+        /// If so; 
+        /// - determines framerate since last check; 
+        /// - calculate STDDev
+        /// - Report current values
+        /// </summary>
         private void Update()
         {
             if (_mTimeCounter < mRefreshTime)

@@ -100,7 +100,8 @@ public class CameraAnimationInspector : Editor
 
 		if (!added)
 		{
-			SceneView.onSceneGUIDelegate += this.UpdateSceneCallback;
+			// SceneView.onSceneGUIDelegate += this.UpdateSceneCallback; - Deprecated
+			SceneView.duringSceneGui += this.UpdateSceneCallback;
 			added = true;
 		}
 	}
@@ -144,13 +145,15 @@ public class CameraAnimationInspector : Editor
 	{
 		if (!added)
 		{
-			SceneView.onSceneGUIDelegate += this.UpdateSceneCallback;
+			// SceneView.onSceneGUIDelegate += this.UpdateSceneCallback; - Deprecated
+			SceneView.duringSceneGui += this.UpdateSceneCallback;
 			added = true;
 		}
 
 		if(target == null || (target as CameraAnimation).gameObject.activeInHierarchy == false || EditorApplication.isPlaying)
 		{
-			SceneView.onSceneGUIDelegate -= this.UpdateSceneCallback;
+			// SceneView.onSceneGUIDelegate -= this.UpdateSceneCallback; - Deprecated
+			SceneView.duringSceneGui -= this.UpdateSceneCallback;
 			added = false;
 			return;
 		}

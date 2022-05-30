@@ -3,19 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using Voxon;
 
-public class HelpMessage_9 : MonoBehaviour
+namespace Voxon.Examples._9_SpaceNav
 {
-    // Start is called before the first frame update
-    void Start()
+    /// <summary>
+    /// Displays Help Message to TouchScreen
+    /// </summary>
+    public class HelpMessage : MonoBehaviour
     {
-        VXProcess.add_log_line("");
-        VXProcess.add_log_line("Shift model using Space Navigator");
-        VXProcess.add_log_line("Zoom with left and right button");
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        /// <summary>
+        /// Call on Start
+        /// Displays controls for Space Navigator on screen
+        /// </summary>
+        void Start()
+        {
+            VXProcess.add_log_line("");
+            VXProcess.add_log_line("Shift model using Space Navigator");
+            VXProcess.add_log_line("Zoom with left and right button");
+        }
     }
 }

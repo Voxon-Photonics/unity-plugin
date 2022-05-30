@@ -1,17 +1,41 @@
 ﻿using UnityEngine;
 
-namespace Voxon.Examples
+namespace Voxon.Examples._1_SpawningObject
 {
+    /// <summary>
+    /// Monobehaviour that triggers a tone and recolors the parent gameObject on collision.
+    /// The recoloring will then fade over time, back to the base color of white
+    /// </summary>
     public class Touched : MonoBehaviour {
-        private int _transpose = -4;  // transpose in semitones
+        /// <summary>
+        /// transpose in semitones
+        /// </summary>
+        private int _transpose = -4;
+        /// <summary>
+        /// Associated Audio Source (Plays the Tone)
+        /// </summary>
         private AudioSource _sound;
 
+        /// <summary>
+        /// Position of Audio Source
+        /// </summary>
         public int position;
+        /// <summary>
+        /// Sample Rate of Audio
+        /// </summary>
         public int sampleRate = 44100;
+        /// <summary>
+        /// Frequency of Audio Tone
+        /// </summary>
         public int frequency = 440;
+        /// <summary>
+        /// Audio Clip which will be played by <see cref="_sound"/>
+        /// </summary>
         private AudioClip _myClip;
 
-        // Use this for initialization
+        /// <summary>
+        /// Initialise Touched. Adding / Finding an AudioSource, configuring the source options and Generating Tone to be played on collision
+        /// </summary>
         private void Start () {
             if(GetComponent<AudioSource>() == null)
             {
@@ -29,7 +53,10 @@ namespace Voxon.Examples
             _sound.spatialBlend = 0f;
         }
 	
-        // Update is called once per frame
+        /// <summary>
+        /// Called once per frame. If the parent isn't white, transitions back towards this color while reducing tone volume.
+        /// Otherwise makes sure the tone isn't playing
+        /// </summary>
         void Update () {
 
             if (gameObject.GetComponent<Renderer>().sharedMaterial.color != Color.white)
@@ -58,6 +85,11 @@ namespace Voxon.Examples
 
         }
 
+        /// <summary>
+        /// Triggered on collision with another object. Sets the parent to the colliding objects color, and plays a note / tone
+        /// based on the colliding objects material color.
+        /// </summary>
+        /// <param name="collision"></param>
         private void OnCollisionEnter(Collision collision)
         {
             Color col = collision.gameObject.GetComponent<Renderer>().sharedMaterial.color;
@@ -85,7 +117,10 @@ namespace Voxon.Examples
             }
         }
 
-
+        /// <summary>
+        /// Generates audio data based on current position, frequency and sample rate
+        /// </summary>
+        /// <param name="data"></param>
         void OnAudioRead(float[] data)
         {
             int count = 0;
@@ -96,6 +131,11 @@ namespace Voxon.Examples
                 count++;
             }
         }
+
+        /// <summary>
+        /// Sets position of Audio Source
+        /// </summary>
+        /// <param name="newPosition"></param>
         void OnAudioSetPosition(int newPosition)
         {
             position = newPosition;

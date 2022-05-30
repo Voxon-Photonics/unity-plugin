@@ -1,15 +1,33 @@
 ﻿using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Voxon.Examples
+namespace Voxon.Examples._4_MouseInput
 {
+    /// <summary>
+    /// Collect Mouse input data from the Voxon Runtime
+    /// </summary>
     public class MouseInput : MonoBehaviour {
+        /// <summary>
+        /// Minimum X, Z values for Mouse
+        /// </summary>
         private Vector3 _minLimits = new Vector3(-4.5f, -1, -4.5f);
+        /// <summary>
+        /// Maximum X, Z values for Mouse
+        /// </summary>
         private Vector3 _maxLimits = new Vector3(4.5f, -1, 4.5f);
 
+        /// <summary>
+        /// Set of Meshes to iterate through
+        /// </summary>
         [FormerlySerializedAs("Meshes")] public Mesh[] meshes = new Mesh[4];
 
-        // Update is called once per frame
+        /// <summary>
+        /// Called every X milliseconds (not linked to framerate)
+        /// Updates gameobjects position based on mouse position
+        /// Input Test:
+        /// "Left": Randomise Mesh Color
+        /// "Right": Randomise Mesh Scale (X,Y,Z)
+        /// </summary>
         private void FixedUpdate () {
             MousePosition mp = Voxon.Input.GetMousePos();
 

@@ -1,13 +1,22 @@
 ﻿using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Voxon.Examples
+namespace Voxon.Examples._1_SpawningObject
 {
+    /// <summary>
+    /// Class that continually spawns objects per frame.
+    /// </summary>
     public class ObjectSpawner : MonoBehaviour {
 
+        /// <summary>
+        /// Collection of materials to be used by spawned game objects (providing visual variety to shapes).
+        /// </summary>
         [FormerlySerializedAs("Mats")] public Material[] mats;
 
-        // Update is called once per frame
+        /// <summary>
+        /// Updates Once per frame. Generates a primitive object, with an attached rigid body, every 25 frames which is then randomly positioned
+        /// and dropped from the object spawner. This object also has a random material from <see cref="mats"/> applied to it.
+        /// </summary>
         private void Update () {
             if (Time.frameCount % 25 != 0) return;
         
