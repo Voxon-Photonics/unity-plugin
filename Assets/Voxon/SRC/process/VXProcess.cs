@@ -11,7 +11,7 @@ namespace Voxon
     public class VXProcess : Singleton<VXProcess> {
 
 		#region types
-		public enum RecordingType { FRAME, SERIES };
+		public enum RecordingType { SINGLE_FRAME, ANIMATION };
 		#endregion
 
 
@@ -60,7 +60,7 @@ namespace Voxon
 		public bool recordOnLoad = false;
 
 		[Tooltip("Capture all vcb into single zip, or as individual frames")]
-		public RecordingType recordingStyle = RecordingType.SERIES;
+		public RecordingType recordingStyle = RecordingType.ANIMATION;
         #endregion
 
         private Vector3 normalLighting = new Vector3();
@@ -194,7 +194,7 @@ namespace Voxon
 			if (recordOnLoad)
 			{
 				is_recording = true;
-				if(recordingStyle == RecordingType.SERIES)
+				if(recordingStyle == RecordingType.ANIMATION)
 				{
 					Voxon.VXProcess.Runtime.StartRecording(recordingPath, TargetFrameRate);
 				}
@@ -251,7 +251,7 @@ namespace Voxon
 			// TODO Save Camera Pos
 			_camera?.SaveCameraAnim();
 			// TODO Save Frame
-			if (is_recording && recordingStyle == RecordingType.FRAME)
+			if (is_recording && recordingStyle == RecordingType.SINGLE_FRAME)
 			{
 				Runtime.GetVCB(recordingPath, TargetFrameRate);
 			}
@@ -278,7 +278,7 @@ namespace Voxon
 
 		private void CloseRuntime()
 		{
-			if (is_recording && recordingStyle == RecordingType.SERIES)
+			if (is_recording && recordingStyle == RecordingType.ANIMATION)
 			{
 				is_recording = false;
 				Runtime.EndRecording();

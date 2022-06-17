@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class CameraAnimation : MonoBehaviour
 {
-	/// <summary>
+	/// <summary
 	/// Notes: Camera transformation utilises a mix of linear and bezier curves
 	/// to provide the director with increased control over the camera movement.
 	/// Camera animation is based on per frame (due to possible recording delays)

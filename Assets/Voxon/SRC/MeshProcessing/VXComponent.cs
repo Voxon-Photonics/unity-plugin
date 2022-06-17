@@ -90,7 +90,6 @@ namespace Voxon
                 if (_umesh == null)
                 {
                     ExceptionHandler.Except($"({name}) Mesh: FAILED TO LOAD", new NullReferenceException());
-                    Destroy(this);
                 }
 
                 if (_umaterials.Length != _umesh.subMeshCount)

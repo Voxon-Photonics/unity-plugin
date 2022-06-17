@@ -6,9 +6,6 @@ using UnityEngine;
 
 namespace Voxon
 {
-	/// <summary>
-	/// Post build code to generate Batch file to run built program in batch mode
-	/// </summary>
 	class UnityBuildPostProcessor : IPostprocessBuildWithReport
 	{
 		public int callbackOrder => 0;
@@ -18,18 +15,14 @@ namespace Voxon
 			string fileName = "";
 			string outputDirectory = "";
 
-			Debug.Log("PostProcess Build");
-			Debug.Log(report.files);
-
 			foreach(BuildFile file in report.files)
 			{
-				if ((file.role == "Executable" || file.role == "executable" || file.role == "exe") && !file.path.Contains("UnityCrashHandler"))
-				{
-					fileName = Path.GetFileName(file.path);
-					outputDirectory = Path.GetDirectoryName(file.path);
-					Debug.Log($"File: {fileName}, Folder: {outputDirectory}");
-					break;
-				}
+			
+				if(file.role != "Executable") continue;
+			
+				fileName = Path.GetFileName(file.path);
+				outputDirectory = Path.GetDirectoryName(file.path);
+				Debug.Log($"File: {fileName}, Folder: {outputDirectory}");
 			}
 
 			// Generate Batch executable
