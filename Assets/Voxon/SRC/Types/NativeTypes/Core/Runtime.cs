@@ -185,6 +185,12 @@ namespace Voxon
 			_features["DrawSphere"].Invoke(_runtime, paras);
 		}
 
+		public void DrawSphereBulk(poltex[] vertices, float radius)
+		{
+			var paras = new object[] {  vertices,  radius };
+			_features["DrawSphereBulk"].Invoke(_runtime, paras);
+		}
+
 		public void DrawTexturedMesh(ref tiletype texture, poltex[] vertices, int verticeCount, int[] indices, int indiceCount, int flags)
 		{
 			var paras = new object[] { texture, vertices, verticeCount, indices, indiceCount, flags };
