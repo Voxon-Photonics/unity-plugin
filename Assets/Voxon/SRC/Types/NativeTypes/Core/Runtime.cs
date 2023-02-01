@@ -368,6 +368,12 @@ namespace Voxon
 			_features["LogToScreen"].Invoke(_runtime, paras);
 		}
 
+		public void LogToScreenExt(int x, int y, int colFG, int colBG, string text)
+		{
+			var paras = new object[] { x, y, colFG, colBG, text };
+			_features["LogToScreenExt"].Invoke(_runtime, paras);
+		}
+
 		public void SetAspectRatio(float aspx, float aspy, float aspz)
 		{
 			var paras = new object[] { aspx, aspy, aspz };
@@ -459,15 +465,15 @@ namespace Voxon
 			_features["SetNormalLighting"].Invoke(_runtime, paras);
 		}
 
-		public bool SetDisplay2D()
+		public bool SetDisplay2D(int hibernateLeds = -1)
 		{
-		
-			return (bool)_features["SetDisplay2D"].Invoke(_runtime, null);
+			var paras = new object[] { hibernateLeds };
+			return (bool)_features["SetDisplay2D"].Invoke(_runtime, paras);
 		}
 
 		public bool SetDisplay3D()
 		{
-
+		
 			return (bool)_features["SetDisplay3D"].Invoke(_runtime, null);
 		}
 
