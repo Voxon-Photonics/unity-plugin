@@ -6,12 +6,17 @@ using UnityEditor;
 [ExecuteInEditMode]
 public class VXCamera : MonoBehaviour
 {
+
 	public bool uniformScale = true;
 	[SerializeField]
 	float baseScale = 1; // Need to adjust controls for this
 	public Vector3 vectorScale = Vector3.one;
-
+	[SerializeField]
+	public bool helixMode = false;
+	[SerializeField]
+	public float helixAspRMax = 1.55f; // 1.55 for 45 cm x 15 ||  1.41 for 30 cm x 12 
 	public bool loadViewFinder = false;
+
 	public Vector3 ViewFinderDimensions = new Vector3(1, 0.4f, 1);
 
 	VxViewFinder view_finder;
@@ -108,11 +113,11 @@ public class VXCamera : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
     {
-		
+
 	}
 
-    // Update is called once per frame
-    void Update()
+// Update is called once per frame
+void Update()
     {
 		if (CameraAnimator == null)
 		{

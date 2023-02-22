@@ -12,17 +12,35 @@ namespace Voxon
 
 		#region types
 		public enum RecordingType { SINGLE_FRAME, ANIMATION };
-		#endregion
+        #endregion
+
+        #region timer
+        double startTime = 0;
+        double startDelay = 0;
+        double awakeDelay = 0;
+        const double EDITOR_AWAKE_DELAY = 1.5;
+        #endregion
 
 
-		#region constants
-		public const string BuildDate = "2023/01/31";
+        #region constants
+        public const string BuildDate = "20230221";
         #endregion
 
         public static Runtime Runtime;
 
         #region inspector
-		[Header("Debug")]
+
+        [Header("Editor")]
+        [Tooltip("Delaying the Voxon Startup in editor makes the Voxon plugin more stable")]
+        public bool delayStartUpInEditor = true;
+
+        [Tooltip("Delaying the Voxon Startup in editor makes the Voxon plugin more stable")]
+        private bool restartVXRuntime = false;
+
+        [Tooltip("Delaying the Voxon Startup in editor makes the Voxon plugin more stable")]
+        private bool killVXRuntime = false;
+
+        [Header("Debug")]
         [FormerlySerializedAs("_guidelines")] [Tooltip("Will show capture volume of VX1 while emulating")]
         public bool guidelines;
         
@@ -61,6 +79,7 @@ namespace Voxon
 
 		[Tooltip("Capture all vcb into single zip, or as individual frames")]
 		public RecordingType recordingStyle = RecordingType.ANIMATION;
+
         #endregion
 
         private Vector3 normalLighting = new Vector3();
@@ -124,14 +143,19 @@ namespace Voxon
 				Time.captureFramerate = TargetFrameRate;
 			}
 
-			current_frame = -1; // We haven't started our first frame yet
+            awakeDelay = EDITOR_AWAKE_DELAY;
+
+            current_frame = -1; // We haven't started our first frame yet
 			Drawables.Clear();
             Gameobjects.Clear();
         }
 
-        private void Start () {
+        void Start() {
 
             Camera = editorCamera;
+            int type = 0;
+            startTime = Time.timeAsDouble;
+
             // Should VX Load?
             if (!active)
             {
@@ -151,13 +175,29 @@ namespace Voxon
             // Load DLL
             if (!Runtime.isLoaded())
             {
-                Runtime.Load();
-                Runtime.Initialise();
+                if (editorCamera.helixMode)
+                {
+                    type += 2;
+                 
+             
+                }
 
+                Runtime.Load();
+                #if UNITY_EDITOR
+                type += 1; 
+                #endif
+
+                Runtime.Initialise(type);
+                if (editorCamera.helixMode)
+                {
+                    Runtime.SetSimulatorHelixMode(true);
+                    Runtime.SetExternalRadius(Camera.helixAspRMax);
+                }
+ 
                 _dll_version = Runtime.GetDLLVersion().ToString().Substring(0, 8);
                 
                 #if (UNITY_EDITOR)
-                    Debug.Log($"Voxon Unity Plugin. Compatible with Unity versions >= 2018.4");
+                    Debug.Log($"Voxon Unity Plugin. Compatible with Unity versions >= 2020");
                     Debug.Log($"Voxon Runtime version: {_dll_version}");
                     Debug.Log($"C# Interface version: {typeof(Voxon.IRuntimePromise).Assembly.GetName().Version}");
                 #endif
@@ -204,76 +244,129 @@ namespace Voxon
         // Update is called once per frame
         void Update()
         {
-			current_frame++;
+			
 
-			if (!active || Runtime == null)
+            if (restartVXRuntime)
             {
+                restartVXRuntime = false;
+                Start();
                 return;
             }
 
-            bool isBreathing = Runtime.FrameStart();
-
-            AudioListener.volume = Runtime.GetVolume();
-
-            if (guidelines)
-                Runtime.DrawGuidelines();
-
-            if (show_version)
+            if (killVXRuntime)
             {
-                Runtime.LogToScreen(20, 560,$"DLL Version: {_dll_version}" );
+                killVXRuntime = false;
+                CloseRuntime();
+                return;
             }
+
+            startTime = Time.timeAsDouble;
+
+
+
+            // To prevent  the Unity Editor from crashing we introduce a little delay before a frame start this is because the handle
+            // to the voxiebox.DLL can sometimes return NULL and crash the editor if we try to access it to quickly.
+#if (UNITY_EDITOR)
                 
 
-            // A camera must always be active while in process
-            if (_camera != null && _camera.Camera == null)
+                  if (awakeDelay > 0 && delayStartUpInEditor == true) { 
+                  startDelay = startTime + awakeDelay;
+                  awakeDelay = 0;
+                  }
+
+                  if (delayStartUpInEditor == false)  startDelay = 0;
+#endif
+
+            if (startTime >= startDelay) //
             {
-				Debug.LogError("No Active VXCamera!");
-				active = false;
-				CloseRuntime();
-				Runtime.FrameEnd();
-				return;
-            }
+                current_frame++;
 
-			// TODO if Loaded Camera Animation - > Set Camera Transform
-			_camera?.LoadCameraAnim();
+                if (!active || Runtime == null)
+                {
+                    return;
+                }
 
-			if (_camera != null && _camera.HasChanged)
-            {
+                bool isBreathing = false;
 
-                _camera?.ForceUpdate();
-            }
+                try
+                {
+                    isBreathing = Runtime.FrameStart();
 
 
-			// TODO If Loaded Capture Playback -> Set Capture Frame Else Draw
 
-			Draw();
+                    if (guidelines)
+                        Runtime.DrawGuidelines();
 
-			// TODO Save Camera Pos
-			_camera?.SaveCameraAnim();
-			// TODO Save Frame
-			if (is_recording && recordingStyle == RecordingType.SINGLE_FRAME)
-			{
-				Runtime.GetVCB(recordingPath, TargetFrameRate);
-			}
+                    if (show_version)
+                    {
+                        Runtime.LogToScreenExt(20, 560, 0xff4000, -1, $"Voxon Unity Plugin");
+                        Runtime.LogToScreen(20, 570, $"Voxon Runtime version: {_dll_version}");
+                        Runtime.LogToScreen(20, 580, $"Plugin build date: {BuildDate}");
+                        Runtime.LogToScreenExt(20, 590, 0x00ffff, -1, $"Compatible with Unity versions >= 2020");
 
-			_camera?.ClearUpdated();
+                    }
 
-            // VX quit command; TODO this should be by choice
-            if (Runtime.GetKey(0x1) || !isBreathing)
-            {
-				CloseRuntime();
 
-				_camera?.Camera.CloseAnimator();
+                    // A camera must always be active while in process
+                    if (_camera != null && _camera.Camera == null)
+                    {
+                        Debug.LogError("No Active VXCamera!");
+                        active = false;
+                        CloseRuntime();
+                        Runtime.FrameEnd();
+                        return;
+                    }
+
+                    // TODO if Loaded Camera Animation - > Set Camera Transform
+                    _camera?.LoadCameraAnim();
+
+                    if (_camera != null && _camera.HasChanged)
+                    {
+
+                        _camera?.ForceUpdate();
+                    }
+
+
+                    // TODO If Loaded Capture Playback -> Set Capture Frame Else Draw
+
+                    Draw();
+
+                    // TODO Save Camera Pos
+                    _camera?.SaveCameraAnim();
+                    // TODO Save Frame
+                    if (is_recording && recordingStyle == RecordingType.SINGLE_FRAME)
+                    {
+                        Runtime.GetVCB(recordingPath, TargetFrameRate);
+                    }
+
+                    _camera?.ClearUpdated();
+
+
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError("Error in Runtime");
+                    Debug.LogError(e.Message);
+                }
+                AudioListener.volume = Runtime.GetVolume();
+                // VX quit command; TODO this should be by choice
+                if (Runtime.GetKey(0x1) || !isBreathing)
+                {
+                    CloseRuntime();
+
+                    _camera?.Camera.CloseAnimator();
 #if UNITY_EDITOR
                 UnityEditor.EditorApplication.isPlaying = false;
 #elif UNITY_WEBPLAYER
 				Application.OpenURL(webplayerQuitURL);
 #else
-				Application.Quit();
+                    Application.Quit();
 #endif
+                }
+
+                Runtime.FrameEnd();
+
             }
-        
-            Runtime.FrameEnd();
         }
 
 		private void CloseRuntime()

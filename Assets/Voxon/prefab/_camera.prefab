@@ -145,6 +145,8 @@ MonoBehaviour:
   uniformScale: 1
   baseScale: 10
   vectorScale: {x: 1, y: 1, z: 1}
+  helixMode: 0
+  helixAspRMax: 1.55
   loadViewFinder: 0
   ViewFinderDimensions: {x: 1, y: 0.39999998, z: 1}
   CameraAnimator: {fileID: 8444672262183301159}

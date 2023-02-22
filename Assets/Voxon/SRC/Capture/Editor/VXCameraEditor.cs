@@ -12,17 +12,25 @@ public class VXCameraEditor : Editor
 	SerializedProperty baseScale;
 	SerializedProperty vectorScale;
 
+
+	SerializedProperty helixMode;
+	SerializedProperty helixAspRMax;
 	SerializedProperty loadViewFinder;
 	SerializedProperty ViewFinderDimensions;
 
+	bool showHelix = true;
 	bool showScalars = true;
 	bool showViewFinder = true;
+
+
 
 	void OnEnable()
 	{
 		uniformScale = serializedObject.FindProperty("uniformScale");
 		baseScale = serializedObject.FindProperty("baseScale");
 		vectorScale = serializedObject.FindProperty("vectorScale");
+		helixMode = serializedObject.FindProperty("helixMode");
+		helixAspRMax = serializedObject.FindProperty("helixAspRMax");
 
 		loadViewFinder = serializedObject.FindProperty("loadViewFinder");
 		ViewFinderDimensions = serializedObject.FindProperty("ViewFinderDimensions");
@@ -32,6 +40,18 @@ public class VXCameraEditor : Editor
 	{
 		serializedObject.Update();
 
+
+		showHelix = EditorGUILayout.BeginFoldoutHeaderGroup(showHelix, "Display Type");
+		if (showHelix)
+		{
+			EditorGUILayout.PropertyField(helixMode);
+			if (helixMode.boolValue == true)
+			{
+				EditorGUILayout.PropertyField(helixAspRMax);
+			}
+		}
+
+		EditorGUILayout.EndFoldoutHeaderGroup();
 
 		showScalars = EditorGUILayout.BeginFoldoutHeaderGroup(showScalars, "Camera Scale");
 

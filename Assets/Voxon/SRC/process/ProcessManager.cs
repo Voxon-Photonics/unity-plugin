@@ -1,5 +1,6 @@
 ﻿#if UNITY_EDITOR
 using UnityEditor;
+using UnityEngine;
 
 namespace Voxon
 {
@@ -12,6 +13,17 @@ namespace Voxon
         {
             _processManager = (ProcessManager)GetWindow(typeof(ProcessManager));
             // Unnecessary but it shuts up Unity's warnings
+
+
+            _processManager.titleContent = new UnityEngine.GUIContent("Voxon Unity Plugin");
+
+
+
+
+            // Limit size of the window
+            _processManager.minSize = new Vector2(450, 470);
+            _processManager.maxSize = new Vector2(1920, 470);
+
             _processManager.Show();
         }
 

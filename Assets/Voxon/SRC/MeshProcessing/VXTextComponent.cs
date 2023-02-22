@@ -17,6 +17,7 @@ namespace Voxon
         [FormerlySerializedAs("_color")] [Tooltip("text colour")]
         public int color = 0xffffff;
 
+
         private static readonly System.Text.Encoding Enc = System.Text.Encoding.ASCII;
 
         public string text = "";

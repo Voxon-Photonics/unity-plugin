@@ -10,7 +10,7 @@ using Voxon;
  *  
  *  last updated 18/12/2018
  *  + Added JSON file support
- *  + Added speed up and down of controlls
+ *  + Added speed up and down of controls
  * 
  * */
 public class VoxieCamTuner : MonoBehaviour {

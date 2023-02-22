@@ -27,7 +27,7 @@ namespace Voxon.Examples._5_DeltaTimeText
 		}
 
 		/// <summary>
-		/// Called per Frame.
+		/// Called per frame.
 		/// Updates the displayed text to current Time Delta
 		/// </summary>
 		void Update()

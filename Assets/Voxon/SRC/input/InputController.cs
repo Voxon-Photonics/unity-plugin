@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -247,8 +248,15 @@ namespace Voxon
 
         public static void LoadData()
         {
+            try {
             Debug.Log($"Load: {Instance.filename}");
+            } 
+            catch  (Exception e)
+            {
+             Debug.LogError("Error couldn't Load Data from Input Controller");
+             Debug.LogError(e.Message);
 
+            }
             string filePath = Path.Combine(Application.streamingAssetsPath, Instance.filename);
             if (File.Exists(filePath))
             {

@@ -23,8 +23,7 @@ namespace Voxon.Examples.Input
             if (Voxon.Input.GetKey("Cam_Backward"))
             {
                 pos.z -= 0.1f;
-            }
-            
+            }   
             if (Voxon.Input.GetKey("Cam_Up"))
             {
                 pos.y += 0.1f;

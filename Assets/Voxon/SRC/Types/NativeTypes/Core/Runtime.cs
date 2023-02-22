@@ -336,9 +336,10 @@ namespace Voxon
 			return (float)_features["GetVolume"].Invoke(_runtime, null);
 		}
 
-		public void Initialise()
+		public void Initialise(int type)
 		{
-			_features["Initialise"].Invoke(_runtime, null);
+			var paras = new object[] { type };
+			_features["Initialise"].Invoke(_runtime, paras);
 		}
 
 		public bool isInitialised()

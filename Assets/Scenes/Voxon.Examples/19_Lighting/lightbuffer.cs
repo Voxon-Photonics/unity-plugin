@@ -145,7 +145,7 @@ namespace Voxon.Examples._19_Lighting
 			cam.depthTextureMode = cam.depthTextureMode | DepthTextureMode.Depth;
 			rb = cam.targetTexture;
 
-			resolution = rb.width;
+			//resolution = rb.width;
 
 			if(resolution == 0)
 			{
@@ -154,6 +154,7 @@ namespace Voxon.Examples._19_Lighting
 			}
 
 			clearShader = (ComputeShader)Resources.Load("LightClear");
+
 
 			// Voxel Setup
 			// voxels = xz_resolution * xz_resolution * y_resolution; // Default to 200 Y resolution

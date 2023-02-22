@@ -12,6 +12,10 @@ namespace Voxon
         public void OnPreprocessBuild(BuildReport report)
         {
 
+           // Kill any Voxon Runtime that is running...
+           Voxon.VXProcess.Runtime.Shutdown();
+           Voxon.VXProcess.Runtime.Unload();
+
             if (!AssetDatabase.IsValidFolder("Assets/StreamingAssets"))
             {
                 Debug.LogError("You should never see this; Editor Handler should have fixed this already");

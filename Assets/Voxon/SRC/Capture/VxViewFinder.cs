@@ -4,7 +4,7 @@ using UnityEngine;
 
 /* 
  * Controls camera aspect ratio during operation.
- * Can load existing apect ratio data from local config
+ * Can load existing aspect ratio data from local config
  * Alternatively can set own aspect ratio during play
  */
 
