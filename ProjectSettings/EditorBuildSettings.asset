@@ -50,7 +50,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Voxon.Examples/14_ColorSwap.unity
     guid: 1dadfd561949d2245be075045247584b
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Voxon.Examples/8_Ragdoll.unity
     guid: a3d985c5873c64c4b8322900ffa6a065
   - enabled: 0

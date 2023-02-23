@@ -23,7 +23,7 @@ namespace Voxon
 
 
         #region constants
-        public const string BuildDate = "20230221";
+        public const string BuildDate = "20230223";
         #endregion
 
         public static Runtime Runtime;
@@ -38,7 +38,11 @@ namespace Voxon
         private bool restartVXRuntime = false;
 
         [Tooltip("Delaying the Voxon Startup in editor makes the Voxon plugin more stable")]
-        private bool killVXRuntime = false;
+        public bool killVXRuntime = false;
+
+        [Tooltip("Delaying the Voxon Startup in editor makes the Voxon plugin more stable")]
+        public bool debugVxProcess = false;
+
 
         [Header("Debug")]
         [FormerlySerializedAs("_guidelines")] [Tooltip("Will show capture volume of VX1 while emulating")]
@@ -244,7 +248,11 @@ namespace Voxon
         // Update is called once per frame
         void Update()
         {
-			
+			if (debugVxProcess)
+            {
+                debugVxProcess = false;
+            }
+
 
             if (restartVXRuntime)
             {
@@ -256,7 +264,12 @@ namespace Voxon
             if (killVXRuntime)
             {
                 killVXRuntime = false;
+                restartVXRuntime = true;
+                StopAllCoroutines();
                 CloseRuntime();
+#if UNITY_EDITOR
+ UnityEditor.EditorApplication.isPlaying = false;
+#endif
                 return;
             }
 
@@ -270,8 +283,8 @@ namespace Voxon
                 
 
                   if (awakeDelay > 0 && delayStartUpInEditor == true) { 
-                  startDelay = startTime + awakeDelay;
-                  awakeDelay = 0;
+                      startDelay = startTime + awakeDelay;
+                      awakeDelay = 0;
                   }
 
                   if (delayStartUpInEditor == false)  startDelay = 0;
@@ -371,13 +384,16 @@ namespace Voxon
 
 		private void CloseRuntime()
 		{
-			if (is_recording && recordingStyle == RecordingType.ANIMATION)
-			{
-				is_recording = false;
-				Runtime.EndRecording();
-			}
-			Runtime.Shutdown();
-			Runtime.Unload();
+            if (Runtime != null)
+            {
+                if (is_recording && recordingStyle == RecordingType.ANIMATION)
+                {
+                    is_recording = false;
+                    Runtime.EndRecording();
+                }
+                Runtime.Shutdown();
+                Runtime.Unload();
+            }
 		}
 
         private new void OnApplicationQuit()
