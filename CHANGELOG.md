@@ -5,7 +5,7 @@
 ### Features
 * 2D / 3D toggle feature so you can hibernate the VX1
 * Support for a Helix (circle) display
-* New Example Scenes : 3D Model examples, VoxieText
+* New Example Scene, Showing 3D Models and VoxieText Script
 * Embedded Emulation rotational controls press '[' ']' + Right Shift || Right Ctrl to rotate emulation display
 
 

@@ -1,9 +1,8 @@
 
 # Version 1.1.1.5 (2023-02-23)
-  
-  ## Major Changes
-  
-  ### Features
+ 
+## Major Changes
+### Features
 * 2D / 3D toggle feature so you can hibernate the VX1
 * Support for a Helix (circle) display
 * New Example Scenes : 3D Model examples, VoxieText

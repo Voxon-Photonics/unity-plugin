@@ -30,7 +30,21 @@ namespace Voxon
             try
             {
                 // Debug.Log($"Processing Mesh Data: {mesh.name}");
+                //  name = mesh.name; // this means 2 meshes with same name will cause an error
+
+                // Name would be : "Mesh_<randomnumber>_<realtimeSinceStartup> on add
+                System.Random rnd = new System.Random(); // adding some random numbers to the end to ensure 
+                int rand = rnd.Next(0, 100);
+                mesh.name = string.Concat(mesh.name, "_");
+                mesh.name = string.Concat(mesh.name, rand);
+                mesh.name = string.Concat(mesh.name, "_");
+                mesh.name = string.Concat(mesh.name, Time.realtimeSinceStartup);
+
+        
                 name = mesh.name;
+
+
+                Debug.Log($"Processing Mesh Data: {mesh.name}");
 
                 // Mesh Divisions
                 submeshCount = mesh.subMeshCount;
@@ -88,7 +102,20 @@ namespace Voxon
         {
             try
             {
+                //  name = meshData.name; // this means 2 meshes with same name will cause an error
+
+                // Name would be : "Mesh_<randomnumber>_<realtimeSinceStartup> on add
+                System.Random rnd = new System.Random(); // adding some random numbers to the end to ensure 
+                int rand = rnd.Next(0, 100);
+                meshData.name = string.Concat(meshData.name, "_");
+                meshData.name = string.Concat(meshData.name, rand);
+                meshData.name = string.Concat(meshData.name, "_");
+                meshData.name = string.Concat(meshData.name, Time.realtimeSinceStartup);
+
+                Debug.Log($"Processing Mesh Data: {meshData.name}");
+
                 name = meshData.name;
+
 
                 // Mesh Divisions
                 submeshCount = meshData.submeshCount;
