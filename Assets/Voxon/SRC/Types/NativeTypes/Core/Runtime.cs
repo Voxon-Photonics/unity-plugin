@@ -26,12 +26,14 @@ namespace Voxon
 		CYAN = -6
 	};
 
-	public enum MENUPOSITION
+	public enum MENU_BUTTON_TYPE
 	{
-		SINGLE = 3,
-		FIRST = 1,
-		MIDDLE = 0,
-		END = 2
+		SINGLE = 3, // single use button
+		FIRST = 1, // first button connected
+		MIDDLE = 0, // middle button can be multiple
+		END = 2, // end of the string of connected buttons
+		TOGGLE = 8, // special button that can toggle its text
+		FILE_PICKER = 9, // file picker to load in a file type
 	}
 	
 	public class Runtime : IRuntimePromise
@@ -581,7 +583,7 @@ namespace Voxon
 		public void MenuUpdateItem(int id, string st, int down, double v)
 		{
 			var paras = new object[] { id, st, down, v };
-			_features["MenuReset"].Invoke(_runtime, paras);
+			_features["MenuUpdateItem"].Invoke(_runtime, paras);
 		}
 		#endregion
 		

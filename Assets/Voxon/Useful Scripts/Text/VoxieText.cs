@@ -31,6 +31,7 @@ namespace Voxon
         public Vector3 voxiePos = new Vector3(0f, 0f, 0.0f);
         [FormerlySerializedAs("_color")]
         int color = 0xffffff;
+        int orgColor = 0xffffff;
 
         public float fontSize = 1;
         [Tooltip("Set starting horizontal angle in degrees")]
@@ -65,12 +66,20 @@ namespace Voxon
         public float rotateTilt = 0f;
 
 
+        [Tooltip("Fade out text after the fade out time. (requires Update Per Frame)")]
+        public bool fadeText = false;
+        [Tooltip("Fade out text after X number of seconds")]
+        public double fadeOutTime = 3;
+
+
         private static readonly System.Text.Encoding Enc = System.Text.Encoding.ASCII;
 
         public string text = "";
 
         public bool updatePerFrame = false;
-        public bool relevativePos = false;
+        public bool relativePos = false;
+
+        double setStringTime = 0;
 
         private byte[] _ts;
         // Use this for initialization
@@ -82,6 +91,7 @@ namespace Voxon
             UpdateLocation();
             UpdateTransforms();
             VXProcess.Drawables.Add(this);
+            orgColor = color;
         }
 
         public void SetString(string newString)
@@ -93,7 +103,41 @@ namespace Voxon
             tmp.CopyTo(_ts, 0);
             // Append 0 to end string
             _ts[tmp.Length] = 0;
+            setStringTime = Time.timeAsDouble + fadeOutTime;
+            color = orgColor;
         }
+        // tweens a colour to a destination colour... good for fade outs or tweens 
+        public int tweenCol(int colour, int speed, int destColour)
+        {
+
+            int b, g, r;
+            int bd, gd, rd;
+
+            b = (colour & 0xFF);
+            g = (colour >> 8) & 0xFF;
+            r = (colour >> 16) & 0xFF;
+            bd = (destColour & 0xFF);
+            gd = (destColour >> 8) & 0xFF;
+            rd = (destColour >> 16) & 0xFF;
+
+            if (b > bd) b -= speed;
+            else if (b < bd) b += speed;
+            if (r > rd) r -= speed;
+            else if (r < rd) r += speed;
+            if (g > gd) g -= speed;
+            else if (g < gd) g += speed;
+
+            if (r < 0x00) r = 0x00;
+            if (r > 0xFF) r = 0xFF;
+            if (g < 0x00) g = 0x00;
+            if (g > 0xFF) g = 0xFF;
+            if (b < 0x00) b = 0x00;
+            if (b > 0xFF) b = 0xFF;
+
+            return (r << 16) | (g << 8) | (b);
+
+        }
+
 
         void UpdateString()
         {
@@ -105,7 +149,11 @@ namespace Voxon
             _ts[tmp.Length] = 0;
         }
 
-        
+        public void SetColor(int rValue, int gValue, int bValue)
+        {
+            color = (rValue << 16) | (gValue << 8) | (bValue);
+            orgColor = color;
+        }
 
 
         public void UpdateLocation()
@@ -131,6 +179,8 @@ namespace Voxon
         ///  </summary>
         public void Draw()
         {
+           
+
             if (!gameObject.activeInHierarchy || CompareTag("VoxieHide"))
             {
                 Debug.Log($"{gameObject.name}: Skipping");
@@ -153,9 +203,21 @@ namespace Voxon
 
                 UpdateTransforms();
 
+                if (fadeText && fadeOutTime < Time.timeAsDouble && color != 0x000000) 
+                {
+                    color = tweenCol(color, 5, 0x000000);
+
+                } else if  (fadeText == false)
+                {
+                    color = (rValue << 16) | (gValue << 8) | (bValue);
+                }
+
+            } else
+            {
+                color = (rValue << 16) | (gValue << 8) | (bValue);
             }
 
-            color =  (rValue << 16) | (gValue << 8) | (bValue);
+      
 
             VXProcess.Runtime.DrawLetters(ref _pp, ref _pr, ref _pd, color, _ts);
         }
@@ -197,7 +259,7 @@ namespace Voxon
             f = (fontSize * textWidth) * .5f; _pr.x *= (float)f; _pr.y *= (float)f; _pr.z *= (float)f;
             f = (fontSize * textHeight) * .5f; _pd.x *= (float)f; _pd.y *= (float)f; _pd.z *= (float)f;
      
-            if (relevativePos)
+            if (relativePos)
             {
                 _pp.x = voxiePos.x + this.gameObject.transform.position.x;
                 _pp.y = voxiePos.y + this.gameObject.transform.position.y;  // -z
