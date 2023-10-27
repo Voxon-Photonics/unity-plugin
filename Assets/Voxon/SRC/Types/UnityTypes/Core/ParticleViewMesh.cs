@@ -10,14 +10,17 @@ namespace Voxon
 
         private int _drawFlags = 2 | 1 << 3; // 2 - Fill, and Draw from Texture buffer
 
+        private bool useWorldSpace = false; 
+
         #region Constructors
 
-        public ParticleViewMesh(ParticleModel particle, Mesh inMesh, GameObject parent = null) : base(particle, parent)
+        public ParticleViewMesh(ParticleModel particle, Mesh inMesh, bool useWorldSpace = false, GameObject parent = null) : base(particle, parent)
         {
             try
             {
                 _mesh = MeshRegister.Instance.get_registed_mesh(ref inMesh);
                 _transformedMesh = new poltex[_mesh.vertexCount];
+                this.useWorldSpace = useWorldSpace;
             }
             catch (Exception e)
             {
@@ -25,6 +28,8 @@ namespace Voxon
             }
         }
         #endregion
+
+    //    public setLocal( bool)
 
         #region drawing
         public override void Draw()
@@ -34,15 +39,25 @@ namespace Voxon
             for (var idx = 0; idx < particles; ++idx)
             {
 
-                // Unity Style
-                Matrix4x4 matrix = VXProcess.Instance.Transform * Model.GetMatrix(idx);
+                Matrix4x4 matrix;
 
+                // Unity Style
+                if (useWorldSpace)
+                {
+                    matrix = VXProcess.Instance.Transform * Model.GetMatrixWorld(idx);
+                } else
+                {
+                    matrix = VXProcess.Instance.Transform * Model.GetMatrix(idx);
+                }
+
+          
                 _mesh.compute_transform_cpu(matrix, ref _transformedMesh);
 
                 for (int idy = _mesh.submeshCount - 1; idy >= 0; --idy)
                 {
-					VXProcess.Runtime.DrawUntexturedMesh(_transformedMesh, _mesh.vertexCount, _mesh.indices[idy], _mesh.indexCounts[idy], _drawFlags, Model.GetParticleColour(idx));
+                    VXProcess.Runtime.DrawUntexturedMesh(_transformedMesh, _mesh.vertexCount, _mesh.indices[idy], _mesh.indexCounts[idy], _drawFlags, Model.GetParticleColour(idx));
                 }
+                
             }
         }
         #endregion

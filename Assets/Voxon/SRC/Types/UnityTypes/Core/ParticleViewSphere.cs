@@ -6,24 +6,83 @@ namespace Voxon
     {
         #region Constructors
 
-        public ParticleViewSphere(ParticleModel particle, GameObject parent = null) : base(particle, parent) { }
+        public ParticleViewSphere(ParticleModel particle, bool useWorldSpace = false, GameObject parent = null) : base(particle, parent) {
+
+            this.useWorldSpace = useWorldSpace;
+
+        }
+
+        private bool useWorldSpace = false;
+
+        poltex[] poltex_buffer;
         #endregion
 
         #region drawing
         public override void Draw()
         {
+
+            float Zoffset = 0; // 0.19f; // some strange zoffset that is needed?
+    
             int particles = Model.ParticleCount;
+            poltex_buffer = new poltex[Model.ParticleCount];
+            point3d point;
+            point3d point2;
+            float size = 0.001f;
+            int col = 0x000000;
+            int dimAmount = 5; // if you want to dim all spheres increase this number -1 == dont change 0 == output nothing, 
 
             for (var idx = 0; idx < particles; ++idx)
             {
-                float size = Model.GetParticleSize(idx);
-                point3d point = Model.GetParticle(idx);
+                size = Model.GetParticleSize(idx);
 
-				VXProcess.Runtime.DrawSphere(ref point, size, 0, Model.GetParticleColour(idx));
+                if (useWorldSpace)
+                {
+                    point = Model.GetParticleWorld(idx);
+                }
+                else
+                {
+                    point = Model.GetParticle(idx);
+                }
+                poltex_buffer[idx].x = point.x;
+                poltex_buffer[idx].y = point.y;
+                poltex_buffer[idx].z = point.z + Zoffset;
+                /*
+                point2.x = point.x;
+                point2.y = point.y;
+                point2.z = point.z + Zoffset;
+                */
+                col = colorHexDivide(Model.GetParticleColour(idx), dimAmount);
 
+                poltex_buffer[idx].col = col;
+
+               // VXProcess.Runtime.DrawSphere(ref point2, size, 0, col); //-- optimised to use DrawSphereBulk
+               
             }
+
+        VXProcess.Runtime.DrawSphereBulk(poltex_buffer, size); // twice as fast
+
         }
         #endregion
+
+        // dims a color by a certain amount
+        int colorHexDivide(int _colour, int _divideAmount)
+        {
+            if (_divideAmount == -1) return _colour;
+            int b, g, r;
+
+            b = (_colour & 0xFF);
+            g = (_colour >> 8) & 0xFF;
+            r = (_colour >> 16) & 0xFF;
+
+  
+            if (_divideAmount == 0) return 0;
+
+            b /= _divideAmount;
+            g /= _divideAmount;
+            r /= _divideAmount;
+
+            return (r << 16) | (g << 8) | (b);
+        }
 
     }
 }

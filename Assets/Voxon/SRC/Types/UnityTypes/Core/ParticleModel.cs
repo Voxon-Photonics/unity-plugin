@@ -10,7 +10,7 @@ namespace Voxon
     [Serializable]
     public class ParticleModel
     {
-        private const float SizeModifier = 0.05f;
+        private const float SizeModifier = 0.005f; // was 0.05f
 
         private GameObject _parent;
 
@@ -33,8 +33,8 @@ namespace Voxon
                 ParticleSystem.MainModule main = _mParticleSystem.main;
                 _mParticles = new ParticleSystem.Particle[main.maxParticles];
 
-                // Use worldspace
-                main.simulationSpace = ParticleSystemSimulationSpace.World;
+                // Uncomment this to use worldspace
+                 //main.simulationSpace = ParticleSystemSimulationSpace.World;
             }
         }
         public int ParticleCount => (_mParticleSystem != null) ? _mParticleSystem.GetParticles(_mParticles) : 0;
@@ -43,9 +43,20 @@ namespace Voxon
         {
             return _mParticles[particleIndex].GetCurrentSize(_mParticleSystem) * SizeModifier;
         }
-
+        // return particle position from local....
         public point3d GetParticle(int particleIndex)
         {
+            // original  return (VXProcess.Instance.Transform * _mParticleSystem.transform.InverseTransformPoint(_mParticles[particleIndex].position)).ToPoint3d();
+
+            return (VXProcess.Instance.Transform * _mParticleSystem.transform.TransformPoint(_mParticles[particleIndex].position)).ToPoint3d();
+        }
+        // retuirn particle postion from world
+        public point3d GetParticleWorld(int particleIndex)
+        {
+            // orginal   return (VXProcess.Instance.Transform * _mParticles[particleIndex].position).ToPoint3d(); orginal
+
+
+
             return (VXProcess.Instance.Transform * _mParticles[particleIndex].position).ToPoint3d();
         }
 
@@ -60,9 +71,25 @@ namespace Voxon
             set { _parent = value; Update(); }
         }
         
-        public Matrix4x4 GetMatrix(int particleIndex)
+        public Matrix4x4 GetMatrix(int particleIndex) {
+            // comment this to use local space
+            Vector3 worldPos = _mParticleSystem.transform.TransformPoint(_mParticles[particleIndex].position);
+            _mat.SetTRS(worldPos, Quaternion.Euler(_mParticles[particleIndex].rotation3D), _mParticles[particleIndex].GetCurrentSize3D(_mParticleSystem)*5);
+
+            // Uncomment this to use worldspace
+            //_mat.SetTRS(_mParticles[particleIndex].position, Quaternion.Euler(_mParticles[particleIndex].rotation3D), _mParticles[particleIndex].GetCurrentSize3D(_mParticleSystem) * 5);
+
+
+
+            return _mat;
+        }
+
+        // get Matrix using world space
+        public Matrix4x4 GetMatrixWorld(int particleIndex)
         {
-            _mat.SetTRS(_mParticles[particleIndex].position, Quaternion.Euler(_mParticles[particleIndex].rotation3D), _mParticles[particleIndex].GetCurrentSize3D(_mParticleSystem)*5);
+
+            _mat.SetTRS(_mParticles[particleIndex].position, Quaternion.Euler(_mParticles[particleIndex].rotation3D), _mParticles[particleIndex].GetCurrentSize3D(_mParticleSystem) * 5);
+
             return _mat;
         }
         #endregion

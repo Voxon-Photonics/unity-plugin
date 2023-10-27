@@ -16,6 +16,7 @@ public class SpaceMouseGrow : MonoBehaviour
 	public float min_scale = 0.0001f;
 	public float max_distance = 2;
 
+	public bool invertMovements = false;
 	VXCamera cam = null;
 	// Start is called before the first frame update
 	void Start()
@@ -72,9 +73,18 @@ public class SpaceMouseGrow : MonoBehaviour
 		var v3pos = transform.position;
 		if (position != null)
 		{
-			v3pos.x += movement_speed * (position[0] / 35.0f);
-			v3pos.y += movement_speed * (position[2] / 35.0f);
-			v3pos.z -= movement_speed * (position[1] / 35.0f);
+			if (invertMovements)
+			{
+				v3pos.x += movement_speed * (-position[0] / 35.0f);
+				v3pos.y -= movement_speed * (-position[2] / 35.0f); // z for VX1
+				v3pos.z -= movement_speed * (-position[1] / 35.0f); // y for VX1
+			}
+			else
+			{
+				v3pos.x += movement_speed * (position[0] / 35.0f);
+				v3pos.y -= movement_speed * (position[2] / 35.0f); // z for VX1
+				v3pos.z -= movement_speed * (position[1] / 35.0f); // y for VX1
+			}
 
 			float distance = Vector3.Distance(original_pos, v3pos);
 			if (distance > max_distance)
@@ -87,7 +97,7 @@ public class SpaceMouseGrow : MonoBehaviour
 		if (Voxon.Input.GetSpaceNavButton("LeftButton") && Voxon.Input.GetSpaceNavButton("RightButton"))
 		{
 			transform.position = original_pos;
-			// transform.rotation = original_rot;
+			transform.rotation = original_rot;
 			cam.BaseScale = original_size;
 		}
 	}

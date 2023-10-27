@@ -23,7 +23,7 @@ namespace Voxon
 
 
         #region constants
-        public const string BuildDate = "20230223";
+        public const string BuildDate = "20230522";
         #endregion
 
         public static Runtime Runtime;
@@ -32,15 +32,15 @@ namespace Voxon
 
         [Header("Editor")]
         [Tooltip("Delaying the Voxon Startup in editor makes the Voxon plugin more stable")]
-        public bool delayStartUpInEditor = true;
+        private bool delayStartUpInEditor = true;
 
-        [Tooltip("Delaying the Voxon Startup in editor makes the Voxon plugin more stable")]
+        [Tooltip("Force Restart of VX Runtime")]
         private bool restartVXRuntime = false;
-
-        [Tooltip("Delaying the Voxon Startup in editor makes the Voxon plugin more stable")]
+		
+        [Tooltip("Instally kills the VX Runtime (if its lingering in memory)")]
         public bool killVXRuntime = false;
 
-        [Tooltip("Delaying the Voxon Startup in editor makes the Voxon plugin more stable")]
+        [Tooltip("hit a breakpoint in the VxProcess Script (requires VS to be in debug mode)")]
         public bool debugVxProcess = false;
 
 
@@ -179,25 +179,27 @@ namespace Voxon
             // Load DLL
             if (!Runtime.isLoaded())
             {
+/* TODO Clipshape is now independent replace this code for real Helix mode...
                 if (editorCamera.helixMode)
                 {
                     type += 2;
                  
              
                 }
-
+*/
                 Runtime.Load();
                 #if UNITY_EDITOR
                 type += 1; 
                 #endif
 
                 Runtime.Initialise(type);
+                /*
                 if (editorCamera.helixMode)
                 {
                     Runtime.SetSimulatorHelixMode(true);
                     Runtime.SetExternalRadius(Camera.helixAspRMax);
                 }
- 
+ */
                 _dll_version = Runtime.GetDLLVersion().ToString().Substring(0, 8);
                 
                 #if (UNITY_EDITOR)

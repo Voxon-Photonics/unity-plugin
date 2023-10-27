@@ -16,6 +16,12 @@ namespace Voxon
             SPHERE
         };
 
+        public bool useWorldSpace = false;
+
+        [Range(-1,30)]
+        public int density = -1; 
+
+    
         // Editor View (Won't use after initialisation)
         [FormerlySerializedAs("particle_style")] public ParticleStyle particleStyle = ParticleStyle.BILLBOARD;
 
@@ -48,10 +54,10 @@ namespace Voxon
                     _particle = new ParticleViewBox(_particleModel);
                     break;
                 case ParticleStyle.SPHERE:
-                    _particle = new ParticleViewSphere(_particleModel);
+                    _particle = new ParticleViewSphere(_particleModel, useWorldSpace);
                     break;
                 case ParticleStyle.MESH:
-                    _particle = new ParticleViewMesh(_particleModel, GetComponent<ParticleSystemRenderer>().mesh);
+                    _particle = new ParticleViewMesh(_particleModel, GetComponent<ParticleSystemRenderer>().mesh, useWorldSpace);
                     break;
             }
 
