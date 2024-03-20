@@ -13,8 +13,8 @@ namespace Voxon
 
         static EditorHandler()
         {
-            #if !UNITY_2020_3
-                Debug.LogWarning("Voxon Plugin may not be compatible with this version of Unity. Please use 2020.3.X (LTS)");
+            #if !UNITY_2021_3
+                Debug.LogWarning("Voxon Plugin may not be compatible with this version of Unity. Please use 2021.3.X (LTS)");
             #endif
             
             EditorApplication.playModeStateChanged += PlayStateChange;

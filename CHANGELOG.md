@@ -1,7 +1,15 @@
+# Version 1.1.1.5 (2024-03-20)
+
+## Major Changes
+
+* Final release in this form works will all never versions of the C# Runtime.DLL and interface. 
+
+
 
 # Version 1.1.1.5 (2023-02-23)
  
 ## Major Changes
+
 ### Features
 * 2D / 3D toggle feature so you can hibernate the VX1
 * Support for a Helix (circle) display
@@ -20,7 +28,8 @@
 
 ## Major Changes
 ### Features
-* Moved to new Camera system. Uses VXCamera prefab objects to maintain correct aspect ratio
+* Moved to new Camera system. Uses VXCamera prefab objects to maintain correct aspect ratio  
+ 
 * Updated to add support for VCB recording, and local lighting
 
 ### Bugs
